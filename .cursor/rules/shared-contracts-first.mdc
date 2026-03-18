@@ -1,0 +1,46 @@
+---
+description: Shared contracts are the single source of truth; no duplication or drift across web, mobile, and backend.
+alwaysApply: true
+---
+
+# Shared Contracts First
+
+## Intent
+
+Shared contracts are the single source of truth across web, mobile, and backend. Define them first when multiple surfaces depend on the same API or domain boundary. Never duplicate schemas, types, or domain models; prevent drift between contract definitions and implementation.
+
+## Ownership
+
+| Location | Owns |
+|----------|------|
+| `packages/contracts` | API schemas, Zod validation, request/response contracts |
+| `packages/types` | Shared framework-agnostic domain models |
+
+## Required Workflow
+
+1. **Before implementation**: Define or update the contract in `packages/contracts` or `packages/types` when web, mobile, or backend share the boundary.
+2. **API versioning**: Use `/api/v1` for all versioned endpoints.
+3. **Forms**: Validate against shared schemas from `packages/contracts` where applicable.
+4. **Contract changes**: Trigger downstream validation across all affected apps; do not ship until client and server are aligned.
+5. **When changing an endpoint**: Update contract schema, server implementation, typed client usage, and affected tests together.
+
+## Contract Update Checklist
+
+When changing a contract or endpoint:
+
+- [ ] Update schema in `packages/contracts` (or domain type in `packages/types`)
+- [ ] Update server/API implementation
+- [ ] Update typed client usage in `packages/api-client`
+- [ ] Update all affected app call sites
+- [ ] Update or add affected tests
+- [ ] Verify forms using this contract validate against the updated schema
+
+## Forbidden Shortcuts
+
+- Duplicating schemas, request types, response types, or domain models inside app-local folders
+- Allowing drift between contract definitions and implementation
+- Skipping client or server updates when a contract changes
+- Defining API routes without corresponding contract schemas
+- Using non-shared Zod schemas or types for cross-surface boundaries
+- Validating forms against local schemas when a shared contract exists
+- Bypassing `/api/v1` for versioned API routes

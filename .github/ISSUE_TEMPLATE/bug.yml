@@ -1,0 +1,181 @@
+name: Bug
+description: Structured operational issue for defects and regressions
+title: "Bug: "
+labels: ["state:proposed", "type:bug"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Short description of the bug or regression.
+      placeholder: Describe the bug in one line
+    validations:
+      required: true
+
+  - type: textarea
+    id: source_documentation
+    attributes:
+      label: Source Documentation
+      description: Cite the expected source of truth, related contract, or relevant doc.
+      placeholder: |
+        - docs/07-technical-plan.md §...
+        - docs/0x-...md §...
+        - contract or screen reference
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_behavior
+    attributes:
+      label: Current Behavior
+      description: Describe the observed bug, failure mode, or regression.
+      placeholder: |
+        Observed:
+        - ...
+
+        Evidence:
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Define what the fix may change and what must remain out of scope.
+      placeholder: |
+        In scope:
+        - ...
+
+        Out of scope:
+        - ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: owning_agent
+    attributes:
+      label: Owning Agent
+      description: Select the active operational owner label for this issue.
+      options:
+        - owner:orchestrator
+        - owner:pm
+        - owner:architect
+        - owner:backend
+        - owner:web
+        - owner:mobile
+        - owner:ai
+        - owner:qa
+        - owner:review
+        - owner:release
+    validations:
+      required: true
+
+  - type: textarea
+    id: collaborating_agents
+    attributes:
+      label: Collaborating Agents
+      description: List collaborating owner labels, or write `None`.
+      placeholder: |
+        None
+        or
+        - owner:web
+        - owner:qa
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: affected_apps
+    attributes:
+      label: Affected Apps
+      description: Select all impacted surfaces.
+      options:
+        - label: mobile-user
+        - label: mobile-admin
+        - label: web-gym-admin
+        - label: web-platform-admin
+        - label: web-site
+        - label: shared
+
+  - type: textarea
+    id: files_or_packages_in_scope
+    attributes:
+      label: Files or Packages in Scope
+      description: List the concrete paths or packages this fix is allowed to touch.
+      placeholder: |
+        - apps/web-gym-admin/...
+        - packages/api-client/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List blocking issues, prerequisites, or write `None`.
+      placeholder: |
+        None
+        or
+        - #123
+        - failing backend contract update
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Use GitHub task list syntax.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: required_tests
+    attributes:
+      label: Required Tests
+      description: List the required validation for this fix.
+      placeholder: |
+        - [ ] Unit: ...
+        - [ ] Integration: ...
+        - [ ] E2E / Mobile / RLS: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: localization_impact
+    attributes:
+      label: Localization Impact
+      description: Describe translation, formatting, fallback, or SEO-localization implications. Write `None` if not client-facing.
+      placeholder: |
+        None
+        or
+        - translation keys:
+        - locale-aware formatting:
+        - fallback behavior:
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_level
+    attributes:
+      label: Risk Level
+      options:
+        - low
+        - medium
+        - high
+    validations:
+      required: true
+
+  - type: textarea
+    id: next_handoff_expectations
+    attributes:
+      label: Next Handoff Expectations
+      description: What the next owner must verify before taking over.
+      placeholder: |
+        - confirm reproduction is resolved
+        - verify regression coverage
+    validations:
+      required: false

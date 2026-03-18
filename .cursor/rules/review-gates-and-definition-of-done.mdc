@@ -1,0 +1,97 @@
+---
+description: Code review is blocking; enforce phase gates, definition of done, and release criteria. Issue pre-review artifacts and lifecycle labels are enforced.
+alwaysApply: true
+---
+
+# Review Gates and Definition of Done
+
+## Intent
+
+Code review is blocking. Human approval is mandatory for phase transitions, major architecture deviations, and release readiness. A task, epic, or phase is not done until all completion criteria are met and review blockers are resolved.
+
+## Issue Pre-Review Requirements
+
+Before handoff to `owner:review`, the issue must contain:
+
+- **Latest implementation summary comment**: what was implemented and how it maps to acceptance criteria
+- **Test evidence**: test results, coverage summary, or a run link
+- **Localization impact note**: what was localized, which keys changed, and fallback behavior
+- **Unresolved blocker list**: known blockers, even if the list is empty
+
+## Lifecycle Label Rules
+
+- **`state:tested`**: may not be applied without test evidence or an explicit blocker
+- **`state:reviewed`**: may be applied only after blocking review is complete
+- **`state:approved`**: reserved for recorded approval or release signoff, not basic code review
+- **`state:done`**: applied only after review, approval when required, and integration are complete
+- **Release-sensitive work**: a final approval comment is mandatory before release; record who approved and when
+
+## Gates
+
+### Scope Gate (Before Implementation)
+
+- Task source must be traceable
+- Scope must be explicit
+- Ownership must be assigned
+- Dependencies must be known
+
+### Architecture Gate (Before Subsystem Implementation)
+
+- Architecture alignment must be confirmed
+- Package ownership must be clear
+- Contract implications must be known
+
+### Quality Gate (Before Review)
+
+- Required tests must exist
+- Localization impact must be addressed
+- Permission-sensitive logic must be validated
+- Critical flows must be covered appropriately
+
+### Release Gate (Before Release)
+
+- Phase approval must exist when applicable
+- Review blockers must be resolved
+- Required tests must pass
+- Migration and environment concerns must be understood
+- Human approval must be recorded
+
+## Definition of Done
+
+A task, epic, or phase is not done unless **all** of the following are true:
+
+- Implementation is complete
+- Required tests are written
+- Required tests are passing
+- Localization requirements are satisfied
+- Review findings are resolved
+- Acceptance criteria are met
+- Integration is complete
+- Approval is recorded when required
+
+## Mandatory Blockers
+
+Review must block merge or approval if:
+
+- Missing translation support on client-facing features
+- API changes without contract updates
+- Schema changes without RLS review
+- Chat changes without read-state or permission checks
+- AI changes without schema validation
+- Critical flows without appropriate tests
+- Out-of-scope file changes without approval
+- Architecture drift from the technical plan
+- Missing i18n coverage
+
+## Release Criteria
+
+Release readiness must verify:
+
+- Review passed
+- Required tests pass
+- Review blockers are resolved
+- Migration safety is understood
+- Environment concerns are understood
+- Approval state is recorded
+- Rollback awareness is documented where applicable
+- Human approval is recorded

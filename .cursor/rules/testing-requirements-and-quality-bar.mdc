@@ -1,0 +1,61 @@
+---
+description: Enforce mandatory unit, integration, E2E, mobile, and RLS test coverage; testing is part of delivery.
+alwaysApply: true
+---
+
+# Testing Requirements and Quality Bar
+
+## Intent
+
+Testing is part of delivery, not post-delivery cleanup. No task is complete until required tests are written and passing. Critical-path coverage cannot be downgraded without explicit approval.
+
+## Test Layers
+
+| Layer | Scope | Tool/approach |
+|-------|-------|---------------|
+| **Unit** | Shared utilities, schemas, parsing, non-trivial domain logic | Jest or equivalent |
+| **Integration** | Auth, permissions, memberships, bookings, chat, tenant-sensitive flows | Test framework + Supabase test fixtures |
+| **E2E** | Critical web journeys | Playwright |
+| **Mobile** | Component and flow tests | React Native Testing Library |
+| **RLS** | Cross-tenant denial scenarios | RLS verification tests |
+
+Shared packages must not ship without unit coverage where logic exists.
+
+## Mandatory Scenarios
+
+The baseline automated test strategy must cover:
+
+- Login flows
+- Member lifecycle
+- Class booking and cancellation
+- Chat send, read, and reconnect
+- AI workout formatting returns valid schema
+- Multi-role user across gyms and branches
+- Admin-only elevated operations remain audited
+
+## Change-Triggered Test Expectations
+
+| Change type | Required test response |
+|-------------|------------------------|
+| Contract changes | Downstream validation across affected apps |
+| Permission-sensitive logic | Explicit permission tests |
+| Chat changes | Realtime and read-state verification |
+| Auth flows | Integration coverage |
+| Tenant-sensitive changes | Permission tests and RLS verification |
+| New shared packages | Unit tests where logic exists |
+| New API routes | Integration coverage where practical |
+| Critical web flows | Playwright coverage |
+| Schema changes affecting tenant data | RLS review and RLS tests |
+
+## Failure Conditions
+
+Do not merge or release if:
+
+- Required tests for the change are missing
+- Required tests are failing
+- Critical-path coverage has been downgraded without explicit approval
+- A schema change affecting tenant-owned data has no RLS review or RLS tests
+- A chat change lacks realtime and read-state verification
+- Permission-sensitive logic has no explicit tests
+- A critical flow is shipped without appropriate tests
+- Integration tests for auth, permissions, memberships, bookings, chat, or tenant-sensitive flows are missing where applicable

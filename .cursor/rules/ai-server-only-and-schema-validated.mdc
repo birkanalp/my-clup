@@ -1,0 +1,66 @@
+---
+description: AI is server-side only; no client calls to Ollama; schema-validated outputs via shared service boundary.
+alwaysApply: true
+---
+
+# AI Server-Only and Schema-Validated
+
+## Intent
+
+Constrain AI work to the approved server-side architecture and safety model. No client app may call Ollama directly. All AI must flow through a shared server-side service boundary with standardized validation, timeouts, and fallback behavior.
+
+## Allowed Architecture
+
+- **Runtime**: Ollama with a Qwen small instruct model; exact version chosen by environment config
+- **Access**: AI functionality exposed through a shared server-side service boundary
+- **Service boundary responsibilities**:
+  - Prompt building
+  - Model selection
+  - Output validation (Zod schemas)
+  - Logging and tracing
+  - Error handling
+  - Safety fallback behavior
+
+## Initial AI Use Cases
+
+- Workout text cleanup
+- Exercise extraction from rough trainer input
+- Chat summarization
+- Suggested staff replies
+- Campaign copy drafting
+
+## Safety Rules
+
+- **Server-side only**: AI requests are server-side only; no client may call Ollama
+- **Prompt templates**: Versioned in code
+- **Output validation**: All outputs must be validated against Zod schemas
+- **Timeouts**: Required for every AI call
+- **Retry policies**: Required
+- **Feature flag**: Must exist to disable AI safely
+- **Sensitive prompts**: Do not store long-term without strong justification
+- **Locale**: AI input and output handling must support explicit locale control for user-facing text
+
+## Required Implementation Checklist
+
+When adding or changing AI functionality:
+
+- [ ] AI call goes through the shared server-side service boundary
+- [ ] Prompt templates are versioned in code
+- [ ] Output schema (Zod) is defined and enforced
+- [ ] Timeout is configured
+- [ ] Retry policy is configured
+- [ ] Feature flag exists to disable the flow
+- [ ] Locale is passed for user-facing input/output
+- [ ] Logging and tracing are present
+- [ ] Error handling and safety fallback behavior are implemented
+
+## Prohibited Patterns
+
+- Client apps calling Ollama directly
+- AI outputs used without Zod schema validation
+- AI calls without timeouts
+- AI calls without retry policies
+- Shipping AI features without a kill-switch feature flag
+- Storing sensitive raw prompts long-term without documented justification
+- AI user-facing text without explicit locale control
+- Introducing a second AI service boundary alongside the approved one

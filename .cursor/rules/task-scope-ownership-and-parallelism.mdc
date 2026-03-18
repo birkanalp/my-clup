@@ -1,0 +1,72 @@
+---
+description: Prevent overlapping work and architecture drift; require explicit scope, ownership, and safe parallelism rules. Tasks are GitHub Issues with label-based handoff.
+alwaysApply: true
+---
+
+# Task Scope, Ownership, and Parallelism
+
+## Intent
+
+No implementation starts without explicit scope. Prevent overlapping work, architecture drift, and unsafe parallel execution. Workers stay inside assigned boundaries. If scopes overlap, sequence the work or route the boundary to explicit integration planning.
+
+## GitHub Issue Representation
+
+Every implementation task must be represented as a GitHub Issue. The issue must contain these mandatory fields:
+
+| Field | Required |
+|-------|----------|
+| Summary | Yes |
+| Source doc reference | Yes |
+| Acceptance criteria | Yes |
+| Owning agent | Yes |
+| Collaborating agents | Yes — if any |
+| Files or packages in scope | Yes — explicit list |
+| Dependencies | Yes |
+| Required tests | Yes |
+| Localization impact | Yes |
+| Risk level | Yes |
+
+## Label-Based Handoff
+
+- **Handoff is label-based**: ownership and lifecycle are expressed via GitHub labels
+- **Exactly one active owner label**: remove the current owner label before adding the next one
+- **Exactly one active lifecycle label**: replace the previous `state:*` label when the lifecycle changes
+- **Canonical lifecycle labels**: `state:proposed`, `state:clarified`, `state:scoped`, `state:assigned`, `state:in-progress`, `state:implemented`, `state:tested`, `state:reviewed`, `state:approved`, `state:integrated`, `state:done`, `state:blocked`
+
+## Out-of-Scope Changes
+
+If an agent needs to change files outside the declared scope:
+
+1. Add an issue comment with the justification
+2. Wait for orchestrator approval before merge
+3. Do not proceed with merge until approval is recorded
+
+## Parallelism Rules
+
+Parallel execution is allowed **only when**:
+
+- file ownership does not overlap
+- package ownership does not overlap
+- database and API contracts are already aligned
+- integration points are explicit in advance
+
+If scopes overlap, the Orchestrator Agent must:
+
+1. sequence the tasks
+2. re-scope the tasks to eliminate overlap
+3. route the boundary to Product Architecture for explicit integration planning
+
+## Worker Constraints
+
+- Stay inside assigned boundaries
+- Do not change files outside declared scope without approval
+- Respect package ownership
+- Do not leave scope ownership ambiguous
+- Out-of-scope file changes without orchestrator approval are a review blocker
+
+## Escalation Rules
+
+- **Overlapping scopes**: escalate to Orchestrator before starting parallel work
+- **Need to change files outside scope**: request orchestrator approval and document the reason
+- **Contract or integration uncertainty**: route to Orchestrator and Product Architecture
+- **Conflicts with the technical plan**: stop and request a human decision

@@ -1,0 +1,80 @@
+---
+description: Standardize label-based ownership and handoff behavior for agent-driven delivery. One active owner label, one active lifecycle label, strict handoff protocol, and explicit blocked-state protocol.
+alwaysApply: true
+---
+
+# GitHub Label and Handoff Governance
+
+## Intent
+
+Ownership and lifecycle are represented exclusively via GitHub labels. Exactly one active owner label and exactly one active lifecycle label may exist at a time. Handoffs follow a strict protocol. Blocked work uses a defined blocked-state protocol.
+
+## Standard Labels
+
+### Owner Labels (exactly one active)
+
+- `owner:orchestrator`
+- `owner:pm`
+- `owner:architect`
+- `owner:backend`
+- `owner:web`
+- `owner:mobile`
+- `owner:ai`
+- `owner:qa`
+- `owner:review`
+- `owner:release`
+
+### Lifecycle Labels (exactly one active)
+
+- `state:proposed`
+- `state:clarified`
+- `state:scoped`
+- `state:assigned`
+- `state:in-progress`
+- `state:implemented`
+- `state:tested`
+- `state:reviewed`
+- `state:approved`
+- `state:integrated`
+- `state:done`
+- `state:blocked`
+
+## Handoff Protocol
+
+A handoff must:
+
+1. remove the current owner label
+2. add the next owner label
+3. replace the lifecycle label if the state changes
+4. leave a summary comment describing:
+   - what was completed
+   - what remains
+   - changed files or packages
+   - test status
+   - localization implications
+   - known risks
+
+Agents must not assign ownership to another agent unless the acceptance criteria for that stage are satisfied.
+
+## Blocked-State Protocol
+
+When work is blocked:
+
+1. apply `state:blocked`
+2. keep ownership with the role that can resolve the blocker
+3. add a blocker comment containing:
+   - blocker summary
+   - root cause
+   - why work cannot safely continue
+   - action or dependency needed to unblock
+   - owner of the unblock decision
+
+## Forbidden Patterns
+
+- Multiple owner labels at once
+- Multiple lifecycle labels at once
+- Handoff without removing the previous owner label
+- Handoff without a summary comment
+- Assigning ownership when the current stage is not actually complete
+- Using `state:blocked` without a blocker comment
+- Leaving ownership ambiguous when work is in progress

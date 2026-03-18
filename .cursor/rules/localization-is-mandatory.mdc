@@ -1,0 +1,63 @@
+---
+description: Localization is mandatory across all client-facing MyClup surfaces; no hardcoded strings, locale-aware formatting.
+alwaysApply: true
+---
+
+# Localization Is Mandatory
+
+## Intent
+
+Localization is a default requirement across all client-facing MyClup surfaces. The monorepo must be designed for multilingual delivery from day one. A client-facing task is not done until localization impact is explicitly reviewed.
+
+## Scope
+
+Localization is mandatory for:
+
+- Member mobile app (`apps/mobile-user`)
+- Staff mobile app (`apps/mobile-admin`)
+- Gym admin web (`apps/web-gym-admin`)
+- Platform admin web (`apps/web-platform-admin`)
+- Public website (`apps/web-site`)
+
+## Mandatory Behaviors
+
+- All client-facing text must come from translation resources or localized content models
+- No hardcoded user-facing strings in screens, pages, or shared components
+- Locale selection or locale detection must exist across all client apps
+- Dates, times, numbers, currencies, and measurement units must be locale-aware
+- User language preference must be modeled and respected across surfaces
+- Shared translation keys and locale helpers live in shared packages, not per-app duplication
+- Use shared locale utilities for dates, numbers, times, currencies, and units
+- RTL readiness should be considered in component and layout design even if v1 is LTR-first
+
+## Fallback Behavior
+
+- Missing translations must fall back safely to the default locale
+- Do not show empty strings or key names to users when a translation is missing
+- Fallback order: requested locale → default locale → safe placeholder if defined
+- Consent acceptance should record the locale shown to the user
+- Do not ship new client-facing features without translation keys, locale formatting, and safe fallback behavior
+
+## Content Types Requiring Locale Support
+
+| Content type | Locale support |
+|-------------|----------------|
+| UI labels, buttons, messages | Translation resources |
+| Legal, consent, policy text | Versioned per locale |
+| Campaigns, notifications | Locale-aware variants |
+| Chat templates, automated replies, chatbot content | Locale-aware variants |
+| Gym-managed public content | Multilingual variants where applicable |
+| Public website and discovery pages | Locale-aware SEO |
+| API responses with user-facing text | Explicit locale in contract |
+
+## Review Checklist
+
+Before considering a client-facing task complete:
+
+- [ ] No hardcoded strings in screens, pages, or shared components
+- [ ] Translation keys exist for all new user-facing text
+- [ ] Dates, times, numbers, currencies, units use locale-aware formatting
+- [ ] User language preference is respected where applicable
+- [ ] Missing translation fallback behavior is defined and tested
+- [ ] Legal, consent, campaign, or chatbot content has locale variants if applicable
+- [ ] RTL layout considerations noted for components that may need them later

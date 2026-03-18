@@ -1,0 +1,68 @@
+---
+description: Protect the flagship chat subsystem; enforce storage, realtime, tenant isolation, and operational rules.
+alwaysApply: true
+---
+
+# Chat-First and Realtime Safety
+
+## Intent
+
+Chat is a core platform subsystem, not a side feature. It must be treated as a flagship capability. Any chat change must review tenant isolation, permission checks, read state, realtime behavior, and auditability.
+
+## Core Rules
+
+- **Storage**: Durable messages must be stored in Postgres
+- **Live updates**: Use Supabase Realtime for delivery; do not introduce a second realtime mechanism
+- **Presence and typing**: Ephemeral only; do not persist long-term
+- **Attachments**: Media and attachments must use Supabase Storage
+- **Read state**: Tracked per participant; read receipts are required
+- **Pagination**: Conversation history must use cursor-based pagination
+- **Optimistic sending**: Clients may use optimistic UI; message creation must be idempotent
+- **Contracts**: Do not bypass shared chat contracts
+
+## Supported Conversation Types
+
+- Direct
+- Member-to-gym support
+- Member-to-instructor
+- Group
+- Broadcast (separate workflow from free-form group messaging)
+- Internal staff
+
+## Data and Contracts Expectations
+
+The shared model must include:
+
+| Contract | Purpose |
+|----------|---------|
+| `Conversation` | Conversation metadata |
+| `ConversationParticipant` | Membership |
+| `Message` | Durable message content |
+| `MessageAttachment` | Attachment metadata |
+| `MessageReceipt` | Per-participant read state |
+| `ConversationAssignment` | Staff assignment |
+| `TypingState` | Ephemeral typing indicator |
+
+Assignment, labels, templates, and quick replies must remain separate from raw message records.
+
+## Operational Safety Checks
+
+- **Tenant isolation**: Enforced on every conversation query
+- **Membership validation**: Conversation membership must be validated before message access
+- **Search**: Must be server-side; no client-side message search for cross-conversation queries
+- **Broadcast**: Treated as a separate workflow from free-form group messaging
+- **Assignment auditability**: Staff-assigned chats must preserve auditability for reassignment
+- **Locale**: Chat templates, automated replies, and chatbot content must support locale-aware variants
+
+## Review Blockers
+
+Do not approve or merge chat-related changes if:
+
+- Tenant isolation is not enforced on conversation or message access
+- Message creation is not idempotent
+- Search is implemented client-side for cross-conversation queries
+- Read state or permission checks are missing
+- Assignment changes lack auditability
+- Locale-aware variants are missing for templates, automated replies, or chatbot content
+- A second realtime mechanism is introduced alongside Supabase Realtime
+- Durable messages are stored outside Postgres or attachments outside Supabase Storage

@@ -1,0 +1,60 @@
+---
+description: Enforce multi-tenant safety, server-side permission checks, audited elevated access, and RLS for tenant-owned data.
+alwaysApply: true
+---
+
+# Server-Side Auth, Permissions, and Tenant Safety
+
+## Intent
+
+Tenant safety is mandatory by default. All permission enforcement happens server-side. Cross-tenant access is denied unless explicitly audited. Elevated platform admin access must be audited. Do not rely on UI-only checks for authorization.
+
+## Mandatory Security Guarantees
+
+- **Tenant model**: `gym` is the root tenant; `branch` is the operational scope
+- **Server-side verification**: Every write path must verify role and tenant scope on the server
+- **No UI-only checks**: Permission enforcement must never rely on UI-only checks; always verify server-side
+- **Cross-tenant denial**: Cross-tenant access must be denied by default
+- **Audited elevated access**: Platform admin elevated access must be audited
+- **RLS**: Row Level Security is mandatory for tenant-owned data
+- **Role modeling**: Roles must be modeled through assignment tables, not hard-coded user types
+
+## Sensitive Flow List
+
+These flows require extra scrutiny and mandatory audit logging:
+
+- Role changes
+- Billing overrides
+- Membership manual extension
+- Refunds
+- Admin impersonation
+- Cross-tenant support access
+
+## Required Server Checks
+
+Before any write or elevated operation:
+
+1. Verify user identity (Supabase `user.id`)
+2. Verify tenant scope (gym, branch) and that the user has access
+3. Verify role permits the action
+4. For sensitive flows: record audit event before/after
+5. For cross-tenant operations: explicit approval path and audit trail
+6. Do not trust `tenant_id` or `branch_id` from the client; derive or validate from server context
+
+## Schema and RLS Expectations
+
+- **Assignment tables**: Use role-assignment tables (e.g., `user_role_assignments`, `gym_staff`) instead of hard-coded user types
+- **Tenant columns**: Tenant-owned tables must have `gym_id` (and optionally `branch_id`) with RLS policies
+- **RLS review**: Any schema change affecting tenant-owned data requires RLS review before merge
+- **Audit tables**: Sensitive operations must write to an audit log table
+
+## Review Blockers
+
+Do not approve or merge if:
+
+- A change touches auth, permissions, tenant scoping, billing overrides, or impersonation **without** integration test coverage
+- A schema change affects tenant-owned tables **without** RLS policy review
+- Permission logic exists only in UI components
+- Cross-tenant access is granted without audit logging
+- Role or tenant checks are skipped "for admin" without going through an audited elevated flow
+- A write path does not verify tenant scope server-side

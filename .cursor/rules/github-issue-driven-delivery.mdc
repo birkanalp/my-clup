@@ -1,0 +1,55 @@
+---
+description: GitHub Issues are the operational source of truth for task execution; GitHub Project is a visibility dashboard.
+alwaysApply: true
+---
+
+# GitHub Issue-Driven Delivery
+
+## Intent
+
+GitHub Issues are the operational source of truth for task execution. GitHub Project is used for planning visibility and dashboarding, not as the only source of task truth. Every implementation task must map to a GitHub Issue. No feature implementation may begin unless the corresponding issue is at least scoped and assigned.
+
+## Required Issue Fields
+
+Each implementation issue must contain at minimum:
+
+| Field | Required |
+|-------|----------|
+| Summary | Yes |
+| Source doc reference | Yes |
+| Acceptance criteria | Yes |
+| Owning agent | Yes |
+| Collaborating agents | Yes — if any |
+| Files or packages in scope | Yes |
+| Dependencies | Yes |
+| Required tests | Yes |
+| Localization impact | Yes |
+| Risk level | Yes |
+
+## Traceability Requirements
+
+Agent handoffs must be reflected in:
+
+- **Issue labels**: update exactly one `owner:*` label and exactly one lifecycle `state:*` label
+- **Issue comments**: document handoffs, scope changes, blockers, and out-of-scope changes
+- **Issue body updates**: when scope changes materially, update the body
+
+If the issue state and actual implementation status diverge, agents must update the issue before continuing.
+
+## Allowed Workflow Behavior
+
+- create an issue before implementation
+- use GitHub Project for board views, roadmaps, and planning visibility
+- update issue labels, comments, and body as work progresses
+- close an issue only after review, approval when required, and integration requirements are satisfied
+- reflect handoffs via label changes plus a comment
+
+## Forbidden Behavior
+
+- implementing a feature without a corresponding GitHub Issue
+- starting implementation when the issue is not at least scoped and assigned
+- closing an issue before review or approval requirements are satisfied
+- treating GitHub Project as the sole source of task truth
+- leaving issue state out of sync with actual implementation status
+- handoffs without label and comment updates
+- material scope changes without updating the issue body
