@@ -1,5 +1,7 @@
 /**
- * @myclup/contracts — Shared API schemas, validation, request/response contracts.
- * Domain contracts will be added in Epic #14.
+ * @myclup/contracts — Shared API schemas, Zod validation, request/response contracts.
+ *
+ * Ownership: API schemas, input/output validation, and cross-app contracts.
+ * API versioning: /api/v1.
  */
-export {};
+export * from "./health";
