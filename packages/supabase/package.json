@@ -20,6 +20,10 @@
     "./auth": {
       "types": "./dist/auth/index.d.ts",
       "default": "./dist/auth/index.js"
+    },
+    "./audit": {
+      "types": "./dist/audit/index.d.ts",
+      "default": "./dist/audit/index.js"
     }
   },
   "scripts": {
@@ -31,7 +35,8 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.47.0",
-    "@supabase/ssr": "^0.6.0"
+    "@supabase/ssr": "^0.6.0",
+    "zod": "^3.24.0"
   },
   "devDependencies": {
     "@myclup/config-eslint": "workspace:*",

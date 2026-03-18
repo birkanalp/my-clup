@@ -196,6 +196,9 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.47.0
         version: 2.99.2
+      zod:
+        specifier: ^3.24.0
+        version: 3.25.76
     devDependencies:
       '@myclup/config-eslint':
         specifier: workspace:*

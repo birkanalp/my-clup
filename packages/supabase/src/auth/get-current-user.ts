@@ -44,13 +44,15 @@ export async function getCurrentUser(req: AuthRequest): Promise<CurrentUser | nu
     serviceRoleKey,
   });
 
-  const { data: profile, error } = await client
+  const { data, error } = await client
     .from('profiles')
     .select('*')
     .eq('user_id', session.user.id)
     .single();
 
-  if (error || !profile) return null;
+  if (error || !data) return null;
+
+  const profile = data as Profile;
 
   return {
     user: session.user,
