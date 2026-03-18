@@ -87,6 +87,17 @@ const { data, error } = await client.from("gyms").select("*").eq("id", gymId);
 
 - **Schema**: Prefer `public` schema unless a separate schema is justified
 - **Migrations**: Use `supabase/migrations/` at repo root (or as documented in project setup)
+
+### Applying Migrations
+
+When a Supabase project is linked (`supabase link --project-ref <id>`):
+
+```bash
+# From repo root
+pnpm exec supabase db push
+```
+
+Migrations create `gyms`, `branches`, `profiles`, `user_role_assignments`, `gym_staff`, `audit_events` and RLS policies (Task 15.1).
 - **Naming**: snake_case for tables and columns
 - **IDs**: Use `uuid` for primary keys; `gen_random_uuid()` default
 - **Timestamps**: `created_at`, `updated_at` (timestamptz)
@@ -102,6 +113,36 @@ const { data, error } = await client.from("gyms").select("*").eq("id", gymId);
 - **Service role**: Bypasses RLS; server code using service role must enforce checks in application logic
 - **Anon/authenticated**: Used only for client-side Supabase access where BFF delegates; RLS must restrict to authorized rows
 - **Cross-tenant**: Denied by default; platform admin elevated access requires audit trail
+
+### RLS Verification Plan
+
+After applying migrations with `supabase db push`, verify tables and RLS are in place:
+
+1. **Verify tables exist** (psql or Supabase SQL editor):
+   ```sql
+   SELECT table_name FROM information_schema.tables
+   WHERE table_schema = 'public'
+   AND table_name IN ('gyms', 'branches', 'profiles', 'user_role_assignments', 'gym_staff', 'audit_events');
+   ```
+   Expected: 6 rows.
+
+2. **Verify RLS is enabled** on tenant-owned tables:
+   ```sql
+   SELECT relname, relrowsecurity FROM pg_class
+   WHERE relname IN ('gyms', 'branches', 'profiles', 'user_role_assignments', 'gym_staff', 'audit_events')
+   AND relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = 'public');
+   ```
+   Expected: `relrowsecurity = true` for each.
+
+3. **Verify policies exist**:
+   ```sql
+   SELECT schemaname, tablename, policyname FROM pg_policies
+   WHERE schemaname = 'public'
+   AND tablename IN ('gyms', 'branches', 'profiles', 'user_role_assignments', 'gym_staff', 'audit_events');
+   ```
+   Expected: One or more policies per table.
+
+Run these checks before marking schema changes ready for merge.
 
 ---
 
