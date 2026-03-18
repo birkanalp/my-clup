@@ -1,5 +1,13 @@
 {
   "name": "@myclup/config-prettier",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.0"
+  }
 }
