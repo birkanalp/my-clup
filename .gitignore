@@ -25,3 +25,8 @@ dist
 out
 build
 .expo
+
+# Test outputs
+coverage
+playwright-report
+test-results

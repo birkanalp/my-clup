@@ -31,3 +31,22 @@ For multilingual delivery, configure:
 ### CI Usage
 
 In CI, inject secrets via your platform's secret manager (e.g. GitHub Actions secrets). Do not check in `.env` files. Use `.env.example` as the reference for required keys.
+
+## Testing
+
+### Unit tests (Vitest)
+
+- Run `pnpm run test` at root (uses Turborepo).
+- Shared packages use Vitest; see `packages/utils` for an example.
+
+### E2E (Playwright)
+
+- `playwright.config.ts` exists at root as a skeleton.
+- Add E2E tests when Next.js apps exist (Epic #14+).
+- Run with `pnpm exec playwright test` from root.
+
+### Mobile (React Native Testing Library)
+
+- For Expo apps, use [React Native Testing Library](https://callstack.github.io/react-native-testing-library/) for component and flow tests.
+- RTL integrates with Jest (or Vitest via `@vitest/coverage-v8`).
+- Add RTL tests when `apps/mobile-user` and `apps/mobile-admin` are scaffolded.
