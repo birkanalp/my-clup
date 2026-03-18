@@ -2,9 +2,17 @@
  * @myclup/utils — Framework-agnostic helpers and pure functions.
  */
 
-/**
- * Placeholder utility. Real helpers will be added in later epics.
- */
-export function identity<T>(x: T): T {
-  return x;
-}
+export { identity } from "./identity";
+export {
+  formatDate,
+  formatTime,
+  formatNumber,
+  formatCurrency,
+  formatUnit,
+  type FormatDateOptions,
+  type FormatTimeOptions,
+  type FormatNumberOptions,
+  type FormatCurrencyOptions,
+} from "./format";
+export { parseISODate } from "./date";
+export { isValidLocale } from "./locale";

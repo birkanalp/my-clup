@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { identity } from "./index";
+import { identity } from "./identity";
 
 describe("identity", () => {
   it("returns the input unchanged", () => {
