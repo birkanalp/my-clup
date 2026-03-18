@@ -2,7 +2,21 @@
   "name": "@myclup/types",
   "version": "0.0.0",
   "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
   "devDependencies": {
-    "@myclup/config-typescript": "workspace:*"
+    "@myclup/config-typescript": "workspace:*",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
   }
 }
