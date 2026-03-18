@@ -37,7 +37,8 @@ packages/supabase/
 
 ### Entry Points
 
-- **`@myclup/supabase`** — Main: `createServerClient`, `Database`, `Json`
+- **`@myclup/supabase`** — Main: `createServerClient`, auth helpers, `Database`, `Json`
+- **`@myclup/supabase/auth`** — Auth helpers (`getSession`, `getCurrentUser`, `createUserScopedClient`)
 - **`@myclup/supabase/client`** — Client factory only
 - **`@myclup/supabase/generated`** — Raw DB types (advanced use)
 
@@ -80,6 +81,60 @@ const { data, error } = await client.from('gyms').select('*').eq('id', gymId);
 ```
 
 **Important**: The service role key bypasses Row Level Security. Always verify tenant scope and user permissions server-side before any write or sensitive read.
+
+---
+
+## Auth Helpers (Server-Only)
+
+Use `@myclup/supabase/auth` for session validation and user-scoped clients in API routes and server modules.
+
+### Functions
+
+| Function | Purpose |
+|----------|---------|
+| `getSession(req)` | Extract and validate Supabase session; returns `Session \| null` |
+| `getCurrentUser(req)` | Return `{ user, profile }` or `null`; fetches from `profiles` table |
+| `createUserScopedClient(session)` | Create Supabase client with user JWT; RLS applies |
+
+### Supported Flows
+
+- **Cookie-based** (Next.js): Uses `@supabase/ssr` and `Cookie` header. For server components and API routes.
+- **Bearer-token** (Mobile): Uses `Authorization: Bearer <token>`. Mobile apps pass `session.access_token`.
+
+### Usage in API Routes
+
+```typescript
+import { getSession, getCurrentUser, createUserScopedClient } from "@myclup/supabase/auth";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export async function GET(req: NextRequest) {
+  const session = await getSession(req);
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const client = createUserScopedClient(session);  // RLS applies
+  const { data } = await client.from("profiles").select("*").single();
+  return NextResponse.json(data);
+}
+
+export async function GET_profile(req: NextRequest) {
+  const current = await getCurrentUser(req);
+  if (!current) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  return NextResponse.json({ user: current.user, profile: current.profile });
+}
+```
+
+### Security Boundaries
+
+- **Never trust client-supplied `tenant_id` or `branch_id`** — derive from server context.
+- **Always validate** via `getSession` before any protected operation.
+- **`createUserScopedClient`** uses the user's JWT; RLS enforces tenant isolation.
+- **`getSession`** validates tokens via `auth.getUser()`; never trust cookie content alone.
+- Import only in BFF routes, API handlers, server actions — never in client code.
 
 ---
 

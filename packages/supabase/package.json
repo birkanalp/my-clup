@@ -16,6 +16,10 @@
     "./generated": {
       "types": "./dist/generated/database.types.d.ts",
       "default": "./dist/generated/database.types.js"
+    },
+    "./auth": {
+      "types": "./dist/auth/index.d.ts",
+      "default": "./dist/auth/index.js"
     }
   },
   "scripts": {
@@ -26,7 +30,8 @@
     "generate:types": "echo 'Run: supabase gen types typescript --project-id <id> > src/generated/database.types.ts'"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.47.0"
+    "@supabase/supabase-js": "^2.47.0",
+    "@supabase/ssr": "^0.6.0"
   },
   "devDependencies": {
     "@myclup/config-eslint": "workspace:*",
