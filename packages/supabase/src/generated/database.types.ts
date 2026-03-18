@@ -28,6 +28,20 @@ export type AppRole =
   | 'branch_instructor'
   | 'branch_staff';
 
+export type AppRole =
+  | "platform_admin"
+  | "platform_support"
+  | "platform_finance"
+  | "gym_owner"
+  | "gym_manager"
+  | "gym_staff"
+  | "gym_instructor"
+  | "gym_receptionist"
+  | "gym_sales"
+  | "branch_manager"
+  | "branch_instructor"
+  | "branch_staff";
+
 export interface Database {
   public: {
     Tables: {
