@@ -1,5 +1,13 @@
 {
   "name": "@myclup/config-tailwind",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "exports": {
+    "./tailwind": "./tailwind.preset.js",
+    "./nativewind": "./nativewind.theme.js",
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
 }
