@@ -2,7 +2,40 @@
   "name": "@myclup/supabase",
   "version": "0.0.0",
   "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "default": "./dist/client/index.js"
+    },
+    "./generated": {
+      "types": "./dist/generated/database.types.d.ts",
+      "default": "./dist/generated/database.types.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "lint": "eslint . && prettier --check .",
+    "test": "vitest run",
+    "generate:types": "echo 'Run: supabase gen types typescript --project-id <id> > src/generated/database.types.ts'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.47.0"
+  },
   "devDependencies": {
-    "@myclup/config-typescript": "workspace:*"
+    "@myclup/config-eslint": "workspace:*",
+    "@myclup/config-prettier": "workspace:*",
+    "@myclup/config-typescript": "workspace:*",
+    "@types/node": "^22.10.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
   }
 }
