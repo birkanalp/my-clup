@@ -1,0 +1,132 @@
+---
+description: Enable autonomous workflow progression across agent stages for a single active Epic without manual human dispatch after every step.
+alwaysApply: true
+---
+
+# Self-Advancing Orchestration
+
+## Intent
+
+Allow the workflow to progress automatically across agent stages for a single active Epic without requiring manual human dispatch after every step. GitHub Issues remain the source of truth; labels drive the workflow; Epic-child relationships define hierarchy. GitHub Project is optional visibility—delivery must not block if Project tools are unavailable.
+
+## Active Epic Policy
+
+- **Only one Epic** may be actively advancing through implementation at a time unless a human explicitly allows multiple active Epics.
+- Within the active Epic, **only dependency-ready tasks** may advance.
+- Agents must not pull work from the next Epic automatically.
+- Agents must not create implementation tasks outside the currently active Epic unless explicitly instructed.
+
+## Autonomous Workflow Chain
+
+The workflow chain must progress automatically in this order:
+
+1. **business-analyst-agent** — decomposes Epic into tasks
+2. **product-architecture-agent** — reviews architecture
+3. **orchestrator-agent** — finalizes execution readiness, sequences tasks
+4. **Implementation agent** (backend, web, mobile, ai) — implements
+5. **qa-agent** — validates
+6. **review-agent** — blocking review
+7. **orchestrator-agent** — finalizes completion, activates next tasks
+
+After review approval, the orchestrator-agent must automatically:
+
+- finalize the completed task
+- advance its lifecycle state
+- remove stale owner labels
+- activate the next dependency-ready task(s)
+- assign the next owner label
+- continue the workflow without waiting for manual human dispatch
+
+## Task Activation Rules
+
+- A task may move to `state:assigned` only if:
+  - all required predecessor tasks are complete, or
+  - it is the first executable task in the Epic
+- Tasks not yet executable must remain `state:scoped`
+- Blocked tasks must move to `state:blocked`
+- Reviewed and accepted tasks must move through: `state:implemented` → `state:tested` → `state:reviewed` → `state:done` as evidence is produced
+
+## Handoff Rules
+
+Every handoff must include:
+
+- owner label removal for the current agent
+- owner label assignment for the next agent
+- lifecycle label update if applicable
+- a summary comment
+
+Summary comments must state:
+
+- what was completed
+- what was validated
+- what remains
+- known risks or blockers
+- the next expected owner
+
+**Implementation agent routing** — The orchestrator must choose the correct implementation agent:
+
+| Task type | Owner |
+|-----------|-------|
+| repo/bootstrap/tooling/backend infrastructure | backend-agent |
+| package boundary / architecture / structural | product-architecture-agent or architect-owned workflow |
+| web surface | web-agent |
+| mobile surface | mobile-agent |
+| AI foundation | ai-agent |
+
+`owner:review` and `owner:qa` must never be assigned as implementation owners.
+
+## Epic Progression Rules
+
+- The active Epic continues advancing task by task until:
+  - the Epic is fully complete, or
+  - a true blocker is reached, or
+  - a human pauses or reprioritizes the Epic
+- Completion of one task should **immediately** trigger orchestration of the next ready task(s)
+- The workflow must not stop after QA or Review if the task is approved
+
+## Blocked-State Rules
+
+The chain may stop only when:
+
+- documentation conflicts make execution unsafe
+- architecture is unresolved
+- external credentials or approvals are missing
+- dependencies are not yet complete
+- QA or Review explicitly blocks the task
+
+When blocked:
+
+- set `state:blocked`
+- leave a blocker comment (per `docs/workflow-templates/blocker.md`)
+- identify the unblock decision or dependency
+- identify who must resolve it
+
+## Human Intervention Exceptions
+
+Human intervention is required only for:
+
+- conflicting documentation
+- unresolved architecture choices
+- external approvals or secrets
+- reprioritization across Epics
+- explicit blocker resolution
+
+Humans should not need to manually dispatch each next agent in a healthy workflow.
+
+## Execution Logging
+
+The orchestrator-agent must leave a durable Epic-level orchestration comment whenever:
+
+- a task is completed
+- the next task(s) are activated
+- the Epic becomes blocked
+- the Epic phase changes materially
+
+## Forbidden Patterns
+
+- **Pulling from next Epic** — Do not start work from a later Epic without explicit approval
+- **Creating tasks outside active Epic** — Do not create implementation tasks outside the active Epic unless instructed
+- **Bypassing dependency order** — Do not activate tasks before dependencies are complete
+- **Silent scope expansion** — Do not expand issue scope without approval
+- **Stopping after approval** — Do not wait for manual dispatch after QA/Review approval when the task is unblocked
+- **Assigning QA/Review as implementers** — Never use `owner:review` or `owner:qa` for implementation work

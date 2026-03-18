@@ -150,7 +150,9 @@ Implementation owners are:
 Implementation work should normally move to:
 
 - `state:in-progress` when active work begins
-- `state:implemented` when the coded change is complete
+- `state:implemented` when the coded change is complete **and** the GitHub delivery steps are done (branch, commit, push, PR creation, issue comment, lifecycle update)
+
+Implementation is **not** complete until a PR has been created or an explicit blocker has been documented. See `.cursor/agents/*-agent.md` (backend, web, mobile, ai) for the required GitHub delivery steps before handoff to QA.
 
 ### 6.4 Validation
 

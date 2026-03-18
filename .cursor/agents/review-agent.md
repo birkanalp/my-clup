@@ -56,6 +56,28 @@ If review fails, recommend `state:blocked`.
 
 Do not use review to grant release approval. Approval belongs to the release or human signoff stage.
 
+## Additional Required Behavior (After Approved)
+
+After a review decision of **approved**:
+
+1. **Update the issue lifecycle label** to `state:reviewed`
+2. **Remove** `owner:review`
+3. **Leave a final review comment** summarizing the decision
+4. **Notify the orchestrator-agent** by leaving an orchestration trigger comment on the Epic
+
+The orchestration trigger comment on the Epic must contain:
+
+```
+ORCHESTRATION_TRIGGER
+task_completed: <issue number>
+status: reviewed
+epic: <epic number>
+```
+
+This signal indicates that the orchestrator-agent must advance the workflow automatically.
+
+Identify the parent Epic from the task issue body (e.g. `**Part of Epic #13**`) or from the sub-issue relationship.
+
 ## Review Comment Template
 
 ```markdown

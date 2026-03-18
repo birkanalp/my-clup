@@ -66,6 +66,17 @@ When ownership changes, require a handoff comment containing:
 
 Do not hand off unless the current stage is actually complete.
 
+## Implementation-to-QA Gate
+
+A task in implementation phase **cannot advance to QA** unless:
+
+- Code changes are committed
+- A remote branch exists
+- A GitHub Pull Request exists
+- The PR is linked back to the issue
+
+If no PR exists, the task must **remain in implementation state** or move to `state:blocked` with a clear reason. Do not assign `owner:qa` or advance the lifecycle until these conditions are met.
+
 ## Parallel Execution Rules
 
 Parallel execution is allowed **only when**:
@@ -91,6 +102,29 @@ If scopes overlap, sequence the work or route the shared boundary to Product Arc
 - **Continue autonomous progression** until:
   - the Epic is fully completed, or
   - a blocker state is reached
+
+## Orchestration Trigger Handling
+
+The orchestrator-agent must monitor Epic comments for orchestration triggers.
+
+When a comment containing `ORCHESTRATION_TRIGGER` appears on an Epic:
+
+1. **Identify the completed task** from `task_completed: <issue number>` in the trigger
+2. **Finalize the task lifecycle** — set `state:done` if appropriate
+3. **Determine dependency-ready tasks** — tasks whose dependencies are now complete
+4. **Move ready tasks to `state:assigned`**
+5. **Assign correct owner labels** — route to backend, web, mobile, or ai based on task type
+6. **Leave an Epic orchestration update comment** — summarize what was completed and what was activated
+7. **Continue the workflow** without human intervention
+
+Trigger format (posted by review-agent after approval):
+
+```
+ORCHESTRATION_TRIGGER
+task_completed: <issue number>
+status: reviewed
+epic: <epic number>
+```
 
 ## Success Criteria
 

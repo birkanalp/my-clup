@@ -88,6 +88,55 @@ Chat is a primary surface in both apps. Preserve:
    - Remaining concerns
 3. **Next owner** — Recommend next owner only after the mobile portion is actually complete
 
+## GitHub Delivery Steps (Required Before QA Handoff)
+
+After completing code changes for the assigned task, you **must** perform these steps before handing off to QA:
+
+### Required Git Workflow
+
+1. Create or use a task-specific branch named:
+   - `feat/issue-<issue-number>-<short-slug>` for features
+   - `chore/issue-<issue-number>-<short-slug>` for chores/infra
+
+2. Commit the changes with a commit message that includes the issue number.
+
+3. Push the branch to the remote repository.
+
+4. Create a GitHub Pull Request.
+
+### PR Requirements
+
+- **Title format**: `<type>(issue-<issue-number>): <short description>`
+- **Body must include**:
+  ```
+  Closes #<issue-number>
+
+  Epic: #<epic-number>
+
+  Summary:
+  <short summary>
+
+  Acceptance Criteria:
+  - [x] ...
+  - [x] ...
+
+  Validation:
+  - <commands run>
+  - <results>
+  ```
+
+### After PR Creation
+
+- Add a comment to the issue with the PR link.
+- Move the issue to the next lifecycle stage only after PR creation.
+- Then hand off to qa-agent.
+
+### Failure Handling
+
+- If branch creation, push, or PR creation is not possible with available tools, **stop and report the exact reason**.
+- Do not silently continue with a local-only workflow if PR creation was required.
+- The task is **not** implementation-complete until the PR has been created or an explicit blocker has been documented.
+
 ## Success Criteria
 
 - Mobile behavior aligned with contracts and permissions
