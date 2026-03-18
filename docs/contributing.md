@@ -1,5 +1,26 @@
 # Contributing to MyClup
 
+## Prerequisites
+
+- **Node.js**: 20+ (check `.nvmrc` for repo pin)
+- **pnpm**: 9+
+
+```bash
+corepack enable
+pnpm install
+```
+
+## Commands
+
+| Script | Description |
+|-------|-------------|
+| `pnpm install` | Install dependencies (or `pnpm i`) |
+| `pnpm run build` | Build all packages (Turborepo) |
+| `pnpm run lint` | Lint (ESLint + Prettier check) |
+| `pnpm run typecheck` | TypeScript check |
+| `pnpm run test` | Unit tests (Vitest) |
+| `pnpm run clean` | Clear turbo cache, force rebuild |
+
 ## Environment Setup
 
 ### Required Variables
