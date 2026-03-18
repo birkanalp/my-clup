@@ -1,0 +1,81 @@
+---
+description: Enforce GitHub Project sync, Epic-child linkage, and autonomous agent handoff for self-advancing execution.
+alwaysApply: true
+---
+
+# GitHub Project and Autonomous Handoff
+
+## Intent
+
+Force all agents to keep GitHub Issues, GitHub Project fields, Epic-child relationships, and ownership handoffs synchronized while enabling self-advancing execution. No manual human dispatch between stages unless truly blocked. Issues and Project must never diverge.
+
+## Required GitHub Synchronization
+
+Every implementation issue must:
+
+1. **Be added to the GitHub Project** named `MyClup Development`.
+2. **Keep Project fields synchronized** with issue labels and state. Stale Project fields are a violation.
+
+Required field sync:
+
+| Project Field | Source |
+|---------------|--------|
+| Status | Lifecycle label (`state:*`) |
+| Owner | Active owner label (`owner:*`) |
+| Priority | Priority label (`priority:p0`, etc.) |
+| Surface | Surface labels where applicable |
+| Type | Type label (`type:feature`, `type:infra`, etc.) |
+| Risk Level | Issue body definition |
+
+Agents must update Project fields whenever issue labels or state change. Do not leave Project fields stale after label/state changes.
+
+## Epic-Child Relationship Rules
+
+- **Real linkage required**: Every task created under an Epic must be linked as a real child/sub-issue of that Epic when GitHub supports it. Comment-only linkage is insufficient.
+- **Task body reference**: Every task issue body must explicitly reference its parent Epic (e.g., `**Part of Epic #13**` or equivalent).
+- **Do not rely on comments alone** for Epic-task relationships; use GitHub's native sub-issue or `Closes`, `Relates to` linkage where available.
+
+## Autonomous Handoff Rules
+
+When an agent finishes a task stage, it must hand off directly to the next responsible agent without requiring manual human dispatch—unless blocked.
+
+Required progression:
+
+1. **business-analyst-agent** → decomposes Epic into tasks
+2. **product-architecture-agent** → reviews architecture
+3. **orchestrator-agent** → finalizes execution readiness, sequences tasks
+4. **Implementation agent** (owner:backend, owner:web, owner:mobile, owner:ai) → implements
+5. **qa-agent** → validates
+6. **review-agent** → blocking review
+7. **orchestrator-agent** → finalizes completion, activates next tasks
+
+After review approval, the **orchestrator-agent** must:
+
+- close or finalize the completed task
+- activate the next dependency-ready task(s)
+- assign the correct next owner
+- sync all related Project fields
+- update Epic progress if applicable
+
+## Blocked-State Exception Rules
+
+- If blocked, the chain stops **only at the blocked issue**.
+- Document the blocker in a blocker comment (per `docs/workflow-templates/blocker.md`).
+- Apply `state:blocked` and keep ownership with the role that can resolve the blocker.
+- Downstream agents do not proceed on blocked tasks; they may work on other unblocked work.
+
+Human intervention is required **only** for:
+
+- conflicting documentation
+- unclear architecture choices
+- missing external credentials or approvals
+- true blocker states
+
+## Forbidden Patterns
+
+- **Leaving issues outside the Project** — Every implementation issue must be in `MyClup Development`.
+- **Leaving Project fields stale** — Update Status, Owner, Priority, Surface, Type, Risk Level when labels or state change.
+- **Comments as only Epic-task link** — Use real child/sub-issue linkage where supported; comments complement, not replace.
+- **Manual dispatch when unblocked** — Hand off directly to the next agent; do not stop for human dispatch unless blocked.
+- **Skipping handoff steps** — Do not bypass qa-agent or review-agent when the workflow requires them.
+- **Approving without sync** — Do not mark `state:reviewed` or `state:done` without syncing Project fields.

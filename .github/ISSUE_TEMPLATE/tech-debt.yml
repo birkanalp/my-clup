@@ -1,0 +1,168 @@
+name: Tech Debt
+description: Structured issue for debt reduction, cleanup, and workflow hardening
+title: "Tech Debt: "
+labels: ["state:proposed", "type:tech-debt"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Short description of the debt item.
+      placeholder: Add a one-line summary
+    validations:
+      required: true
+
+  - type: textarea
+    id: source_documentation
+    attributes:
+      label: Source Documentation
+      description: Cite the repo docs, rule files, or setup docs that justify this work.
+      placeholder: |
+        - docs/08-agentic-workflow.md §...
+        - .cursor/rules/...mdc
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Define the cleanup boundary explicitly.
+      placeholder: |
+        In scope:
+        - ...
+
+        Out of scope:
+        - ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: owning_agent
+    attributes:
+      label: Owning Agent
+      description: Select the active operational owner label for this issue.
+      options:
+        - owner:orchestrator
+        - owner:pm
+        - owner:architect
+        - owner:backend
+        - owner:web
+        - owner:mobile
+        - owner:ai
+        - owner:qa
+        - owner:review
+        - owner:release
+    validations:
+      required: true
+
+  - type: textarea
+    id: collaborating_agents
+    attributes:
+      label: Collaborating Agents
+      description: List collaborating owner labels, or write `None`.
+      placeholder: |
+        None
+        or
+        - owner:architect
+        - owner:qa
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: affected_apps
+    attributes:
+      label: Affected Apps
+      description: Select all impacted surfaces.
+      options:
+        - label: mobile-user
+        - label: mobile-admin
+        - label: web-gym-admin
+        - label: web-platform-admin
+        - label: web-site
+        - label: shared
+
+  - type: textarea
+    id: files_or_packages_in_scope
+    attributes:
+      label: Files or Packages in Scope
+      description: List the concrete paths or packages this issue is allowed to touch.
+      placeholder: |
+        - docs/...
+        - .cursor/...
+        - .github/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List blocking issues, prerequisites, or write `None`.
+      placeholder: |
+        None
+        or
+        - #123
+        - project setup decision
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Use GitHub task list syntax.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: required_tests
+    attributes:
+      label: Required Tests
+      description: List the required validation for this debt item. Write `None` only if no executable behavior changes.
+      placeholder: |
+        None
+        or
+        - [ ] Unit: ...
+        - [ ] Integration: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: localization_impact
+    attributes:
+      label: Localization Impact
+      description: Describe translation, formatting, fallback, or SEO-localization implications. Write `None` if not client-facing.
+      placeholder: |
+        None
+        or
+        - translation keys:
+        - locale-aware formatting:
+        - fallback behavior:
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_level
+    attributes:
+      label: Risk Level
+      options:
+        - low
+        - medium
+        - high
+    validations:
+      required: true
+
+  - type: textarea
+    id: next_handoff_expectations
+    attributes:
+      label: Next Handoff Expectations
+      description: What the next owner must verify before taking over.
+      placeholder: |
+        - confirm duplicate rules were removed
+        - verify docs and templates stayed aligned
+    validations:
+      required: false

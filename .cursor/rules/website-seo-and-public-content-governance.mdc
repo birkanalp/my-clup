@@ -1,0 +1,52 @@
+---
+description: Protect the public website; enforce SEO-first, multilingual, locale-aware routing and content governance.
+alwaysApply: true
+---
+
+# Website SEO and Public Content Governance
+
+## Intent
+
+The website is a multilingual, SEO-first public surface from day one. Public content changes must consider SEO, translation coverage, and content governance together. Marketing components remain separate from admin components unless reuse is clearly justified.
+
+## Public Surface Rules
+
+- The website operates as an SEO-aware public surface from the start, not treated as a later enhancement
+- Support locale-prefixed routing and locale-aware SEO foundations
+- Discovery and public listing content must support translated variants where available
+- Legal and policy pages must be versioned per locale
+- Missing public translations must fall back safely to the default locale
+- Forms, navigation, metadata, and shared public UI must be translated consistently
+- Locale-specific CTAs and translated lead forms
+
+## SEO Rules
+
+Public pages must support:
+
+- Localized metadata
+- Canonical handling
+- `hreflang` and alternate locale handling
+- Sitemap generation
+- Structured data where relevant
+
+The website must be SEO-safe across locales. Locale-specific public URL strategy must be defined.
+
+## Localization Rules
+
+- Support locale-prefixed routing
+- Store legal and marketing pages per locale
+- Support translated gym listing content where available
+- Fallback safely to default locale when translation is missing
+- Translate navigation, metadata, forms, and shared website UI consistently
+- APIs serving public content must support locale selection
+
+## Forbidden Shortcuts
+
+- Treating the website as single-locale or deferring multilingual support
+- Adding public pages without localized metadata and canonical handling
+- Missing `hreflang` or alternate locale links on multilingual pages
+- Sharing marketing UI primitives with admin panels without clear reuse justification
+- Legal or policy pages without per-locale versions
+- Hardcoded strings in forms, navigation, or shared public UI
+- Public content changes without considering SEO impact, translation coverage, and governance
+- Skipping sitemap or structured data where schema markup applies

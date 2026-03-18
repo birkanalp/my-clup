@@ -1,0 +1,82 @@
+---
+description: Enforce fixed MyClup monorepo structure, stack defaults, and package ownership boundaries.
+alwaysApply: true
+---
+
+# Monorepo Boundaries and Stack
+
+## Fixed Stack
+
+These are mandatory defaults; do not substitute:
+
+- **Package manager**: `pnpm`
+- **Monorepo orchestrator**: `turborepo`
+- **Language**: `TypeScript`
+
+## Allowed Boundaries
+
+### Top-Level Apps
+
+```
+apps/
+  mobile-user/      # Expo member app
+  mobile-admin/     # Expo gym/instructor app
+  web-gym-admin/    # Next.js gym panel
+  web-platform-admin/ # Next.js platform admin
+  web-site/         # Next.js marketing/SEO site
+```
+
+### Shared Packages
+
+```
+packages/
+  api-client/       # Single shared network client layer
+  contracts/        # API schemas, validation, request/response contracts
+  types/            # Framework-agnostic domain types
+  utils/            # Framework-agnostic helpers, pure functions
+  ui-web/           # Web presentation primitives only
+  ui-native/        # Native/Expo presentation primitives only
+  config-typescript/
+  config-eslint/
+  config-prettier/
+  config-tailwind/
+  supabase/         # DB types, shared clients, SQL/RLS helpers
+```
+
+### Package Ownership
+
+| Package | Owns |
+|---------|------|
+| `contracts` | Shared API schemas, input/output validation, cross-app contracts |
+| `types` | Shared framework-agnostic domain types |
+| `api-client` | **Only** shared network client; apps must not bypass it |
+| `utils` | Pure helpers, formatters; must stay framework-agnostic |
+| `ui-web` / `ui-native` | Presentation primitives; no orchestration or business logic |
+
+## Anti-Patterns
+
+- Putting business logic inside `ui-web` or `ui-native`
+- Creating a shared package before reuse is real and immediate
+- Collapsing admin, marketing, web, and native concerns into artificial cross-cutting abstractions
+- Copying or redefining contracts, types, or clients inside apps
+- Introducing a second network client instead of extending `api-client`
+- Adding framework-specific code to `utils` or `types`
+- Moving app-specific flows into shared packages "just in case"
+
+## Valid vs Invalid Placement
+
+**Valid**
+- `contracts`: Zod schema for `CreateBookingInput`
+- `types`: `MembershipStatus` enum, `TenantId` branded type
+- `api-client`: `bookings.create()` calling Next.js BFF
+- `utils`: `formatCurrency(value, locale)`, `parseISODate()`
+- `ui-web`: `Button`, `DataTable`, `Modal` (no API calls, no tenant logic)
+- `apps/mobile-user`: Booking flow orchestration, screen composition
+
+**Invalid**
+- `ui-web/BookingWizard.tsx` calling Supabase directly
+- `utils`: React hook, Next.js `getServerSideProps` helper
+- `apps/web-gym-admin/types/booking.ts` duplicating `packages/types`
+- New `packages/fetch-wrapper` when `api-client` can be extended
+- `packages/shared-admin` abstracting gym vs platform admin
+- `ui-native`: Tenant check or permission logic

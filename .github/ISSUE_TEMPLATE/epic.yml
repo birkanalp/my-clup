@@ -1,0 +1,165 @@
+name: Epic
+description: Planning container for a large initiative with child implementation issues
+title: "[Epic] "
+labels: ["state:proposed"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Epic Summary
+      description: Short description of the initiative.
+      placeholder: Add a short epic summary
+    validations:
+      required: true
+
+  - type: textarea
+    id: source_documentation
+    attributes:
+      label: Source Documentation
+      description: Cite the repo docs that define this epic. Use one line per source.
+      placeholder: |
+        - docs/00-master-plan.md §...
+        - docs/07-technical-plan.md §...
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Define the initiative boundary explicitly.
+      placeholder: |
+        In scope:
+        - ...
+
+        Out of scope:
+        - ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: owning_agent
+    attributes:
+      label: Owning Agent
+      description: Select the active operational owner label for this epic.
+      options:
+        - owner:orchestrator
+        - owner:pm
+        - owner:architect
+        - owner:backend
+        - owner:web
+        - owner:mobile
+        - owner:ai
+        - owner:qa
+        - owner:review
+        - owner:release
+    validations:
+      required: true
+
+  - type: textarea
+    id: collaborating_agents
+    attributes:
+      label: Collaborating Agents
+      description: List collaborating owner labels, or write `None`.
+      placeholder: |
+        None
+        or
+        - owner:architect
+        - owner:backend
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: affected_apps
+    attributes:
+      label: Affected Apps
+      description: Select all impacted surfaces.
+      options:
+        - label: mobile-user
+        - label: mobile-admin
+        - label: web-gym-admin
+        - label: web-platform-admin
+        - label: web-site
+        - label: shared
+
+  - type: textarea
+    id: files_or_packages_in_scope
+    attributes:
+      label: Files or Packages in Scope
+      description: List the main apps, packages, or docs this epic governs.
+      placeholder: |
+        - apps/...
+        - packages/...
+        - docs/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List blocking issues, prerequisites, or write `None`.
+      placeholder: |
+        None
+        or
+        - #123
+        - authentication foundation
+    validations:
+      required: true
+
+  - type: textarea
+    id: child_issue_plan
+    attributes:
+      label: Child Issue Plan
+      description: List the expected child issues, sequencing, or dependency structure.
+      placeholder: |
+        - [ ] Contract task
+        - [ ] Backend task
+        - [ ] Web task
+        - [ ] QA task
+    validations:
+      required: true
+
+  - type: textarea
+    id: success_criteria
+    attributes:
+      label: Success Criteria
+      description: Define what makes the epic complete.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: localization_impact
+    attributes:
+      label: Localization Impact
+      description: Describe multilingual, translation, or locale-formatting implications. Write `None` if not client-facing.
+      placeholder: |
+        None
+        or
+        - shared translation keys:
+        - locale-aware content behavior:
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_level
+    attributes:
+      label: Risk Level
+      options:
+        - low
+        - medium
+        - high
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional additional planning context.
+      placeholder: Add any extra coordination notes here
+    validations:
+      required: false

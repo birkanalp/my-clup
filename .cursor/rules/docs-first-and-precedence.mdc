@@ -1,0 +1,57 @@
+---
+description: Ground all implementation in MyClup docs; resolve conflicts by explicit precedence; never invent architecture or workflow.
+alwaysApply: true
+---
+
+# Docs-First and Precedence
+
+## Intent
+
+All implementation and workflow decisions must remain traceable to the MyClup documentation. Conflicts must be resolved with a fixed precedence order. Do not invent architecture or workflow behavior when the docs already define it.
+
+## Source Docs (Read First)
+
+Before proposing or implementing any work, read and ground in these documents:
+
+- `docs/07-technical-plan.md`
+- `AGENT.md`
+- `docs/08-agentic-workflow.md`
+- `docs/00-master-plan.md`
+- `docs/01-user-app-plan.md`
+- `docs/02-user-admin-app-plan.md`
+- `docs/03-user-admin-panel-plan.md`
+- `docs/04-admin-panel-plan.md`
+- `docs/05-website-plan.md`
+- `docs/06-addon-packages-plan.md`
+
+## Decision Order (Conflict Resolution)
+
+When docs disagree or constraints clash, apply this order:
+
+1. **`docs/07-technical-plan.md`** — architecture and technical decisions
+2. **`AGENT.md`** — engineering defaults and repo rules
+3. **`docs/08-agentic-workflow.md`** — workflow, issue, handoff, review, and release rules
+4. **`docs/00-master-plan.md`** — roadmap intent and prioritization context
+5. **Product-specific plan docs** (`docs/01` through `docs/06`) — feature and scope details
+
+## Required Behavior
+
+- Read the relevant source docs before proposing implementation
+- Summarize the relevant constraints before implementation
+- Keep task plans traceable to specific documents and sections
+- Explicitly state which doc wins when resolving a conflict
+- Stop and ask for human clarification when the precedence order does not resolve the conflict safely
+
+## Forbidden Behavior
+
+- Proposing implementation without grounding it in the source docs
+- Silently overriding a higher-priority doc
+- Inventing new architecture or workflow semantics without documented justification
+- Omitting traceability when creating tasks, plans, or review decisions
+
+## Output Expectations
+
+1. **Before implementation**: summarize the relevant docs and constraints
+2. **When conflicts arise**: cite the conflict and apply the decision order explicitly
+3. **When uncertain**: ask for clarification instead of guessing
+4. **Task plans**: reference the source doc or rule each task implements

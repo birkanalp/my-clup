@@ -1,0 +1,55 @@
+---
+description: Mandatory audit logging for sensitive ops; GA4, shared event naming; analytics and observability consistency. Agent actions and handoffs traceable via GitHub.
+alwaysApply: true
+---
+
+# Auditability, Analytics, and Observability
+
+## Intent
+
+Sensitive operations must be auditable. Product analytics must remain consistent across surfaces. Critical failures must be traceable. Do not add user-visible features without deciding whether they require analytics events, audit events, operational logs, or error visibility.
+
+## Agent and Issue Traceability
+
+- **Agent actions** affecting issue ownership, blockers, release readiness, or scope changes must be documented in GitHub comments for traceability.
+- **Sensitive work handoffs** must leave a durable issue trail. Document who handed off, to whom, why, and what changed (scope, blockers, risks).
+
+## Audit Requirements
+
+Audit logging is mandatory for these sensitive operations:
+
+- Role changes
+- Membership changes
+- Payment status changes
+- Admin impersonation
+- Tenant-scope overrides
+- Important chat moderation actions
+
+Platform admin elevated access must go through audited flows only. Staff-assigned chat reassignments must preserve auditability.
+
+## Analytics Requirements
+
+- **GA4**: Required for website and web products
+- **Event naming**: Use a shared event naming convention across all surfaces
+- **Mobile abstraction**: Mobile analytics abstraction must exist early so event names remain cross-platform consistent
+- **Locale**: Capture locale where useful for product, growth, and SEO analysis
+
+## Monitoring Requirements
+
+- **Error monitoring**: Abstraction must be prepared for provider integration
+- **Traceability**: Critical backend failures must be traceable
+- **Observability** for:
+  - Auth failures
+  - Permission denials
+  - AI fallback events
+  - Chat delivery failures
+  - Realtime subscription failures
+
+## Change Checklist
+
+When adding or changing user-visible features, decide and implement:
+
+- [ ] **Analytics events**: Does this feature need product/growth analytics? If yes, add events with shared naming convention and locale where applicable
+- [ ] **Audit events**: Does this touch role changes, membership, payments, impersonation, tenant overrides, or chat moderation? If yes, audit log the action
+- [ ] **Operational logs**: Does this need server-side operational visibility? If yes, add structured logging
+- [ ] **Error visibility**: Can this fail in ways that need tracing? If yes, ensure failures are logged and observable
