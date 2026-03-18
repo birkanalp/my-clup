@@ -6,12 +6,14 @@
     "node": ">=20.0.0"
   },
   "scripts": {
+    "install": "pnpm install",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "typecheck": "turbo run typecheck",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "clean": "turbo run build --force --no-cache"
   },
   "devDependencies": {
     "@myclup/config-eslint": "workspace:*",
