@@ -1,0 +1,17 @@
+{
+  "name": "@myclup/config-typescript",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./base": "./tsconfig.base.json",
+    "./node": "./tsconfig.node.json",
+    "./next": "./tsconfig.next.json",
+    "./expo": "./tsconfig.expo.json"
+  },
+  "files": [
+    "tsconfig.base.json",
+    "tsconfig.node.json",
+    "tsconfig.next.json",
+    "tsconfig.expo.json"
+  ]
+}
