@@ -87,6 +87,17 @@ const { data, error } = await client.from("gyms").select("*").eq("id", gymId);
 
 - **Schema**: Prefer `public` schema unless a separate schema is justified
 - **Migrations**: Use `supabase/migrations/` at repo root (or as documented in project setup)
+
+### Applying Migrations
+
+When a Supabase project is linked (`supabase link --project-ref <id>`):
+
+```bash
+# From repo root
+pnpm exec supabase db push
+```
+
+Migrations create `gyms`, `branches`, `profiles`, `user_role_assignments`, `gym_staff`, `audit_events` and RLS policies (Task 15.1).
 - **Naming**: snake_case for tables and columns
 - **IDs**: Use `uuid` for primary keys; `gen_random_uuid()` default
 - **Timestamps**: `created_at`, `updated_at` (timestamptz)
