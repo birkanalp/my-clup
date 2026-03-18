@@ -19,4 +19,11 @@ export {
   type ServerSupabaseClient,
 } from './client/index';
 
-export type { Database, Json } from './generated/database.types';
+export type { Database, Json } from "./generated/database.types";
+
+export {
+  writeAuditEvent,
+  AUDIT_EVENT_TYPES,
+  type WriteAuditEventParams,
+  type AuditEventType,
+} from "./audit/index";
