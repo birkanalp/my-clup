@@ -38,10 +38,38 @@ importers:
   apps/web-site: {}
 
   packages/api-client:
+    dependencies:
+      '@myclup/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      zod:
+        specifier: ^3.24.0
+        version: 3.25.76
     devDependencies:
+      '@myclup/config-eslint':
+        specifier: workspace:*
+        version: link:../config-eslint
+      '@myclup/config-prettier':
+        specifier: workspace:*
+        version: link:../config-prettier
       '@myclup/config-typescript':
         specifier: workspace:*
         version: link:../config-typescript
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.19.15
+      eslint:
+        specifier: ^9.15.0
+        version: 9.39.4(jiti@1.21.7)
+      prettier:
+        specifier: ^3.4.0
+        version: 3.8.1
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.0
+        version: 2.1.9(@types/node@22.19.15)
 
   packages/config-eslint:
     dependencies:
