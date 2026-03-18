@@ -1,0 +1,9 @@
+{
+  "name": "@myclup/ui-web",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "@myclup/config-typescript": "workspace:*",
+    "@myclup/config-tailwind": "workspace:*"
+  }
+}

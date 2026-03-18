@@ -1,10 +1,12 @@
 # Dependencies
 node_modules
 
-# Environment
+# Environment (secrets — never commit; .env.example is tracked)
 .env
-.env.*
 .env.local
+.env.development
+.env.production
+.env.*.local
 
 # IDE
 .idea
