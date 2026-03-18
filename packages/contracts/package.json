@@ -13,6 +13,10 @@
       "types": "./dist/health/index.d.ts",
       "default": "./dist/health/index.js"
     },
+    "./auth": {
+      "types": "./dist/auth/index.d.ts",
+      "default": "./dist/auth/index.js"
+    },
     "./common": {
       "types": "./dist/common/index.d.ts",
       "default": "./dist/common/index.js"
@@ -25,6 +29,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@myclup/types": "workspace:*",
     "zod": "^3.24.0"
   },
   "devDependencies": {
