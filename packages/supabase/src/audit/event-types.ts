@@ -12,6 +12,7 @@ export const AUDIT_EVENT_TYPES = {
   refund: 'refund',
   admin_impersonation: 'admin_impersonation',
   cross_tenant_support: 'cross_tenant_support',
+  chat_assignment: 'chat_assignment',
 } as const;
 
 export type AuditEventType = (typeof AUDIT_EVENT_TYPES)[keyof typeof AUDIT_EVENT_TYPES];
