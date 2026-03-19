@@ -11,7 +11,7 @@
  * Task 17.11, Issue #107
  * Per .cursor/rules/chat-first-realtime-safety.mdc and testing-requirements-and-quality-bar.mdc
  */
-import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -45,7 +45,9 @@ describe('RLS chat verification', () => {
     expect(content).toContain('ALTER TABLE public.conversations ENABLE ROW LEVEL SECURITY');
     expect(content).toContain('ALTER TABLE public.messages ENABLE ROW LEVEL SECURITY');
     expect(content).toContain('ALTER TABLE public.message_receipts ENABLE ROW LEVEL SECURITY');
-    expect(content).toContain('ALTER TABLE public.conversation_participants ENABLE ROW LEVEL SECURITY');
+    expect(content).toContain(
+      'ALTER TABLE public.conversation_participants ENABLE ROW LEVEL SECURITY'
+    );
 
     // Key policies exist
     for (const policy of EXPECTED_CHAT_RLS_POLICIES) {

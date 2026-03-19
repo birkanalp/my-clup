@@ -36,7 +36,14 @@ const GYM_B = '550e8400-e29b-41d4-a716-446655440002';
 function makeMockClient(opts: {
   participant: { conversation_id: string } | null;
   conv: { gym_id: string } | null;
-  messages?: Array<{ id: string; conversation_id: string; sender_id: string; content: string; dedupe_key: string | null; created_at: string }>;
+  messages?: Array<{
+    id: string;
+    conversation_id: string;
+    sender_id: string;
+    content: string;
+    dedupe_key: string | null;
+    created_at: string;
+  }>;
 }) {
   const { participant, conv, messages = [] } = opts;
 
@@ -203,7 +210,10 @@ describe('sendMessage', () => {
     });
     mockCreateServerClient.mockReturnValue(client as never);
 
-    const req = new NextRequest('http://localhost/api', { method: 'POST', body: JSON.stringify(input) });
+    const req = new NextRequest('http://localhost/api', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
     await expect(sendMessage(req, CONV_ID, input)).rejects.toThrow(ForbiddenError);
     await expect(sendMessage(req, CONV_ID, input)).rejects.toThrow(/Not a participant/);
   });
@@ -217,7 +227,10 @@ describe('sendMessage', () => {
     mockCreateServerClient.mockReturnValue(client as never);
     mockResolveTenantScope.mockResolvedValue([]);
 
-    const req = new NextRequest('http://localhost/api', { method: 'POST', body: JSON.stringify(input) });
+    const req = new NextRequest('http://localhost/api', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
     await expect(sendMessage(req, CONV_ID, input)).rejects.toThrow(ForbiddenError);
     await expect(sendMessage(req, CONV_ID, input)).rejects.toThrow(/No access to this gym/);
   });

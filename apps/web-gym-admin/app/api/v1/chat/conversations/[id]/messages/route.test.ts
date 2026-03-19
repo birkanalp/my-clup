@@ -41,7 +41,9 @@ describe('GET /api/v1/chat/conversations/:id/messages', () => {
   });
 
   it('returns 403 when user is not participant', async () => {
-    mockListMessages.mockRejectedValue(new ForbiddenError('Not a participant in this conversation'));
+    mockListMessages.mockRejectedValue(
+      new ForbiddenError('Not a participant in this conversation')
+    );
 
     const request = new NextRequest(
       `http://localhost:3001/api/v1/chat/conversations/${CONV_ID}/messages`,
