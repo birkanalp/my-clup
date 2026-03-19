@@ -23,10 +23,16 @@ export {
   getSession,
   getCurrentUser,
   createUserScopedClient,
+  resolveTenantScope,
+  checkPermission,
+  requirePermission,
+  ForbiddenError,
+  ROLE_PERMISSIONS,
   type AuthRequest,
   type CurrentUser,
   type Profile,
   type UserScopedSupabaseClient,
+  type AnyRole,
 } from './auth/index';
 
 export type { Database, Json } from './generated/database.types';
