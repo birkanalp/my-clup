@@ -29,6 +29,7 @@
     "react-native": "0.76.5"
   },
   "devDependencies": {
+    "@testing-library/react-native": "^12.8.0",
     "@myclup/config-eslint": "workspace:*",
     "@myclup/config-prettier": "workspace:*",
     "@myclup/config-typescript": "workspace:*",

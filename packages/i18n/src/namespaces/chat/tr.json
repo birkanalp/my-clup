@@ -1,34 +1,49 @@
 {
-  "list": {
-    "title": "Sohbet",
-    "empty": "Henüz konuşma yok",
-    "loading": "Yükleniyor...",
-    "error": "Yüklenemedi",
-    "filterAll": "Tümü",
-    "filterUnread": "Okunmamış",
-    "filterAssigned": "Bana atanan"
-  },
   "nav": {
     "chatCenter": "Sohbet Merkezi"
   },
-  "conversation": {
-    "withGym": "Salon desteği",
-    "withInstructor": "Antrenör",
-    "direct": "Doğrudan mesaj"
+  "list": {
+    "title": "Sohbet",
+    "loading": "Konuşmalar yükleniyor...",
+    "error": "Konuşmalar yüklenemedi",
+    "empty": "Henüz konuşma yok",
+    "filterAll": "Tümü",
+    "filterUnread": "Okunmamış",
+    "filterAssigned": "Bana atanmış",
+    "filterBranch": "Şube"
   },
   "assignment": {
+    "title": "Atama",
+    "assignTo": "Atanacak kişi",
+    "reassign": "Yeniden ata",
+    "assignedTo": "Atanan",
     "label": "Atanan",
     "unassigned": "Atanmamış"
+  },
+  "templates": {
+    "title": "Şablonlar",
+    "select": "Şablon ekle"
+  },
+  "quickReplies": {
+    "title": "Hızlı yanıtlar",
+    "select": "Hızlı yanıt ekle"
+  },
+  "conversation": {
+    "withGym": "Salon desteği",
+    "withInstructor": "Eğitmen",
+    "direct": "Doğrudan mesaj"
   },
   "input": {
     "placeholder": "Mesaj yazın...",
     "send": "Gönder"
   },
   "label": {
+    "loading": "Yükleniyor...",
     "unread": "Okunmamış",
     "online": "Çevrimiçi",
     "offline": "Çevrimdışı",
-    "typing": "{{name}} yazıyor..."
+    "typing": "{{name}} yazıyor...",
+    "typingSomeone": "Biri yazıyor..."
   },
   "empty": {
     "noMessages": "Henüz mesaj yok. Konuşmayı başlatın!"
