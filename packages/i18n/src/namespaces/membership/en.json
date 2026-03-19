@@ -1,6 +1,19 @@
 {
+  "nav": {
+    "title": "Membership",
+    "overview": "Overview",
+    "renew": "Renew membership",
+    "payments": "Payment history",
+    "invoiceDetail": "Invoice details",
+    "confirmation": "Renewal confirmation"
+  },
+  "header": {
+    "title": "Membership hub",
+    "subtitle": "Track your access, renew your plan, and review billing."
+  },
   "status": {
     "active": "Active",
+    "frozen": "Frozen",
     "expired": "Expired",
     "cancelled": "Cancelled",
     "pending": "Pending"
@@ -9,11 +22,95 @@
     "monthly": "Monthly",
     "yearly": "Yearly",
     "classPack": "Class pack",
-    "trial": "Trial"
+    "trial": "Trial",
+    "time_based": "Time-based",
+    "session_based": "Session-based",
+    "personal_training": "Personal training"
   },
   "label": {
-    "validUntil": "Valid until",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "validUntil": "Valid until",
+    "packageName": "Package",
+    "packageType": "Plan type",
+    "status": "Status",
+    "remainingSessions": "Remaining sessions",
+    "branchAccess": "Branch access",
+    "allBranches": "All branches",
+    "memberPass": "Member pass",
+    "freezeWindow": "Frozen period",
+    "renewalOptions": "Renewal options",
+    "paymentStatus": "Payment status",
+    "paymentMethod": "Payment method",
+    "amount": "Amount",
+    "invoiceStatus": "Invoice status",
+    "issuedAt": "Issued at",
+    "dueAt": "Due at",
+    "paidAt": "Paid at",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "total": "Total",
+    "lineItems": "Line items",
+    "activeMembership": "Active membership",
+    "renewalSummary": "Renewal summary",
+    "dayCount": "{{count}} days",
+    "notAvailable": "Not available"
+  },
+  "cta": {
+    "renewNow": "Renew now",
+    "viewPayments": "View payment history",
+    "viewInvoice": "View invoice",
+    "shareInvoice": "Share invoice",
+    "retry": "Retry",
+    "submitRenewal": "Submit renewal",
+    "backToMembership": "Back to membership"
+  },
+  "message": {
+    "expiringSoon": "Your membership is approaching expiry.",
+    "expired": "Your membership has expired.",
+    "frozen": "Your membership is currently frozen.",
+    "noMembership": "You do not have an active membership yet.",
+    "noPayments": "No payment history yet.",
+    "renewalSuccess": "Your renewal request was submitted successfully.",
+    "invoiceShare": "Invoice {{invoiceId}} for {{amount}}",
+    "invoiceShareDetail": "Status: {{status}} | Issued: {{issuedAt}} | Total: {{amount}}"
+  },
+  "state": {
+    "loadingMembership": "Loading membership details...",
+    "loadingPayments": "Loading payment history...",
+    "errorMembership": "Membership details could not be loaded.",
+    "errorPayments": "Payment history could not be loaded.",
+    "errorInvoice": "Invoice details could not be loaded.",
+    "submittingRenewal": "Submitting your renewal..."
+  },
+  "renewal": {
+    "helper": "Choose a renewal package that matches your access needs.",
+    "selected": "Selected package",
+    "newValidity": "New validity",
+    "addedSessions": "Added sessions",
+    "requestSummary": "Renewal request"
+  },
+  "payment": {
+    "status": {
+      "pending": "Pending",
+      "succeeded": "Succeeded",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
+    "method": {
+      "cash": "Cash",
+      "card": "Card",
+      "bank_transfer": "Bank transfer",
+      "online": "Online"
+    }
+  },
+  "invoice": {
+    "status": {
+      "draft": "Draft",
+      "open": "Open",
+      "paid": "Paid",
+      "void": "Void",
+      "overdue": "Overdue"
+    }
   }
 }
