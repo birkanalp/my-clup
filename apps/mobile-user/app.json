@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "MyClup Member",
+    "slug": "mobile-user",
+    "version": "1.0.0",
+    "scheme": "myclup-user",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true
+  }
+}

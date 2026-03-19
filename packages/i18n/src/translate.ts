@@ -7,37 +7,12 @@
 import type { SupportedLocale } from "@myclup/types";
 import { FALLBACK_LOCALE } from "@myclup/types";
 
-import commonEn from "./namespaces/common/en.json";
-import commonTr from "./namespaces/common/tr.json";
-import authEn from "./namespaces/auth/en.json";
-import authTr from "./namespaces/auth/tr.json";
-import membershipEn from "./namespaces/membership/en.json";
-import membershipTr from "./namespaces/membership/tr.json";
-import chatEn from "./namespaces/chat/en.json";
-import chatTr from "./namespaces/chat/tr.json";
-import errorsEn from "./namespaces/errors/en.json";
-import errorsTr from "./namespaces/errors/tr.json";
+import { i18nextResources } from "./resources";
+import type { TranslationNamespace } from "./resources";
 
-export type TranslationNamespace = "common" | "auth" | "membership" | "chat" | "errors";
+export type { TranslationNamespace };
 
-type ResourceRecord = Record<string, unknown>;
-
-const RESOURCES: Record<SupportedLocale, Record<TranslationNamespace, ResourceRecord>> = {
-  en: {
-    common: commonEn as ResourceRecord,
-    auth: authEn as ResourceRecord,
-    membership: membershipEn as ResourceRecord,
-    chat: chatEn as ResourceRecord,
-    errors: errorsEn as ResourceRecord,
-  },
-  tr: {
-    common: commonTr as ResourceRecord,
-    auth: authTr as ResourceRecord,
-    membership: membershipTr as ResourceRecord,
-    chat: chatTr as ResourceRecord,
-    errors: errorsTr as ResourceRecord,
-  },
-};
+const RESOURCES = i18nextResources;
 
 export interface TranslateParams {
   [key: string]: string | number;
