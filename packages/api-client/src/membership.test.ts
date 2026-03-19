@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createApi } from './index';
 import {
+  ListMembershipInstancesResponseSchema,
   ListMembershipPlansResponseSchema,
   RenewMembershipResponseSchema,
   ValidateMembershipAccessResponseSchema,
@@ -51,6 +52,44 @@ describe('membership api', () => {
     expect(ListMembershipPlansResponseSchema.safeParse(result).success).toBe(true);
     expect(mockFetchFn).toHaveBeenCalledWith(
       'http://localhost:3001/api/v1/memberships/plans',
+      expect.objectContaining({ method: 'GET' })
+    );
+  });
+
+  it('lists membership instances with query params', async () => {
+    const payload = {
+      items: [
+        {
+          id: validUuid,
+          planId: validUuid,
+          memberId: validUuid,
+          gymId: validUuid,
+          branchId: null,
+          status: 'active' as const,
+          validFrom: validDatetime,
+          validUntil: validDatetime,
+          remainingSessions: 8,
+          entitledBranchIds: [validUuid],
+          createdAt: validDatetime,
+          updatedAt: validDatetime,
+        },
+      ],
+      nextCursor: null,
+    };
+    const mockFetchFn = mockFetch(200, payload);
+    const api = createApi({ baseUrl: 'http://localhost:3001', fetch: mockFetchFn });
+
+    const result = await api.membership.listMembershipInstances({
+      limit: 20,
+      memberId: validUuid,
+      status: 'active',
+    });
+
+    expect(ListMembershipInstancesResponseSchema.safeParse(result).success).toBe(true);
+    expect(mockFetchFn).toHaveBeenCalledWith(
+      expect.stringContaining(
+        `/api/v1/memberships/instances?limit=20&memberId=${validUuid}&status=active`
+      ),
       expect.objectContaining({ method: 'GET' })
     );
   });

@@ -1,19 +1,116 @@
 {
+  "nav": {
+    "title": "Uyelik",
+    "overview": "Genel bakis",
+    "renew": "Uyeligi yenile",
+    "payments": "Odeme gecmisi",
+    "invoiceDetail": "Fatura detaylari",
+    "confirmation": "Yenileme onayi"
+  },
+  "header": {
+    "title": "Uyelik merkezi",
+    "subtitle": "Erisimini takip et, planini yenile ve odemelerini incele."
+  },
   "status": {
     "active": "Aktif",
-    "expired": "Süresi dolmuş",
-    "cancelled": "İptal edildi",
+    "frozen": "Donduruldu",
+    "expired": "Suresi dolmus",
+    "cancelled": "Iptal edildi",
     "pending": "Beklemede"
   },
   "type": {
-    "monthly": "Aylık",
-    "yearly": "Yıllık",
+    "monthly": "Aylik",
+    "yearly": "Yillik",
     "classPack": "Ders paketi",
-    "trial": "Deneme"
+    "trial": "Deneme",
+    "time_based": "Sure bazli",
+    "session_based": "Seans bazli",
+    "personal_training": "Kisisel antrenman"
   },
   "label": {
-    "validUntil": "Geçerlilik tarihi",
-    "startDate": "Başlangıç tarihi",
-    "endDate": "Bitiş tarihi"
+    "startDate": "Baslangic tarihi",
+    "endDate": "Bitis tarihi",
+    "validUntil": "Gecerlilik tarihi",
+    "packageName": "Paket",
+    "packageType": "Plan tipi",
+    "status": "Durum",
+    "remainingSessions": "Kalan seans",
+    "branchAccess": "Sube erisimi",
+    "allBranches": "Tum subeler",
+    "memberPass": "Uye karti",
+    "freezeWindow": "Dondurma donemi",
+    "renewalOptions": "Yenileme secenekleri",
+    "paymentStatus": "Odeme durumu",
+    "paymentMethod": "Odeme yontemi",
+    "amount": "Tutar",
+    "invoiceStatus": "Fatura durumu",
+    "issuedAt": "Duzenlenme tarihi",
+    "dueAt": "Son odeme tarihi",
+    "paidAt": "Odeme tarihi",
+    "subtotal": "Ara toplam",
+    "discount": "Indirim",
+    "total": "Toplam",
+    "lineItems": "Kalemler",
+    "activeMembership": "Aktif uyelik",
+    "renewalSummary": "Yenileme ozeti",
+    "dayCount": "{{count}} gun",
+    "notAvailable": "Mevcut degil"
+  },
+  "cta": {
+    "renewNow": "Hemen yenile",
+    "viewPayments": "Odeme gecmisini gor",
+    "viewInvoice": "Faturayi gor",
+    "shareInvoice": "Faturayi paylas",
+    "retry": "Tekrar dene",
+    "submitRenewal": "Yenilemeyi gonder",
+    "backToMembership": "Uyelige don"
+  },
+  "message": {
+    "expiringSoon": "Uyeliginizin suresi yakinda doluyor.",
+    "expired": "Uyeliginizin suresi doldu.",
+    "frozen": "Uyeliginiz su anda dondurulmus durumda.",
+    "noMembership": "Henuz aktif bir uyeliginiz yok.",
+    "noPayments": "Henuz odeme gecmisi yok.",
+    "renewalSuccess": "Yenileme talebiniz basariyla gonderildi.",
+    "invoiceShare": "{{invoiceId}} numarali fatura, {{amount}}",
+    "invoiceShareDetail": "Durum: {{status}} | Duzenlenme: {{issuedAt}} | Toplam: {{amount}}"
+  },
+  "state": {
+    "loadingMembership": "Uyelik bilgileri yukleniyor...",
+    "loadingPayments": "Odeme gecmisi yukleniyor...",
+    "errorMembership": "Uyelik bilgileri yuklenemedi.",
+    "errorPayments": "Odeme gecmisi yuklenemedi.",
+    "errorInvoice": "Fatura detaylari yuklenemedi.",
+    "submittingRenewal": "Yenileme gonderiliyor..."
+  },
+  "renewal": {
+    "helper": "Erisim ihtiyaciniza uygun yenileme paketini secin.",
+    "selected": "Secilen paket",
+    "newValidity": "Yeni gecerlilik",
+    "addedSessions": "Eklenen seans",
+    "requestSummary": "Yenileme talebi"
+  },
+  "payment": {
+    "status": {
+      "pending": "Beklemede",
+      "succeeded": "Basarili",
+      "failed": "Basarisiz",
+      "refunded": "Iade edildi"
+    },
+    "method": {
+      "cash": "Nakit",
+      "card": "Kart",
+      "bank_transfer": "Havale",
+      "online": "Online"
+    }
+  },
+  "invoice": {
+    "status": {
+      "draft": "Taslak",
+      "open": "Acik",
+      "paid": "Odendi",
+      "void": "Gecersiz",
+      "overdue": "Gecikti"
+    }
   }
 }

@@ -52,6 +52,8 @@ export type {
   FreezeMembershipRequest,
   FreezeMembershipResponse,
   GetMembershipInstanceResponse,
+  ListMembershipInstancesRequest,
+  ListMembershipInstancesResponse,
   ListMembershipPlansRequest,
   ListMembershipPlansResponse,
   MembershipInstance,

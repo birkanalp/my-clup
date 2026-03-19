@@ -4,6 +4,8 @@ import type {
   FreezeMembershipRequest,
   FreezeMembershipResponse,
   GetMembershipInstanceResponse,
+  ListMembershipInstancesRequest,
+  ListMembershipInstancesResponse,
   ListMembershipPlansRequest,
   ListMembershipPlansResponse,
   RenewMembershipRequest,
@@ -15,6 +17,7 @@ import {
   cancelMembershipContract,
   freezeMembershipContract,
   getMembershipInstanceContract,
+  listMembershipInstancesContract,
   listMembershipPlansContract,
   renewMembershipContract,
   validateMembershipAccessContract,
@@ -49,6 +52,18 @@ export function createMembershipApi(request: RequestFn) {
         getMembershipInstanceContract as ApiContract<unknown, GetMembershipInstanceResponse>,
         undefined,
         { pathParams: { id } }
+      );
+    },
+
+    async listMembershipInstances(
+      params?: ListMembershipInstancesRequest
+    ): Promise<ListMembershipInstancesResponse> {
+      return request(
+        listMembershipInstancesContract as ApiContract<
+          ListMembershipInstancesRequest,
+          ListMembershipInstancesResponse
+        >,
+        params
       );
     },
 
