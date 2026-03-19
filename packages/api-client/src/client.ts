@@ -12,8 +12,28 @@ export type ApiContract<TRequest = unknown, TResponse = unknown> = {
 export type ApiClientConfig = {
   /** Base URL for all requests (e.g. https://api.example.com). Trailing slash is normalized. */
   baseUrl: string;
-  /** Optional headers to inject (e.g. Authorization). Applied to every request. */
+  /** Optional static headers to inject. Applied to every request. */
   headers?: Record<string, string>;
+  /**
+   * Optional async function that returns auth headers for each request.
+   * Use this for dynamic token injection (Supabase session on web, access_token on mobile).
+   *
+   * Web example:
+   *   getAuthHeaders: async () => {
+   *     const { data } = await supabase.auth.getSession();
+   *     const token = data.session?.access_token;
+   *     return token ? { Authorization: `Bearer ${token}` } : {};
+   *   }
+   *
+   * Mobile example:
+   *   getAuthHeaders: async () => {
+   *     const session = await getLocalSession();
+   *     return session?.access_token
+   *       ? { Authorization: `Bearer ${session.access_token}` }
+   *       : {};
+   *   }
+   */
+  getAuthHeaders?: () => Promise<Record<string, string>> | Record<string, string>;
   /** Custom fetch implementation (for testing or custom behavior). */
   fetch?: typeof fetch;
 };
@@ -36,18 +56,22 @@ export class ApiError extends Error {
  */
 export function createApiClient(config: ApiClientConfig) {
   const baseUrl = config.baseUrl.replace(/\/$/, '');
-  const headers = config.headers ?? {};
+  const staticHeaders = config.headers ?? {};
   const doFetch = config.fetch ?? fetch;
 
   /**
    * Performs a contract-based request. Fetches the endpoint, parses the response
    * with contract.response.parse(), and returns the typed result.
+   *
+   * When getAuthHeaders is configured, it is called before each request and its
+   * result is merged with static headers (auth headers take precedence).
    */
   async function request<T>(contract: ApiContract<unknown, T>, requestData?: unknown): Promise<T> {
+    const authHeaders = config.getAuthHeaders ? await config.getAuthHeaders() : {};
     const url = `${baseUrl}${contract.path}`;
     const init: RequestInit = {
       method: contract.method,
-      headers: { 'Content-Type': 'application/json', ...headers },
+      headers: { 'Content-Type': 'application/json', ...staticHeaders, ...authHeaders },
     };
 
     if (requestData !== undefined && contract.method !== 'GET') {
