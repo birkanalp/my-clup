@@ -170,6 +170,9 @@ importers:
       '@myclup/supabase':
         specifier: workspace:^
         version: link:../../packages/supabase
+      '@myclup/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@myclup/ui-web':
         specifier: workspace:*
         version: link:../../packages/ui-web

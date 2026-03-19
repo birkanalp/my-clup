@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@myclup/contracts": "workspace:*",
+    "@myclup/types": "workspace:*",
     "@myclup/ui-web": "workspace:*",
     "@myclup/i18n": "workspace:*",
     "@myclup/supabase": "workspace:^",
