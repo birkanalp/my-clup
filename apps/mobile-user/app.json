@@ -6,6 +6,7 @@
     "scheme": "myclup-user",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true
+    "newArchEnabled": true,
+    "plugins": ["expo-font"]
   }
 }
