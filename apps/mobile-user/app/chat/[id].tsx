@@ -11,10 +11,13 @@ export default function ChatDetailScreen() {
   const conversationId = id ?? '';
   const currentUserId = useCurrentUser();
 
-  const { items: messages, loading, error, sendMessage, appendMessage } = useMessages(
-    conversationId || null,
-    currentUserId
-  );
+  const {
+    items: messages,
+    loading,
+    error,
+    sendMessage,
+    appendMessage,
+  } = useMessages(conversationId || null, currentUserId);
 
   const handleNewMessage = useCallback(
     (msg: Message) => {
