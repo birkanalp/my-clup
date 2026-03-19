@@ -29,6 +29,10 @@
       "types": "./dist/membership/index.d.ts",
       "default": "./dist/membership/index.js"
     },
+    "./bookings": {
+      "types": "./dist/bookings/index.d.ts",
+      "default": "./dist/bookings/index.js"
+    },
     "./billing": {
       "types": "./dist/billing/index.d.ts",
       "default": "./dist/billing/index.js"

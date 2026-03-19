@@ -6,6 +6,7 @@
  */
 export * from './auth';
 export * from './billing';
+export * from './bookings';
 export * from './chat';
 export * from './health';
 export * from './locale';
