@@ -41,6 +41,7 @@ import {
   triggerPaymentReminder,
   writeAuditEvent,
 } from '@myclup/supabase';
+import type { TenantScope } from '@myclup/types';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -62,6 +63,21 @@ async function writeBillingAudit(
   } catch (error) {
     console.error('[billing] audit write failed', error);
   }
+}
+
+async function getActorRole(
+  client: ReturnType<typeof getClient>,
+  userId: string,
+  scope: TenantScope
+): Promise<string> {
+  const { data } = await client
+    .from('user_role_assignments')
+    .select('role, gym_id')
+    .eq('user_id', userId);
+  const rows = data ?? [];
+  const platform = rows.find((row) => row.role === 'platform_admin' && row.gym_id === null);
+  if (platform) return 'platform_admin';
+  return rows.find((row) => row.gym_id === scope.gymId)?.role ?? 'staff';
 }
 
 function parseLimitCursor(req: NextRequest) {
@@ -180,6 +196,8 @@ export async function logPaymentServer(
 ): Promise<LogPaymentResponse | null> {
   const scoped = await ensureScopeForWrite(req, input.gymId, input.branchId);
   if (!scoped) return null;
+  const actorRole = await getActorRole(scoped.client, scoped.currentUser.user.id, scoped.scope);
+  const timestamp = new Date().toISOString();
 
   if (input.overrideReason) {
     await requirePermission(
@@ -198,6 +216,12 @@ export async function logPaymentServer(
         previous_state: 'unpaid',
         new_state: input.status,
         reason: input.overrideReason,
+        actor_role: actorRole,
+        tenant_id: scoped.scope.gymId,
+        action: 'billing_override',
+        before_state: 'unpaid',
+        after_state: input.status,
+        timestamp,
       },
       tenant_context: { gym_id: scoped.scope.gymId, branch_id: scoped.scope.branchId ?? undefined },
     });
@@ -213,6 +237,12 @@ export async function logPaymentServer(
         payment_id: input.invoiceId,
         amount_cents: Math.round(input.amount * 100),
         reason: input.overrideReason,
+        actor_role: actorRole,
+        tenant_id: scoped.scope.gymId,
+        action: 'refund',
+        before_state: 'paid',
+        after_state: 'pending_refund',
+        timestamp,
       },
       tenant_context: { gym_id: scoped.scope.gymId, branch_id: scoped.scope.branchId ?? undefined },
     });
@@ -235,6 +265,12 @@ export async function logPaymentServer(
         previous_state: 'unpaid',
         new_state: payment.status,
         reason: input.overrideReason,
+        actor_role: actorRole,
+        tenant_id: payment.gymId,
+        action: 'billing_override',
+        before_state: 'unpaid',
+        after_state: payment.status,
+        timestamp: new Date().toISOString(),
       },
       tenant_context: { gym_id: payment.gymId, branch_id: payment.branchId ?? undefined },
     });
@@ -250,6 +286,12 @@ export async function logPaymentServer(
         payment_id: payment.id,
         amount_cents: Math.round(payment.amount * 100),
         reason: input.overrideReason,
+        actor_role: actorRole,
+        tenant_id: payment.gymId,
+        action: 'refund',
+        before_state: 'pending_refund',
+        after_state: 'refunded',
+        timestamp: new Date().toISOString(),
       },
       tenant_context: { gym_id: payment.gymId, branch_id: payment.branchId ?? undefined },
     });

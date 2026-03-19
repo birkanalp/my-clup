@@ -29,6 +29,7 @@ import {
   validateMembershipAccess,
   writeAuditEvent,
 } from '@myclup/supabase';
+import type { TenantScope } from '@myclup/types';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -66,6 +67,29 @@ async function writeMembershipAudit(
   }
 }
 
+type ActorContext = {
+  actorRole: string;
+  isPlatformAdmin: boolean;
+};
+
+async function getActorContext(
+  client: ReturnType<typeof getClient>,
+  userId: string,
+  scope: TenantScope
+): Promise<ActorContext> {
+  const { data } = await client
+    .from('user_role_assignments')
+    .select('role, gym_id')
+    .eq('user_id', userId);
+  const rows = data ?? [];
+  const platform = rows.find((row) => row.role === 'platform_admin' && row.gym_id === null);
+  if (platform) {
+    return { actorRole: 'platform_admin', isPlatformAdmin: true };
+  }
+  const gymRole = rows.find((row) => row.gym_id === scope.gymId)?.role;
+  return { actorRole: gymRole ?? 'staff', isPlatformAdmin: false };
+}
+
 export async function listInstances(
   req: NextRequest
 ): Promise<ListMembershipInstancesResponse | null> {
@@ -87,6 +111,27 @@ export async function listInstances(
 
   const scope = scopes[0];
   await requirePermission(client, currentUser.user.id, scope, 'members:read');
+  const actor = await getActorContext(client, currentUser.user.id, scope);
+  if (actor.isPlatformAdmin && params.gymId) {
+    const timestamp = new Date().toISOString();
+    await writeMembershipAudit(client, {
+      event_type: AUDIT_EVENT_TYPES.cross_tenant_support,
+      actor_id: currentUser.user.id,
+      target_type: 'membership_instances',
+      target_id: null,
+      payload: {
+        target_gym_id: scope.gymId,
+        target_branch_id: scope.branchId ?? undefined,
+        action: 'membership_list_access',
+        actor_role: actor.actorRole,
+        tenant_id: scope.gymId,
+        before_state: 'request_received',
+        after_state: 'scope_granted',
+        timestamp,
+      },
+      tenant_context: { gym_id: scope.gymId, branch_id: scope.branchId ?? undefined },
+    });
+  }
   return listMembershipInstances(client, {
     ...params,
     gymId: scope.gymId,
@@ -116,6 +161,8 @@ export async function assignInstance(
   }
   const scope = scopes[0];
   await requirePermission(client, currentUser.user.id, scope, 'members:write');
+  const actor = await getActorContext(client, currentUser.user.id, scope);
+  const timestamp = new Date().toISOString();
 
   const assigned = await assignMembershipInstance(client, {
     ...input,
@@ -135,6 +182,12 @@ export async function assignInstance(
       plan_id: assigned.planId,
       valid_from: assigned.validFrom,
       valid_until: assigned.validUntil,
+      actor_role: actor.actorRole,
+      tenant_id: assigned.gymId,
+      action: 'membership_assignment',
+      before_state: 'not_assigned',
+      after_state: assigned.status,
+      timestamp,
     },
     tenant_context: { gym_id: assigned.gymId, branch_id: assigned.branchId ?? undefined },
   });
@@ -162,12 +215,35 @@ export async function renewInstance(
     current.branchId ?? undefined
   );
   if (scopes.length === 0) throw new ForbiddenError('No tenant scope for membership renewal');
-  await requirePermission(client, currentUser.user.id, scopes[0], 'members:write');
+  const scope = scopes[0];
+  await requirePermission(client, currentUser.user.id, scope, 'members:write');
+  const actor = await getActorContext(client, currentUser.user.id, scope);
+  const timestamp = new Date().toISOString();
+
+  await writeMembershipAudit(client, {
+    event_type: AUDIT_EVENT_TYPES.membership_extension,
+    actor_id: currentUser.user.id,
+    target_type: 'membership_instances',
+    target_id: current.id,
+    payload: {
+      membership_id: current.id,
+      previous_end_at: current.validUntil ?? undefined,
+      new_end_at: input.renewedUntil,
+      reason: undefined,
+      actor_role: actor.actorRole,
+      tenant_id: current.gymId,
+      action: 'membership_manual_extension',
+      before_state: current.status,
+      after_state: 'pending_extension',
+      timestamp,
+    },
+    tenant_context: { gym_id: current.gymId, branch_id: current.branchId ?? undefined },
+  });
 
   const renewed = await renewMembership(client, instanceId, input);
 
   await writeMembershipAudit(client, {
-    event_type: AUDIT_EVENT_TYPES.membership_renewal,
+    event_type: AUDIT_EVENT_TYPES.membership_extension,
     actor_id: currentUser.user.id,
     target_type: 'membership_instances',
     target_id: renewed.membership.id,
@@ -175,7 +251,13 @@ export async function renewInstance(
       membership_id: renewed.membership.id,
       previous_end_at: current.validUntil,
       new_end_at: renewed.membership.validUntil,
-      added_session_count: input.addedSessionCount,
+      reason: undefined,
+      actor_role: actor.actorRole,
+      tenant_id: renewed.membership.gymId,
+      action: 'membership_manual_extension',
+      before_state: current.status,
+      after_state: renewed.membership.status,
+      timestamp: new Date().toISOString(),
     },
     tenant_context: {
       gym_id: renewed.membership.gymId,
@@ -206,7 +288,30 @@ export async function freezeInstance(
     current.branchId ?? undefined
   );
   if (scopes.length === 0) throw new ForbiddenError('No tenant scope for membership freeze');
-  await requirePermission(client, currentUser.user.id, scopes[0], 'members:write');
+  const scope = scopes[0];
+  await requirePermission(client, currentUser.user.id, scope, 'members:write');
+  const actor = await getActorContext(client, currentUser.user.id, scope);
+  const timestamp = new Date().toISOString();
+
+  await writeMembershipAudit(client, {
+    event_type: AUDIT_EVENT_TYPES.membership_freeze,
+    actor_id: currentUser.user.id,
+    target_type: 'membership_instances',
+    target_id: current.id,
+    payload: {
+      membership_id: current.id,
+      freeze_start_at: input.freezeStartAt,
+      freeze_end_at: input.freezeEndAt,
+      reason: input.reason,
+      actor_role: actor.actorRole,
+      tenant_id: current.gymId,
+      action: 'membership_freeze',
+      before_state: current.status,
+      after_state: 'pending_freeze',
+      timestamp,
+    },
+    tenant_context: { gym_id: current.gymId, branch_id: current.branchId ?? undefined },
+  });
 
   const frozen = await freezeMembership(client, instanceId, input);
 
@@ -220,6 +325,12 @@ export async function freezeInstance(
       freeze_start_at: input.freezeStartAt,
       freeze_end_at: input.freezeEndAt,
       reason: input.reason,
+      actor_role: actor.actorRole,
+      tenant_id: frozen.membership.gymId,
+      action: 'membership_freeze',
+      before_state: current.status,
+      after_state: frozen.membership.status,
+      timestamp: new Date().toISOString(),
     },
     tenant_context: {
       gym_id: frozen.membership.gymId,
@@ -250,7 +361,29 @@ export async function cancelInstance(
     current.branchId ?? undefined
   );
   if (scopes.length === 0) throw new ForbiddenError('No tenant scope for membership cancellation');
-  await requirePermission(client, currentUser.user.id, scopes[0], 'members:write');
+  const scope = scopes[0];
+  await requirePermission(client, currentUser.user.id, scope, 'members:write');
+  const actor = await getActorContext(client, currentUser.user.id, scope);
+  const timestamp = new Date().toISOString();
+
+  await writeMembershipAudit(client, {
+    event_type: AUDIT_EVENT_TYPES.membership_cancellation,
+    actor_id: currentUser.user.id,
+    target_type: 'membership_instances',
+    target_id: current.id,
+    payload: {
+      membership_id: current.id,
+      cancelled_at: input.cancelledAt,
+      reason: input.reason,
+      actor_role: actor.actorRole,
+      tenant_id: current.gymId,
+      action: 'membership_cancellation',
+      before_state: current.status,
+      after_state: 'pending_cancellation',
+      timestamp,
+    },
+    tenant_context: { gym_id: current.gymId, branch_id: current.branchId ?? undefined },
+  });
 
   const cancelled = await cancelMembership(client, instanceId, input.cancelledAt);
 
@@ -263,6 +396,12 @@ export async function cancelInstance(
       membership_id: cancelled.membership.id,
       cancelled_at: input.cancelledAt,
       reason: input.reason,
+      actor_role: actor.actorRole,
+      tenant_id: cancelled.membership.gymId,
+      action: 'membership_cancellation',
+      before_state: current.status,
+      after_state: cancelled.membership.status,
+      timestamp: new Date().toISOString(),
     },
     tenant_context: {
       gym_id: cancelled.membership.gymId,
@@ -294,7 +433,9 @@ export async function validateInstanceAccess(
   );
   if (scopes.length === 0)
     throw new ForbiddenError('No tenant scope for membership access validation');
-  await requirePermission(client, currentUser.user.id, scopes[0], 'members:read');
+  const scope = scopes[0];
+  await requirePermission(client, currentUser.user.id, scope, 'members:read');
+  const actor = await getActorContext(client, currentUser.user.id, scope);
 
   const result = await validateMembershipAccess(client, instanceId, input.branchId, input.at);
 
@@ -308,6 +449,12 @@ export async function validateInstanceAccess(
         membership_id: instanceId,
         branch_id: input.branchId,
         reason: result.reason,
+        actor_role: actor.actorRole,
+        tenant_id: current.gymId,
+        action: 'membership_access_validation',
+        before_state: current.status,
+        after_state: result.status,
+        timestamp: new Date().toISOString(),
       },
       tenant_context: {
         gym_id: current.gymId,

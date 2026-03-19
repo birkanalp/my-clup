@@ -11,6 +11,7 @@ vi.mock('@myclup/supabase', async (importOriginal) => {
     resolveTenantScope: vi.fn(),
     requirePermission: vi.fn(),
     getMembershipInstance: vi.fn(),
+    listMembershipInstances: vi.fn(),
     assignMembershipInstance: vi.fn(),
     renewMembership: vi.fn(),
     freezeMembership: vi.fn(),
@@ -20,7 +21,13 @@ vi.mock('@myclup/supabase', async (importOriginal) => {
   };
 });
 
-import { assignInstance, cancelInstance, renewInstance, validateInstanceAccess } from './instances';
+import {
+  assignInstance,
+  cancelInstance,
+  listInstances,
+  renewInstance,
+  validateInstanceAccess,
+} from './instances';
 import * as supabase from '@myclup/supabase';
 
 const mockGetCurrentUser = vi.mocked(supabase.getCurrentUser);
@@ -28,6 +35,7 @@ const mockCreateServerClient = vi.mocked(supabase.createServerClient);
 const mockResolveTenantScope = vi.mocked(supabase.resolveTenantScope);
 const mockRequirePermission = vi.mocked(supabase.requirePermission);
 const mockGetMembershipInstance = vi.mocked(supabase.getMembershipInstance);
+const mockListMembershipInstances = vi.mocked(supabase.listMembershipInstances);
 const mockRenewMembership = vi.mocked(supabase.renewMembership);
 const mockCancelMembership = vi.mocked(supabase.cancelMembership);
 const mockValidateMembershipAccess = vi.mocked(supabase.validateMembershipAccess);
@@ -56,7 +64,14 @@ describe('membership instances server', () => {
     vi.clearAllMocks();
     vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://test.supabase.co');
     vi.stubEnv('SUPABASE_SERVICE_ROLE_KEY', 'service-role-key');
-    mockCreateServerClient.mockReturnValue({} as never);
+    const mockClient = {
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockResolvedValue({ data: [{ role: 'gym_manager', gym_id: validUuid }] }),
+        }),
+      }),
+    };
+    mockCreateServerClient.mockReturnValue(mockClient as never);
     mockGetCurrentUser.mockResolvedValue(mockUser);
     mockResolveTenantScope.mockResolvedValue([{ gymId: validUuid, branchId: null }]);
     mockRequirePermission.mockResolvedValue(undefined);
@@ -143,7 +158,7 @@ describe('membership instances server', () => {
     });
 
     expect(result?.cancelled).toBe(true);
-    expect(mockWriteAuditEvent).toHaveBeenCalled();
+    expect(mockWriteAuditEvent.mock.calls.length).toBeGreaterThanOrEqual(2);
   });
 
   it('writes denied-access audit on failed validation', async () => {
@@ -220,5 +235,26 @@ describe('membership instances server', () => {
 
     expect(mockRequirePermission).toHaveBeenCalled();
     expect(mockRenewMembership).toHaveBeenCalled();
+  });
+
+  it('writes cross-tenant audit for platform admin membership reads', async () => {
+    mockCreateServerClient.mockReturnValue({
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockResolvedValue({ data: [{ role: 'platform_admin', gym_id: null }] }),
+        }),
+      }),
+    } as never);
+    mockListMembershipInstances.mockResolvedValue({ items: [], nextCursor: null });
+
+    const req = new NextRequest(
+      `http://localhost/api/v1/memberships/instances?gymId=${validUuid}&limit=20`
+    );
+    await listInstances(req);
+
+    const crossTenantCall = mockWriteAuditEvent.mock.calls.find(
+      ([, payload]) => payload.event_type === supabase.AUDIT_EVENT_TYPES.cross_tenant_support
+    );
+    expect(crossTenantCall).toBeDefined();
   });
 });

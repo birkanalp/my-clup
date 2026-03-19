@@ -11,6 +11,15 @@ import type { AuditEventType } from './event-types';
 /** UUID string format */
 const uuidSchema = z.string().uuid();
 
+const auditMetadataSchema = z.object({
+  actor_role: z.string().optional(),
+  tenant_id: uuidSchema.optional(),
+  action: z.string().optional(),
+  before_state: z.string().optional(),
+  after_state: z.string().optional(),
+  timestamp: z.string().optional(),
+});
+
 /** Role change: assignment modified (e.g. user_role_assignments, gym_staff) */
 export const roleChangePayloadSchema = z.object({
   assignment_type: z.enum(['user_role_assignments', 'gym_staff']),
@@ -20,61 +29,77 @@ export const roleChangePayloadSchema = z.object({
 });
 
 /** Billing override: manual override of billing state */
-export const billingOverridePayloadSchema = z.object({
-  subscription_id: z.string().optional(),
-  previous_state: z.string().optional(),
-  new_state: z.string(),
-  reason: z.string().optional(),
-});
+export const billingOverridePayloadSchema = z
+  .object({
+    subscription_id: z.string().optional(),
+    previous_state: z.string().optional(),
+    new_state: z.string(),
+    reason: z.string().optional(),
+  })
+  .merge(auditMetadataSchema);
 
 /** Membership extension: manual extension of membership validity */
-export const membershipExtensionPayloadSchema = z.object({
-  membership_id: uuidSchema,
-  previous_end_at: z.string().optional(),
-  new_end_at: z.string(),
-  reason: z.string().optional(),
-});
+export const membershipExtensionPayloadSchema = z
+  .object({
+    membership_id: uuidSchema,
+    previous_end_at: z.string().optional(),
+    new_end_at: z.string(),
+    reason: z.string().optional(),
+  })
+  .merge(auditMetadataSchema);
 
-export const membershipAssignmentPayloadSchema = z.object({
-  membership_id: uuidSchema,
-  member_id: uuidSchema,
-  plan_id: uuidSchema,
-  valid_from: z.string(),
-  valid_until: z.string().nullable(),
-});
+export const membershipAssignmentPayloadSchema = z
+  .object({
+    membership_id: uuidSchema,
+    member_id: uuidSchema,
+    plan_id: uuidSchema,
+    valid_from: z.string(),
+    valid_until: z.string().nullable(),
+  })
+  .merge(auditMetadataSchema);
 
-export const membershipRenewalPayloadSchema = z.object({
-  membership_id: uuidSchema,
-  previous_end_at: z.string().nullable(),
-  new_end_at: z.string(),
-  added_session_count: z.number().int().nonnegative().optional(),
-});
+export const membershipRenewalPayloadSchema = z
+  .object({
+    membership_id: uuidSchema,
+    previous_end_at: z.string().nullable(),
+    new_end_at: z.string(),
+    added_session_count: z.number().int().nonnegative().optional(),
+  })
+  .merge(auditMetadataSchema);
 
-export const membershipFreezePayloadSchema = z.object({
-  membership_id: uuidSchema,
-  freeze_start_at: z.string(),
-  freeze_end_at: z.string(),
-  reason: z.string().optional(),
-});
+export const membershipFreezePayloadSchema = z
+  .object({
+    membership_id: uuidSchema,
+    freeze_start_at: z.string(),
+    freeze_end_at: z.string(),
+    reason: z.string().optional(),
+  })
+  .merge(auditMetadataSchema);
 
-export const membershipCancellationPayloadSchema = z.object({
-  membership_id: uuidSchema,
-  cancelled_at: z.string(),
-  reason: z.string().optional(),
-});
+export const membershipCancellationPayloadSchema = z
+  .object({
+    membership_id: uuidSchema,
+    cancelled_at: z.string(),
+    reason: z.string().optional(),
+  })
+  .merge(auditMetadataSchema);
 
-export const membershipAccessDeniedPayloadSchema = z.object({
-  membership_id: uuidSchema,
-  branch_id: uuidSchema,
-  reason: z.enum(['expired', 'cancelled', 'frozen', 'branch_not_entitled']),
-});
+export const membershipAccessDeniedPayloadSchema = z
+  .object({
+    membership_id: uuidSchema,
+    branch_id: uuidSchema,
+    reason: z.enum(['expired', 'cancelled', 'frozen', 'branch_not_entitled']),
+  })
+  .merge(auditMetadataSchema);
 
 /** Refund: refund processed */
-export const refundPayloadSchema = z.object({
-  payment_id: z.string().optional(),
-  amount_cents: z.number().int().nonnegative().optional(),
-  reason: z.string().optional(),
-});
+export const refundPayloadSchema = z
+  .object({
+    payment_id: z.string().optional(),
+    amount_cents: z.number().int().nonnegative().optional(),
+    reason: z.string().optional(),
+  })
+  .merge(auditMetadataSchema);
 
 /** Admin impersonation: platform/admin impersonates another user */
 export const adminImpersonationPayloadSchema = z.object({
@@ -83,12 +108,14 @@ export const adminImpersonationPayloadSchema = z.object({
 });
 
 /** Cross-tenant support: platform support accesses another tenant */
-export const crossTenantSupportPayloadSchema = z.object({
-  target_gym_id: uuidSchema,
-  target_branch_id: uuidSchema.optional(),
-  action: z.string(),
-  reason: z.string().optional(),
-});
+export const crossTenantSupportPayloadSchema = z
+  .object({
+    target_gym_id: uuidSchema,
+    target_branch_id: uuidSchema.optional(),
+    action: z.string(),
+    reason: z.string().optional(),
+  })
+  .merge(auditMetadataSchema.omit({ action: true }));
 
 /** Chat assignment: staff assignment or reassignment of conversation */
 export const chatAssignmentPayloadSchema = z.object({
