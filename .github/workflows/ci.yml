@@ -26,9 +26,8 @@ jobs:
       - name: Install dependencies
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
-        run: |
-          pnpm config set network-concurrency 2
-          pnpm install --frozen-lockfile
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
         run: pnpm run lint
