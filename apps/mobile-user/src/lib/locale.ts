@@ -2,9 +2,9 @@
  * Locale detection: device locale → SupportedLocale.
  * Uses expo-localization and isValidLocale from @myclup/utils.
  */
-import * as Localization from "expo-localization";
-import { DEFAULT_LOCALE, type SupportedLocale } from "@myclup/types";
-import { isValidLocale } from "@myclup/utils";
+import * as Localization from 'expo-localization';
+import { DEFAULT_LOCALE, type SupportedLocale } from '@myclup/types';
+import { isValidLocale } from '@myclup/utils';
 
 /**
  * Map device locale to SupportedLocale.
@@ -19,7 +19,7 @@ export function detectDeviceLocale(): SupportedLocale {
   // Try language tag (e.g. "tr-TR") — extract base language
   const tag = deviceLocales[0]?.languageTag;
   if (tag) {
-    const base = tag.split("-")[0];
+    const base = tag.split('-')[0];
     if (base && isValidLocale(base)) {
       return base as SupportedLocale;
     }

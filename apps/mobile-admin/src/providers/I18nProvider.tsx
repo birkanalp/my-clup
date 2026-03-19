@@ -2,9 +2,9 @@
  * I18nProvider — initializes i18next before rendering.
  * Ensures no flash of untranslated content.
  */
-import React, { Suspense, useEffect, useState } from "react";
-import { I18nextProvider } from "react-i18next";
-import { initI18n, i18n } from "../lib/i18n";
+import React, { Suspense, useEffect, useState } from 'react';
+import { I18nextProvider } from 'react-i18next';
+import { initI18n, i18n } from '../lib/i18n';
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
