@@ -277,6 +277,12 @@ export function HomeDashboardScreen() {
             <AppText variant="body" tone="muted">
               {tCommon('notificationsDashboard.body')}
             </AppText>
+            <AppButton
+              label={tCommon('cta.openNotifications')}
+              icon="bell-badge-outline"
+              variant="secondary"
+              onPress={() => router.push('/notifications')}
+            />
           </Card>
         </View>
       </ScrollView>

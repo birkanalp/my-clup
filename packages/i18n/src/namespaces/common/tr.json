@@ -83,8 +83,47 @@
   "cta": {
     "openMembership": "Üyeliği aç",
     "openChat": "Sohbeti aç",
+    "openNotifications": "Bildirimleri aç",
+    "openProfile": "Profili aç",
     "renewNow": "Şimdi yenile",
     "retry": "Tekrar dene"
+  },
+  "notifications": {
+    "heroTitle": "Bildirimler ve hatırlatıcılar",
+    "heroSubtitle": "Şu anda ilgilenmeniz gerekenleri ve teslimat kanalları açıldığında burada görünecek alanları tek yerde görün.",
+    "centerTitle": "Üye sinyal merkezi",
+    "centerSubtitle": "Güncel hatırlatıcılar mevcut üyelik ve sohbet verilerinden gelir. Gelecekteki transport destekli uyarılar açık yer tutucular olarak kalır.",
+    "loadingTitle": "Bildirimler yükleniyor...",
+    "loadingBody": "Üyelik aciliyeti ve okunmamış görüşmeler kontrol ediliyor.",
+    "errorTitle": "Bildirimler yüklenemedi",
+    "errorBody": "En son üye sinyallerini yenilemek için tekrar deneyin.",
+    "membershipExpiredTitle": "Üyelik süresi doldu",
+    "membershipExpiredBody": "Erişimi geri kazanmak ve üye yüzeyini güncel tutmak için şimdi yenileyin.",
+    "membershipExpiringTitle": "Üyelik yenileme zamanı yaklaşıyor",
+    "membershipExpiringBody": "Kesinti yaşamamak için erişim penceresi kapanmadan yenileyin.",
+    "chatUnreadTitle": "Okunmamış sohbet takibi",
+    "chatUnreadBodySingle": "Son görüşmede sizi bekleyen {{count}} okunmamış mesaj var.",
+    "chatUnreadBodyMany": "Aktif görüşmelerde toplam {{count}} okunmamış mesaj var.",
+    "caughtUpTitle": "Her şey güncel",
+    "caughtUpBody": "Şu anda acil üye hatırlatıcısı yok. Bu merkez gelecekteki uyarıları tek yerde toplayacak.",
+    "bookingPlaceholderTitle": "Rezervasyon hatırlatıcıları",
+    "bookingPlaceholderBody": "Rezervasyon yüzeyi bağlandığında ders hatırlatmaları ve bekleme listesi uyarıları burada görünecek.",
+    "updatesPlaceholderTitle": "Push ve kampanya uyarıları",
+    "updatesPlaceholderBody": "Push, kampanya ve uygulama güncelleme uyarıları teslimat transport'u etkinleşene kadar yer tutucu olarak kalır.",
+    "quickLinksTitle": "Akışı sürdür",
+    "quickLinksSubtitle": "Bu hatırlatıcılarla bağlantılı üye yüzeylerine doğrudan geçin.",
+    "stats": {
+      "unreadMessages": "Okunmamış mesaj",
+      "actionNeeded": "Aksiyon gerekli",
+      "clear": "Temiz",
+      "membership": "Üyelik"
+    },
+    "status": {
+      "primary": "Aktif sinyal",
+      "success": "Güncel",
+      "warning": "Aksiyon gerekli",
+      "neutral": "Sıradaki"
+    }
   },
   "profile": {
     "title": "Profil ve ayarlar",
