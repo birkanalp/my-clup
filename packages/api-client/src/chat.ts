@@ -10,6 +10,7 @@
 
 import type {
   AssignConversationInput,
+  ChatSubscribeResponse,
   Conversation,
   ConversationAssignment,
   CreateConversationInput,
@@ -35,6 +36,7 @@ import {
   markReadContract,
   sendMessageContract,
   sendTemplateContract,
+  validateChatSubscribeContract,
 } from '@myclup/contracts/chat';
 import type { ApiContract } from './client';
 import type { RequestOptions } from './client';
@@ -105,6 +107,18 @@ export function createChatApi(request: RequestFn) {
           >,
           input,
           { pathParams: { id: conversationId } }
+        );
+      },
+
+      /**
+       * GET /api/v1/chat/conversations/:id/subscribe
+       * Validate subscription and return channel params for Supabase Realtime.
+       */
+      async subscribe(id: string): Promise<ChatSubscribeResponse> {
+        return request(
+          validateChatSubscribeContract as ApiContract<unknown, ChatSubscribeResponse>,
+          undefined,
+          { pathParams: { id } }
         );
       },
     },

@@ -1,4 +1,25 @@
 {
+  "list": {
+    "title": "Chat",
+    "empty": "No conversations yet",
+    "loading": "Loading...",
+    "error": "Failed to load",
+    "filterAll": "All",
+    "filterUnread": "Unread",
+    "filterAssigned": "Assigned to me"
+  },
+  "nav": {
+    "chatCenter": "Chat Center"
+  },
+  "conversation": {
+    "withGym": "Gym support",
+    "withInstructor": "Instructor",
+    "direct": "Direct message"
+  },
+  "assignment": {
+    "label": "Assigned to",
+    "unassigned": "Unassigned"
+  },
   "input": {
     "placeholder": "Type a message...",
     "send": "Send"

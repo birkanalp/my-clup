@@ -1,4 +1,25 @@
 {
+  "list": {
+    "title": "Sohbet",
+    "empty": "Henüz konuşma yok",
+    "loading": "Yükleniyor...",
+    "error": "Yüklenemedi",
+    "filterAll": "Tümü",
+    "filterUnread": "Okunmamış",
+    "filterAssigned": "Bana atanan"
+  },
+  "nav": {
+    "chatCenter": "Sohbet Merkezi"
+  },
+  "conversation": {
+    "withGym": "Salon desteği",
+    "withInstructor": "Antrenör",
+    "direct": "Doğrudan mesaj"
+  },
+  "assignment": {
+    "label": "Atanan",
+    "unassigned": "Atanmamış"
+  },
   "input": {
     "placeholder": "Mesaj yazın...",
     "send": "Gönder"

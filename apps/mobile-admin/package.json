@@ -12,10 +12,13 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@myclup/api-client": "workspace:*",
+    "@myclup/contracts": "workspace:*",
     "@myclup/i18n": "workspace:*",
     "@myclup/types": "workspace:*",
     "@myclup/ui-native": "workspace:*",
     "@myclup/utils": "workspace:*",
+    "@supabase/supabase-js": "^2.47.0",
     "@react-native-async-storage/async-storage": "1.23.1",
     "expo": "~52.0.0",
     "expo-localization": "~16.0.0",
