@@ -4,8 +4,8 @@
  * Used for API requests that accept locale (e.g. Accept-Language, query param)
  * and for localized content structures.
  */
-import { z } from "zod";
-import { SUPPORTED_LOCALES, type SupportedLocale } from "@myclup/types";
+import { z } from 'zod';
+import { SUPPORTED_LOCALES, type SupportedLocale } from '@myclup/types';
 
 const supportedLocaleEnum = z.enum(
   SUPPORTED_LOCALES as unknown as [SupportedLocale, ...SupportedLocale[]]
