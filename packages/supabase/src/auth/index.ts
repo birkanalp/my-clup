@@ -33,6 +33,7 @@ export {
   checkPermission,
   requirePermission,
   ForbiddenError,
+  NotFoundError,
   ROLE_PERMISSIONS,
   type AnyRole,
 } from './permissions';
