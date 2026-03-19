@@ -3,7 +3,12 @@ import type { MembershipPlan } from '@myclup/api-client';
 import { useTranslation } from 'react-i18next';
 import { api } from '../../lib/api';
 import { useCurrentUser } from '../chat/useCurrentUser';
-import { calculateRenewalDates, isExpiringSoon, pickPreferredMembership, resolveSupportedLocale } from './helpers';
+import {
+  calculateRenewalDates,
+  isExpiringSoon,
+  pickPreferredMembership,
+  resolveSupportedLocale,
+} from './helpers';
 import type { MembershipScreenData, RenewalReason, RenewalSubmissionResult } from './types';
 
 function determineRenewalReason(validUntil: string | null): RenewalReason {
@@ -22,7 +27,10 @@ function determineRenewalReason(validUntil: string | null): RenewalReason {
 export function useMembership() {
   const memberId = useCurrentUser();
   const { i18n } = useTranslation('membership');
-  const locale = useMemo(() => resolveSupportedLocale(i18n.resolvedLanguage), [i18n.resolvedLanguage]);
+  const locale = useMemo(
+    () => resolveSupportedLocale(i18n.resolvedLanguage),
+    [i18n.resolvedLanguage]
+  );
   const [data, setData] = useState<MembershipScreenData>({
     locale,
     memberId,
@@ -124,7 +132,10 @@ export function useMembership() {
 
       setRenewing(true);
       try {
-        const { renewedUntil, addedSessions } = calculateRenewalDates(data.membership, selectedPlan);
+        const { renewedUntil, addedSessions } = calculateRenewalDates(
+          data.membership,
+          selectedPlan
+        );
         const result = await api.membership.renewMembership(data.membership.id, {
           membershipInstanceId: data.membership.id,
           renewedUntil,
@@ -160,7 +171,11 @@ export function useMembership() {
       return data.renewalOptions[0] ?? null;
     }
 
-    return data.renewalOptions.find((item) => item.id === data.plan?.id) ?? data.renewalOptions[0] ?? null;
+    return (
+      data.renewalOptions.find((item) => item.id === data.plan?.id) ??
+      data.renewalOptions[0] ??
+      null
+    );
   }, [data.plan, data.renewalOptions]);
 
   return {

@@ -5,9 +5,19 @@ import { MembershipCard } from './MembershipCard';
 import type { MembershipScreenData } from './types';
 
 vi.mock('react-native', () => {
-  const createComponent = (tag: 'div' | 'span' | 'button') =>
-    ({ children, onPress, testID, accessibilityRole, ...props }: any) =>
-      React.createElement(
+  type MockProps = {
+    accessibilityRole?: string;
+    children?: React.ReactNode;
+    onPress?: () => void;
+    testID?: string;
+  } & Record<string, unknown>;
+
+  const createComponent =
+    (tag: 'div' | 'span' | 'button') =>
+    ({ children, onPress, testID, ...props }: MockProps) => {
+      delete props.accessibilityRole;
+
+      return React.createElement(
         tag,
         {
           ...props,
@@ -16,6 +26,7 @@ vi.mock('react-native', () => {
         },
         children as React.ReactNode
       );
+    };
 
   return {
     Pressable: createComponent('button'),

@@ -14,7 +14,9 @@ export function RenewMembershipScreen() {
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
   const selectedPlan =
-    data.renewalOptions.find((plan) => plan.id === selectedPlanId) ?? data.renewalOptions[0] ?? null;
+    data.renewalOptions.find((plan) => plan.id === selectedPlanId) ??
+    data.renewalOptions[0] ??
+    null;
   const preview = useMemo(() => {
     if (!data.membership || !selectedPlan) {
       return null;
@@ -36,7 +38,11 @@ export function RenewMembershipScreen() {
     return (
       <View style={styles.centeredState}>
         <Text style={styles.stateText}>{t('state.errorMembership')}</Text>
-        <Pressable accessibilityRole="button" onPress={() => void refresh()} style={styles.submitButton}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => void refresh()}
+          style={styles.submitButton}
+        >
           <Text style={styles.submitButtonText}>{t('cta.retry')}</Text>
         </Pressable>
       </View>

@@ -34,7 +34,7 @@ export function usePaymentHistory() {
         })
         .map((payment) => ({
           payment,
-          invoice: payment.invoiceId ? invoiceById.get(payment.invoiceId) ?? null : null,
+          invoice: payment.invoiceId ? (invoiceById.get(payment.invoiceId) ?? null) : null,
         }));
 
       setItems(nextItems);
@@ -52,9 +52,7 @@ export function usePaymentHistory() {
 
   const invoices = useMemo(
     () =>
-      items
-        .map((item) => item.invoice)
-        .filter((invoice): invoice is Invoice => invoice !== null),
+      items.map((item) => item.invoice).filter((invoice): invoice is Invoice => invoice !== null),
     [items]
   );
 

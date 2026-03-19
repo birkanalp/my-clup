@@ -11,11 +11,7 @@ interface PaymentHistoryListProps {
   onSelectInvoice: (invoiceId: string) => void;
 }
 
-export function PaymentHistoryList({
-  items,
-  locale,
-  onSelectInvoice,
-}: PaymentHistoryListProps) {
+export function PaymentHistoryList({ items, locale, onSelectInvoice }: PaymentHistoryListProps) {
   const { t } = useTranslation('membership');
 
   if (items.length === 0) {

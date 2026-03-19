@@ -13,9 +13,7 @@ export function resolveSupportedLocale(language?: string): SupportedLocale {
   return language === 'tr' ? 'tr' : 'en';
 }
 
-export function pickPreferredMembership(
-  items: MembershipInstance[]
-): MembershipInstance | null {
+export function pickPreferredMembership(items: MembershipInstance[]): MembershipInstance | null {
   return (
     [...items].sort((left, right) => {
       const priorityDifference =

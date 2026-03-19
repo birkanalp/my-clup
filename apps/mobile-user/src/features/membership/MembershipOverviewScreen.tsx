@@ -22,7 +22,11 @@ export function MembershipOverviewScreen() {
     return (
       <View style={styles.centeredState}>
         <Text style={styles.stateText}>{t('state.errorMembership')}</Text>
-        <Pressable accessibilityRole="button" onPress={() => void refresh()} style={styles.retryButton}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => void refresh()}
+          style={styles.retryButton}
+        >
           <Text style={styles.retryButtonText}>{t('cta.retry')}</Text>
         </Pressable>
       </View>
@@ -42,7 +46,9 @@ export function MembershipOverviewScreen() {
           {data.renewalReason ? (
             <View style={styles.noticeBanner}>
               <Text style={styles.noticeText}>
-                {data.renewalReason === 'expired' ? t('message.expired') : t('message.expiringSoon')}
+                {data.renewalReason === 'expired'
+                  ? t('message.expired')
+                  : t('message.expiringSoon')}
               </Text>
             </View>
           ) : null}
