@@ -4,6 +4,8 @@ import { getMessages } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import { routing } from '@/src/i18n/routing';
 import { AppLanguageSwitcher } from '@/src/components/AppLanguageSwitcher';
+import { ChatApiProvider } from '@/src/contexts/ChatApiContext';
+import { ChatNav } from '@/src/components/ChatNav';
 
 type Props = {
   children: React.ReactNode;
@@ -26,10 +28,13 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <header style={{ padding: '0.5rem 1rem', borderBottom: '1px solid #eee' }}>
-        <AppLanguageSwitcher />
-      </header>
-      <>{children}</>
+      <ChatApiProvider>
+        <header style={{ padding: '0.5rem 1rem', borderBottom: '1px solid #eee' }}>
+          <AppLanguageSwitcher />
+          <ChatNav />
+        </header>
+        <>{children}</>
+      </ChatApiProvider>
     </NextIntlClientProvider>
   );
 }
