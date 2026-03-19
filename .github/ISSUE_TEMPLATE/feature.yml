@@ -1,7 +1,7 @@
 name: Feature
 description: Structured implementation issue for new feature work
-title: "Feature: "
-labels: ["state:proposed", "type:feature"]
+title: 'Feature: '
+labels: ['state:proposed', 'type:feature']
 body:
   - type: input
     id: summary

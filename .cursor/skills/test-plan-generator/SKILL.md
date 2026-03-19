@@ -11,13 +11,13 @@ Given a feature scope, produce a test plan covering unit, integration, E2E, and 
 
 ## Test Categories
 
-| Category | Scope | Tool |
-|----------|-------|------|
-| **Unit** | Shared utilities, schemas, parsing, domain logic | Jest |
+| Category        | Scope                                                        | Tool                               |
+| --------------- | ------------------------------------------------------------ | ---------------------------------- |
+| **Unit**        | Shared utilities, schemas, parsing, domain logic             | Jest                               |
 | **Integration** | Auth, permissions, memberships, bookings, chat, tenant flows | Test framework + Supabase fixtures |
-| **E2E** | Critical web journeys | Playwright |
-| **Mobile** | Component and flow tests | React Native Testing Library |
-| **RLS** | Cross-tenant denial, tenant isolation | RLS verification tests |
+| **E2E**         | Critical web journeys                                        | Playwright                         |
+| **Mobile**      | Component and flow tests                                     | React Native Testing Library       |
+| **RLS**         | Cross-tenant denial, tenant isolation                        | RLS verification tests             |
 
 ## Output Template
 
@@ -36,27 +36,27 @@ Emit this structure for each feature:
 
 ## Unit Tests
 
-| Test case | Description | Expected outcome |
-|-----------|-------------|------------------|
-| [name] | [what it tests] | [pass condition] |
+| Test case | Description     | Expected outcome |
+| --------- | --------------- | ---------------- |
+| [name]    | [what it tests] | [pass condition] |
 
 ## Integration Tests
 
-| Test case | Description | Expected outcome |
-|-----------|-------------|------------------|
-| [name] | [what it tests] | [pass condition] |
+| Test case | Description     | Expected outcome |
+| --------- | --------------- | ---------------- |
+| [name]    | [what it tests] | [pass condition] |
 
 ## E2E Tests
 
-| Test case | Description | Expected outcome |
-|-----------|-------------|------------------|
-| [name] | [critical journey] | [pass condition] |
+| Test case | Description        | Expected outcome |
+| --------- | ------------------ | ---------------- |
+| [name]    | [critical journey] | [pass condition] |
 
 ## RLS Security Tests
 
-| Test case | Description | Expected outcome |
-|-----------|-------------|------------------|
-| [name] | [cross-tenant scenario] | Access denied |
+| Test case | Description             | Expected outcome |
+| --------- | ----------------------- | ---------------- |
+| [name]    | [cross-tenant scenario] | Access denied    |
 
 ## Edge Cases
 

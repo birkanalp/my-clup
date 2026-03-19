@@ -19,13 +19,13 @@ Convert a feature description into a precise engineering scope. Output must stay
 
 Use only this canonical label set:
 
-| Dimension | Allowed values |
-|-----------|----------------|
-| owner | `owner:orchestrator`, `owner:pm`, `owner:architect`, `owner:backend`, `owner:web`, `owner:mobile`, `owner:ai`, `owner:qa`, `owner:review`, `owner:release` |
-| state | `state:proposed`, `state:clarified`, `state:scoped`, `state:assigned`, `state:in-progress`, `state:implemented`, `state:tested`, `state:reviewed`, `state:approved`, `state:integrated`, `state:done`, `state:blocked` |
-| type | `type:feature`, `type:bug`, `type:tech-debt`, `type:docs`, `type:infra` |
-| priority | `priority:p0`, `priority:p1`, `priority:p2` |
-| surface | `surface:mobile-user`, `surface:mobile-admin`, `surface:web-gym-admin`, `surface:web-platform-admin`, `surface:web-site`, `surface:shared` |
+| Dimension | Allowed values                                                                                                                                                                                                         |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| owner     | `owner:orchestrator`, `owner:pm`, `owner:architect`, `owner:backend`, `owner:web`, `owner:mobile`, `owner:ai`, `owner:qa`, `owner:review`, `owner:release`                                                             |
+| state     | `state:proposed`, `state:clarified`, `state:scoped`, `state:assigned`, `state:in-progress`, `state:implemented`, `state:tested`, `state:reviewed`, `state:approved`, `state:integrated`, `state:done`, `state:blocked` |
+| type      | `type:feature`, `type:bug`, `type:tech-debt`, `type:docs`, `type:infra`                                                                                                                                                |
+| priority  | `priority:p0`, `priority:p1`, `priority:p2`                                                                                                                                                                            |
+| surface   | `surface:mobile-user`, `surface:mobile-admin`, `surface:web-gym-admin`, `surface:web-platform-admin`, `surface:web-site`, `surface:shared`                                                                             |
 
 ## Output Structure
 

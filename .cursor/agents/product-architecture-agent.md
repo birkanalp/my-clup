@@ -42,15 +42,15 @@ Review issues before worker implementation when changes affect:
 
 ## Package Ownership (from technical plan)
 
-| Package | Owns |
-|---------|------|
-| contracts | API schemas, validation, request/response contracts |
-| types | Shared domain types |
-| api-client | Typed API access |
-| utils | Framework-agnostic helpers |
-| ui-web | Web UI components, presentation primitives |
-| ui-native | Native UI components, presentation primitives |
-| supabase | DB types, clients, RLS, server helpers |
+| Package    | Owns                                                |
+| ---------- | --------------------------------------------------- |
+| contracts  | API schemas, validation, request/response contracts |
+| types      | Shared domain types                                 |
+| api-client | Typed API access                                    |
+| utils      | Framework-agnostic helpers                          |
+| ui-web     | Web UI components, presentation primitives          |
+| ui-native  | Native UI components, presentation primitives       |
+| supabase   | DB types, clients, RLS, server helpers              |
 
 **Boundary rules**: No app may redefine shared contracts locally. No app may copy shared types into local folders. Business logic must not live in UI-only layers.
 
@@ -93,18 +93,23 @@ Mark issues `state:blocked` when architecture prerequisites are unresolved.
 **Status**: [Approved | Blocked | Needs clarification]
 
 ### Boundary implications
+
 [Which packages/apps are affected; ownership]
 
 ### Contract ownership
+
 [Which contracts; who owns them]
 
 ### Integration points
+
 [How components connect; dependencies]
 
 ### Constraints
+
 [Technical plan constraints that apply]
 
 ### Blockers (if any)
+
 [What must be resolved before implementation]
 ```
 

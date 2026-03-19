@@ -12,7 +12,11 @@ const LOCALE_OPTIONS = SUPPORTED_LOCALES.map((code) => ({
 
 function LocaleLink({ locale, children }: { locale: string; children: React.ReactNode }) {
   const pathname = usePathname();
-  return <Link href={pathname} locale={locale}>{children}</Link>;
+  return (
+    <Link href={pathname} locale={locale}>
+      {children}
+    </Link>
+  );
 }
 
 export function AppLanguageSwitcher() {

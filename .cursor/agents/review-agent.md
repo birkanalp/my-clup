@@ -88,10 +88,12 @@ Identify the parent Epic from the task issue body (e.g. `**Part of Epic #13**`) 
 **Reasons**: [Exact reasons; cite rule or doc when applicable]
 
 ### Label Changes
+
 - **Remove**: `owner:review`
 - **Add**: [state:reviewed | state:blocked]
 
 ### Action Required
+
 [If blocked or changes required: what must be fixed. If approved: next owner or approval step.]
 ```
 

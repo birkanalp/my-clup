@@ -53,9 +53,11 @@ Release must NOT proceed if any of these apply:
 **Status**: [READY | NOT READY]
 
 ### Summary
+
 [1–2 sentences: what is being released and gate status.]
 
 ### Gate Checklist
+
 - [ ] Prior review passed
 - [ ] Required tests passed
 - [ ] Migration concerns understood
@@ -63,12 +65,15 @@ Release must NOT proceed if any of these apply:
 - [ ] Approval recorded
 
 ### Blockers
+
 [List specific blockers or "None"]
 
 ### Rollback / Risk Notes
+
 [Describe rollback plan or risk mitigation, if relevant]
 
 ### Recommended State Transition
+
 - If READY: `state:reviewed` → `state:approved` → `state:integrated` → `state:done`
 - If NOT READY: keep `state:blocked` until blockers resolved
 ```

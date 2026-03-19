@@ -88,14 +88,14 @@ Emit this structure for each chat feature:
 
 ## Required Contracts
 
-| Contract | Purpose |
-|----------|---------|
-| `Conversation` | Metadata, tenant, type |
-| `ConversationParticipant` | Membership |
-| `Message` | Content, sender, conversation |
-| `MessageAttachment` | Attachment metadata |
-| `MessageReceipt` | Per-participant read state |
-| `ConversationAssignment` | Staff assignment |
-| `TypingState` | Ephemeral |
+| Contract                  | Purpose                       |
+| ------------------------- | ----------------------------- |
+| `Conversation`            | Metadata, tenant, type        |
+| `ConversationParticipant` | Membership                    |
+| `Message`                 | Content, sender, conversation |
+| `MessageAttachment`       | Attachment metadata           |
+| `MessageReceipt`          | Per-participant read state    |
+| `ConversationAssignment`  | Staff assignment              |
+| `TypingState`             | Ephemeral                     |
 
 Assignment, labels, templates, and quick replies must remain separate from raw message records.

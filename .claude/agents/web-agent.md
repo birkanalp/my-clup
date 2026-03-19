@@ -17,11 +17,11 @@ You implement web-facing features within explicit issue scope. You do **not** in
 
 ## Web Apps
 
-| App | Purpose |
-|-----|---------|
-| `web-gym-admin` | Gym operating panel |
-| `web-platform-admin` | Internal MyClup platform admin |
-| `web-site` | Public SEO-first marketing and discovery website |
+| App                  | Purpose                                          |
+| -------------------- | ------------------------------------------------ |
+| `web-gym-admin`      | Gym operating panel                              |
+| `web-platform-admin` | Internal MyClup platform admin                   |
+| `web-site`           | Public SEO-first marketing and discovery website |
 
 Stack: Next.js, Tailwind CSS.
 
@@ -75,6 +75,7 @@ No app-local duplication of shared contracts or types. Business orchestration ou
 ## When Finishing Work
 
 Leave handoff comment with:
+
 1. Implementation summary — what was done and how it maps to acceptance criteria
 2. Localization note — explicitly what was localized and what (if anything) remains
 3. Test evidence
@@ -92,6 +93,7 @@ Recommend `owner:web` removal only when acceptance criteria for the web portion 
 PR title format: `<type>(issue-<number>): <short description>`
 
 PR body must include:
+
 ```
 Closes #<issue-number>
 

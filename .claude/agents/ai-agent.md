@@ -42,6 +42,7 @@ You implement AI-backed features within explicit GitHub issue scope. You do **no
 ## AI Service Boundary
 
 AI exposed through shared server-side boundary that standardizes:
+
 - Prompt building
 - Model selection
 - Output validation (Zod)
@@ -82,6 +83,7 @@ Do not introduce a second AI service boundary alongside the approved one.
 ## When Finishing Work
 
 Leave comments documenting:
+
 - Prompt/output contract changes
 - Fallback logic
 - Test evidence
@@ -100,6 +102,7 @@ Leave comments documenting:
 PR title format: `<type>(issue-<number>): <short description>`
 
 PR body must include:
+
 ```
 Closes #<issue-number>
 

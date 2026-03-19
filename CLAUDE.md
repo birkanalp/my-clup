@@ -53,15 +53,15 @@ apps/
 
 ### Shared package ownership
 
-| Package | Owns — strictly |
-|---------|-----------------|
-| `packages/contracts` | API schemas, Zod validation, request/response contracts |
-| `packages/types` | Framework-agnostic domain types |
-| `packages/api-client` | The single shared network client — never bypass or duplicate |
-| `packages/utils` | Pure, framework-agnostic helpers and formatters |
-| `packages/ui-web` | Web presentation primitives — no business logic, no API calls |
-| `packages/ui-native` | Native presentation primitives — no business logic, no tenant checks |
-| `packages/supabase` | DB types, shared clients, RLS helpers, server helpers |
+| Package               | Owns — strictly                                                      |
+| --------------------- | -------------------------------------------------------------------- |
+| `packages/contracts`  | API schemas, Zod validation, request/response contracts              |
+| `packages/types`      | Framework-agnostic domain types                                      |
+| `packages/api-client` | The single shared network client — never bypass or duplicate         |
+| `packages/utils`      | Pure, framework-agnostic helpers and formatters                      |
+| `packages/ui-web`     | Web presentation primitives — no business logic, no API calls        |
+| `packages/ui-native`  | Native presentation primitives — no business logic, no tenant checks |
+| `packages/supabase`   | DB types, shared clients, RLS helpers, server helpers                |
 
 ### Hard rules
 
@@ -83,6 +83,7 @@ When web, mobile, and backend share an API boundary:
 3. Forms validate against shared Zod schemas — never local redefinitions
 
 **Contract change checklist** — all must happen together:
+
 - [ ] Schema updated in `packages/contracts` (or type in `packages/types`)
 - [ ] Server/API implementation updated
 - [ ] Typed client in `packages/api-client` updated
@@ -104,6 +105,7 @@ When web, mobile, and backend share an API boundary:
 role changes, billing overrides, membership manual extension, refunds, admin impersonation, cross-tenant support access
 
 **Server check sequence before any write or elevated op:**
+
 1. Verify `user.id` (Supabase identity)
 2. Verify tenant scope (gym, branch) and user access
 3. Verify role permits the action
@@ -123,6 +125,7 @@ Every client-facing feature is incomplete without localization. This applies to:
 - Consider RTL layout readiness in component design even if v1 is LTR-first
 
 **Localization review checklist** (before a client-facing task is done):
+
 - [ ] No hardcoded strings in screens, pages, or shared components
 - [ ] Translation keys exist for all new user-facing text
 - [ ] Locale-aware formatting for dates, times, numbers, currencies, units
@@ -145,6 +148,7 @@ Chat is a flagship capability, not a side feature. Any chat-related change must 
 - **Membership validation**: required before message access
 
 **Block merge if:**
+
 - Tenant isolation is missing on conversation or message access
 - Message creation is not idempotent
 - Read state or permission checks are missing
@@ -163,6 +167,7 @@ Chat is a flagship capability, not a side feature. Any chat-related change must 
 - Logging and tracing are required on every AI call
 
 **AI implementation checklist:**
+
 - [ ] AI call goes through shared server-side boundary
 - [ ] Prompt template is versioned in code
 - [ ] Output Zod schema is defined and enforced
@@ -192,15 +197,16 @@ The website (`apps/web-site`) is multilingual and SEO-first from day one:
 
 Testing is part of delivery — a task is not done until required tests are written and passing.
 
-| Layer | Scope | Tool |
-|-------|-------|------|
-| Unit | Shared utilities, schemas, parsing, non-trivial domain logic | Jest |
-| Integration | Auth, permissions, memberships, bookings, chat, tenant-sensitive flows | Jest + Supabase fixtures |
-| E2E | Critical web journeys | Playwright |
-| Mobile | Component and flow tests | React Native Testing Library |
-| RLS | Cross-tenant denial scenarios | RLS verification tests |
+| Layer       | Scope                                                                  | Tool                         |
+| ----------- | ---------------------------------------------------------------------- | ---------------------------- |
+| Unit        | Shared utilities, schemas, parsing, non-trivial domain logic           | Jest                         |
+| Integration | Auth, permissions, memberships, bookings, chat, tenant-sensitive flows | Jest + Supabase fixtures     |
+| E2E         | Critical web journeys                                                  | Playwright                   |
+| Mobile      | Component and flow tests                                               | React Native Testing Library |
+| RLS         | Cross-tenant denial scenarios                                          | RLS verification tests       |
 
 **Do not merge if:**
+
 - Required tests are missing or failing
 - A schema change affecting tenant-owned data has no RLS review
 - Permission-sensitive logic has no explicit tests
@@ -212,6 +218,7 @@ Testing is part of delivery — a task is not done until required tests are writ
 ## 11. Auditability and Observability
 
 When adding or changing user-visible features, decide and implement:
+
 - [ ] Analytics events — needed? add with shared naming convention
 - [ ] Audit events — touches role/membership/payments/impersonation/tenant overrides/chat moderation? audit log it
 - [ ] Operational logs — needs server-side visibility? add structured logging
@@ -229,6 +236,7 @@ Every implementation task must be a GitHub Issue before work begins. No feature 
 Summary, Source doc reference, Acceptance criteria, Owning agent, Collaborating agents, Files/packages in scope, Dependencies, Required tests, Localization impact, Risk level
 
 **Label governance:**
+
 - Exactly one active `owner:*` label at a time
 - Exactly one active `state:*` label at a time
 - Replace labels on transition — do not stack them
@@ -238,6 +246,7 @@ Summary, Source doc reference, Acceptance criteria, Owning agent, Collaborating 
 **Lifecycle labels:** `state:proposed` → `state:clarified` → `state:scoped` → `state:assigned` → `state:in-progress` → `state:implemented` → `state:tested` → `state:reviewed` → `state:approved` → `state:integrated` → `state:done` (or `state:blocked`)
 
 **Handoff comment must include:**
+
 - What was completed
 - What remains
 - Changed files or packages
@@ -265,6 +274,7 @@ A task is **not implementation-complete** until the PR exists.
 ## 14. Definition of Done
 
 A task is done only when **all** of the following are true:
+
 - [ ] Implementation is complete
 - [ ] Required tests written and passing
 - [ ] Localization requirements satisfied
@@ -274,6 +284,7 @@ A task is done only when **all** of the following are true:
 - [ ] Approval recorded when required
 
 **Review must block merge if:**
+
 - Client-facing strings are not localized
 - API changes lack contract updates
 - Schema changes lack RLS review

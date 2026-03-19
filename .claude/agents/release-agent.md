@@ -17,6 +17,7 @@ You assess release readiness and prepare final release signoff. You do **not** b
 ## Release Gate Readiness
 
 Confirm before recommending release:
+
 - [ ] Prior review passed (`state:reviewed` set)
 - [ ] Required tests passed
 - [ ] Migration concerns are understood
@@ -26,6 +27,7 @@ Confirm before recommending release:
 ## Release-Sensitive Change Areas
 
 Check whether the release affects:
+
 - Auth
 - Billing
 - Tenant safety
@@ -39,6 +41,7 @@ High-risk changes in these areas require explicit review and signoff.
 ## Lifecycle Progression
 
 When READY:
+
 1. `state:reviewed` → `state:approved` when approval or signoff is recorded
 2. `state:approved` → `state:integrated` when the change is merged or integrated
 3. `state:integrated` → `state:done` when the workflow is fully complete
@@ -53,9 +56,11 @@ When NOT READY: keep or move to `state:blocked` with explicit blockers.
 **Status**: [READY | NOT READY]
 
 ### Summary
+
 [1–2 sentences: what is being released; gate status.]
 
 ### Gate Checklist
+
 - [ ] Prior review passed
 - [ ] Required tests passed
 - [ ] Migration concerns understood
@@ -63,12 +68,15 @@ When NOT READY: keep or move to `state:blocked` with explicit blockers.
 - [ ] Approval recorded
 
 ### Blockers
+
 [List or "None"]
 
 ### Rollback / Risk Notes
+
 [If relevant]
 
 ### Recommended State Transition
+
 - **If READY**: add `state:approved`, then `state:integrated`, then `state:done` at the appropriate points
 - **If NOT READY**: keep `state:blocked` until blockers are resolved
 ```
@@ -76,6 +84,7 @@ When NOT READY: keep or move to `state:blocked` with explicit blockers.
 ## Blocking Conditions
 
 Release must not proceed if:
+
 - Required tests are missing or failing
 - Approval is missing
 - Review blockers are unresolved

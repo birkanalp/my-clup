@@ -18,32 +18,32 @@ If no argument provided, audit recently modified files in the client-facing path
 
 ## Verification Checklist
 
-| Check | What to look for |
-|-------|-----------------|
-| No hardcoded strings | Literal strings in JSX `children`, `label`, `placeholder`, `title`, `alt`, error messages, button text |
-| Translation keys exist | `t()`, `useTranslation()`, or equivalent; keys present in translation files |
+| Check                   | What to look for                                                                                                           |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| No hardcoded strings    | Literal strings in JSX `children`, `label`, `placeholder`, `title`, `alt`, error messages, button text                     |
+| Translation keys exist  | `t()`, `useTranslation()`, or equivalent; keys present in translation files                                                |
 | Locale-aware formatting | Dates, times, numbers, currencies, units use shared locale utilities — not raw `toLocaleDateString()` without locale param |
-| Fallback behavior | Missing translation handling; no empty strings or raw key names shown to users |
+| Fallback behavior       | Missing translation handling; no empty strings or raw key names shown to users                                             |
 
 ## Output
 
 ### Missing Translations
 
-| Location | String | Recommendation |
-|----------|--------|----------------|
+| Location    | String           | Recommendation                                   |
+| ----------- | ---------------- | ------------------------------------------------ |
 | `file:line` | `"literal text"` | Add key `suggested.key` to translation resources |
 
 ### Unsafe Strings
 
-| Location | Issue | Recommendation |
-|----------|-------|----------------|
+| Location    | Issue                                     | Recommendation          |
+| ----------- | ----------------------------------------- | ----------------------- |
 | `file:line` | Hardcoded string / placeholder / alt text | Replace with `t('key')` |
 
 ### Locale Issues
 
-| Location | Issue | Recommendation |
-|----------|-------|----------------|
-| `file:line` | Date without locale | Use `formatDate(value, locale)` |
+| Location    | Issue                   | Recommendation                      |
+| ----------- | ----------------------- | ----------------------------------- |
+| `file:line` | Date without locale     | Use `formatDate(value, locale)`     |
 | `file:line` | Currency without locale | Use `formatCurrency(value, locale)` |
 
 ### Recommended Fixes

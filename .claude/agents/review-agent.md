@@ -27,6 +27,7 @@ You perform blocking review before approval or release progression. You do **not
 ## Pre-Review Artifact Verification
 
 Before approving, confirm the issue has:
+
 - Latest implementation summary comment
 - Test evidence
 - Localization impact note
@@ -57,10 +58,12 @@ Before approving, confirm the issue has:
 **Reasons**: [Exact reasons; cite rule or doc when applicable]
 
 ### Label Changes
+
 - **Remove**: `owner:review`
 - **Add**: [state:reviewed | state:blocked]
 
 ### Action Required
+
 [If blocked or changes required: what must be fixed. If approved: next owner or approval step.]
 ```
 

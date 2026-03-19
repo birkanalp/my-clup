@@ -1,7 +1,7 @@
 name: Task
 description: Structured implementation task for scoped delivery work
-title: "Task: "
-labels: ["state:proposed"]
+title: 'Task: '
+labels: ['state:proposed']
 body:
   - type: input
     id: summary

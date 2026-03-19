@@ -236,19 +236,19 @@ Do not mark an issue `state:done` until:
 
 These are the active repository agent definitions:
 
-| Agent file | Operational role |
-|-----------|-------------------|
-| `.cursor/agents/orchestrator-agent.md` | `owner:orchestrator` |
-| `.cursor/agents/business-analyst-agent.md` | supports `owner:pm` workflows |
-| `.cursor/agents/product-architecture-agent.md` | `owner:architect` |
-| `.cursor/agents/prompt-agent.md` | supports orchestration and handoff packaging |
-| `.cursor/agents/backend-agent.md` | `owner:backend` |
-| `.cursor/agents/web-agent.md` | `owner:web` |
-| `.cursor/agents/mobile-agent.md` | `owner:mobile` |
-| `.cursor/agents/ai-agent.md` | `owner:ai` |
-| `.cursor/agents/qa-agent.md` | `owner:qa` |
-| `.cursor/agents/review-agent.md` | `owner:review` |
-| `.cursor/agents/release-agent.md` | `owner:release` |
+| Agent file                                     | Operational role                             |
+| ---------------------------------------------- | -------------------------------------------- |
+| `.cursor/agents/orchestrator-agent.md`         | `owner:orchestrator`                         |
+| `.cursor/agents/business-analyst-agent.md`     | supports `owner:pm` workflows                |
+| `.cursor/agents/product-architecture-agent.md` | `owner:architect`                            |
+| `.cursor/agents/prompt-agent.md`               | supports orchestration and handoff packaging |
+| `.cursor/agents/backend-agent.md`              | `owner:backend`                              |
+| `.cursor/agents/web-agent.md`                  | `owner:web`                                  |
+| `.cursor/agents/mobile-agent.md`               | `owner:mobile`                               |
+| `.cursor/agents/ai-agent.md`                   | `owner:ai`                                   |
+| `.cursor/agents/qa-agent.md`                   | `owner:qa`                                   |
+| `.cursor/agents/review-agent.md`               | `owner:review`                               |
+| `.cursor/agents/release-agent.md`              | `owner:release`                              |
 
 Supporting agent files may exist without a dedicated label. Operational issue ownership still uses the owner label set defined in Section 4.
 

@@ -15,13 +15,13 @@ Extract implementation context from MyClup documentation before coding begins. P
 
 Read these documents in precedence order:
 
-| Doc | Scope |
-|-----|-------|
-| `docs/07-technical-plan.md` | Architecture, stack, boundaries |
-| `AGENT.md` | Engineering defaults |
+| Doc                           | Scope                                         |
+| ----------------------------- | --------------------------------------------- |
+| `docs/07-technical-plan.md`   | Architecture, stack, boundaries               |
+| `AGENT.md`                    | Engineering defaults                          |
 | `docs/08-agentic-workflow.md` | Workflow, lifecycle, review and release gates |
-| `docs/00-master-plan.md` | Product vision, roadmap |
-| `docs/01` through `docs/06` | Surface-specific scope |
+| `docs/00-master-plan.md`      | Product vision, roadmap                       |
+| `docs/01` through `docs/06`   | Surface-specific scope                        |
 
 ### Step 2: Extract Context
 

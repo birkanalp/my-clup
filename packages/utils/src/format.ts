@@ -2,23 +2,23 @@
  * Locale-aware formatting helpers.
  * Uses Intl APIs; accepts SupportedLocale for consistent platform-wide formatting.
  */
-import type { SupportedLocale } from "@myclup/types";
+import type { SupportedLocale } from '@myclup/types';
 
 /** Options for formatDate. */
 export interface FormatDateOptions {
-  dateStyle?: "full" | "long" | "medium" | "short";
-  weekday?: "long" | "short" | "narrow";
-  year?: "numeric" | "2-digit";
-  month?: "numeric" | "2-digit" | "long" | "short" | "narrow";
-  day?: "numeric" | "2-digit";
+  dateStyle?: 'full' | 'long' | 'medium' | 'short';
+  weekday?: 'long' | 'short' | 'narrow';
+  year?: 'numeric' | '2-digit';
+  month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow';
+  day?: 'numeric' | '2-digit';
 }
 
 /** Options for formatTime. */
 export interface FormatTimeOptions {
-  timeStyle?: "full" | "long" | "medium" | "short";
-  hour?: "numeric" | "2-digit";
-  minute?: "numeric" | "2-digit";
-  second?: "numeric" | "2-digit";
+  timeStyle?: 'full' | 'long' | 'medium' | 'short';
+  hour?: 'numeric' | '2-digit';
+  minute?: 'numeric' | '2-digit';
+  second?: 'numeric' | '2-digit';
   hour12?: boolean;
 }
 
@@ -44,7 +44,7 @@ export function formatDate(
   options?: FormatDateOptions
 ): string {
   return new Intl.DateTimeFormat(locale, {
-    dateStyle: options?.dateStyle ?? "medium",
+    dateStyle: options?.dateStyle ?? 'medium',
     ...options,
   }).format(value);
 }
@@ -58,7 +58,7 @@ export function formatTime(
   options?: FormatTimeOptions
 ): string {
   return new Intl.DateTimeFormat(locale, {
-    timeStyle: options?.timeStyle ?? "short",
+    timeStyle: options?.timeStyle ?? 'short',
     ...options,
   }).format(value);
 }
@@ -88,7 +88,7 @@ export function formatCurrency(
   options?: FormatCurrencyOptions
 ): string {
   return new Intl.NumberFormat(locale, {
-    style: "currency",
+    style: 'currency',
     currency: currencyCode,
     minimumFractionDigits: options?.minimumFractionDigits,
     maximumFractionDigits: options?.maximumFractionDigits ?? 2,
@@ -106,7 +106,7 @@ export function formatUnit(
   options?: { maximumFractionDigits?: number }
 ): string {
   return new Intl.NumberFormat(locale, {
-    style: "unit",
+    style: 'unit',
     unit,
     maximumFractionDigits: options?.maximumFractionDigits ?? 1,
   }).format(value);

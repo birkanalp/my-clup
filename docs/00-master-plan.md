@@ -383,18 +383,18 @@ If execution must be staged tightly, prioritize:
 
 Gyms can activate optional, independently purchasable modules on top of their core subscription. Each package targets a specific growth or operational need.
 
-| Package | Purpose |
-|---------|---------|
-| AI Chatbot | 24/7 automated member support with human handoff |
-| Platform Reklamcılığı | Targeted ads to other platform users via discovery and push |
-| Üye Koruma | Block other gyms from advertising to the gym's own members |
-| Gelişmiş Analitik | Churn prediction, cohort analysis, revenue projection |
-| Toplu SMS / WhatsApp | Bulk and trigger-based messaging via off-platform channels |
-| Dijital Sözleşme & E-imza | Mobile contract signing and legal archiving |
-| CRM & Otomasyon | Drip campaigns, retention workflows, lead nurturing automation |
-| White-label Uygulama | Gym's own branded app on App Store and Play Store |
-| Entegrasyon Paketi | Muhasebe (Logo/Mikro/Luca), Google Ads, Instagram Leads |
-| Öncelikli Destek | Dedicated support channel with SLA guarantees |
+| Package                   | Purpose                                                        |
+| ------------------------- | -------------------------------------------------------------- |
+| AI Chatbot                | 24/7 automated member support with human handoff               |
+| Platform Reklamcılığı     | Targeted ads to other platform users via discovery and push    |
+| Üye Koruma                | Block other gyms from advertising to the gym's own members     |
+| Gelişmiş Analitik         | Churn prediction, cohort analysis, revenue projection          |
+| Toplu SMS / WhatsApp      | Bulk and trigger-based messaging via off-platform channels     |
+| Dijital Sözleşme & E-imza | Mobile contract signing and legal archiving                    |
+| CRM & Otomasyon           | Drip campaigns, retention workflows, lead nurturing automation |
+| White-label Uygulama      | Gym's own branded app on App Store and Play Store              |
+| Entegrasyon Paketi        | Muhasebe (Logo/Mikro/Luca), Google Ads, Instagram Leads        |
+| Öncelikli Destek          | Dedicated support channel with SLA guarantees                  |
 
 See `docs/06-addon-packages-plan.md` for full specifications.
 

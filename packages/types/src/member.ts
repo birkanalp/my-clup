@@ -1,10 +1,4 @@
-export type MemberStatus =
-  | "active"
-  | "expired"
-  | "frozen"
-  | "cancelled"
-  | "trial"
-  | "pending";
+export type MemberStatus = 'active' | 'expired' | 'frozen' | 'cancelled' | 'trial' | 'pending';
 
 export interface Member {
   id: string;

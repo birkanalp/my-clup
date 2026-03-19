@@ -4,20 +4,20 @@
  * Exported for react-i18next and other i18next consumers.
  * Resources match the structure expected by i18next: { locale: { namespace: translations } }
  */
-import type { SupportedLocale } from "@myclup/types";
+import type { SupportedLocale } from '@myclup/types';
 
-export type TranslationNamespace = "common" | "auth" | "membership" | "chat" | "errors";
+export type TranslationNamespace = 'common' | 'auth' | 'membership' | 'chat' | 'errors';
 
-import commonEn from "./namespaces/common/en.json";
-import commonTr from "./namespaces/common/tr.json";
-import authEn from "./namespaces/auth/en.json";
-import authTr from "./namespaces/auth/tr.json";
-import membershipEn from "./namespaces/membership/en.json";
-import membershipTr from "./namespaces/membership/tr.json";
-import chatEn from "./namespaces/chat/en.json";
-import chatTr from "./namespaces/chat/tr.json";
-import errorsEn from "./namespaces/errors/en.json";
-import errorsTr from "./namespaces/errors/tr.json";
+import commonEn from './namespaces/common/en.json';
+import commonTr from './namespaces/common/tr.json';
+import authEn from './namespaces/auth/en.json';
+import authTr from './namespaces/auth/tr.json';
+import membershipEn from './namespaces/membership/en.json';
+import membershipTr from './namespaces/membership/tr.json';
+import chatEn from './namespaces/chat/en.json';
+import chatTr from './namespaces/chat/tr.json';
+import errorsEn from './namespaces/errors/en.json';
+import errorsTr from './namespaces/errors/tr.json';
 
 type ResourceRecord = Record<string, unknown>;
 

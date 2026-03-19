@@ -2,10 +2,10 @@
  * LanguageSwitcher — locale toggle primitive (TR / EN).
  * Uses i18n.changeLanguage and optional onLanguageChange for persistence.
  */
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import { useTranslation } from "react-i18next";
-import type { SupportedLocale } from "@myclup/types";
-import { SUPPORTED_LOCALES } from "@myclup/types";
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import type { SupportedLocale } from '@myclup/types';
+import { SUPPORTED_LOCALES } from '@myclup/types';
 
 export interface LanguageSwitcherProps {
   /**
@@ -16,7 +16,7 @@ export interface LanguageSwitcherProps {
 
 export function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherProps) {
   const { i18n } = useTranslation();
-  const current = (i18n.language ?? "en") as SupportedLocale;
+  const current = (i18n.language ?? 'en') as SupportedLocale;
 
   const handlePress = async (locale: SupportedLocale) => {
     if (locale === current) return;
@@ -36,12 +36,7 @@ export function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherProps) {
             pressed && styles.optionPressed,
           ]}
         >
-          <Text
-            style={[
-              styles.optionText,
-              locale === current && styles.optionTextActive,
-            ]}
-          >
+          <Text style={[styles.optionText, locale === current && styles.optionTextActive]}>
             {locale.toUpperCase()}
           </Text>
         </Pressable>
@@ -52,27 +47,27 @@ export function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherProps) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 8,
   },
   option: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: '#e5e7eb',
   },
   optionActive: {
-    backgroundColor: "#0ea5e9",
+    backgroundColor: '#0ea5e9',
   },
   optionPressed: {
     opacity: 0.8,
   },
   optionText: {
     fontSize: 14,
-    fontWeight: "600",
-    color: "#374151",
+    fontWeight: '600',
+    color: '#374151',
   },
   optionTextActive: {
-    color: "#ffffff",
+    color: '#ffffff',
   },
 });
