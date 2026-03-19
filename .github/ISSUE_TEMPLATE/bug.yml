@@ -1,7 +1,7 @@
 name: Bug
 description: Structured operational issue for defects and regressions
-title: "Bug: "
-labels: ["state:proposed", "type:bug"]
+title: 'Bug: '
+labels: ['state:proposed', 'type:bug']
 body:
   - type: input
     id: summary

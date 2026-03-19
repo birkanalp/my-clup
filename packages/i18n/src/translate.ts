@@ -4,67 +4,42 @@
  * Translation namespaces: common, auth, membership, chat, errors.
  * Fallback: requested locale → FALLBACK_LOCALE (en) → key string.
  */
-import type { SupportedLocale } from "@myclup/types";
-import { FALLBACK_LOCALE } from "@myclup/types";
+import type { SupportedLocale } from '@myclup/types';
+import { FALLBACK_LOCALE } from '@myclup/types';
 
-import commonEn from "./namespaces/common/en.json";
-import commonTr from "./namespaces/common/tr.json";
-import authEn from "./namespaces/auth/en.json";
-import authTr from "./namespaces/auth/tr.json";
-import membershipEn from "./namespaces/membership/en.json";
-import membershipTr from "./namespaces/membership/tr.json";
-import chatEn from "./namespaces/chat/en.json";
-import chatTr from "./namespaces/chat/tr.json";
-import errorsEn from "./namespaces/errors/en.json";
-import errorsTr from "./namespaces/errors/tr.json";
+import { i18nextResources } from './resources';
+import type { TranslationNamespace } from './resources';
 
-export type TranslationNamespace = "common" | "auth" | "membership" | "chat" | "errors";
+export type { TranslationNamespace };
 
-type ResourceRecord = Record<string, unknown>;
-
-const RESOURCES: Record<SupportedLocale, Record<TranslationNamespace, ResourceRecord>> = {
-  en: {
-    common: commonEn as ResourceRecord,
-    auth: authEn as ResourceRecord,
-    membership: membershipEn as ResourceRecord,
-    chat: chatEn as ResourceRecord,
-    errors: errorsEn as ResourceRecord,
-  },
-  tr: {
-    common: commonTr as ResourceRecord,
-    auth: authTr as ResourceRecord,
-    membership: membershipTr as ResourceRecord,
-    chat: chatTr as ResourceRecord,
-    errors: errorsTr as ResourceRecord,
-  },
-};
+const RESOURCES = i18nextResources;
 
 export interface TranslateParams {
   [key: string]: string | number;
 }
 
 /** Plural form keys supported for pluralization */
-type PluralForm = "zero" | "one" | "two" | "few" | "many" | "other";
+type PluralForm = 'zero' | 'one' | 'two' | 'few' | 'many' | 'other';
 
 /**
  * Determine plural form for a given count and locale.
  * Simplified: supports "one" (count===1) and "other" for en/tr.
  */
 function getPluralForm(count: number, _locale: SupportedLocale): PluralForm {
-  if (count === 0) return "zero";
-  if (count === 1) return "one";
-  if (count === 2) return "two";
-  return "other";
+  if (count === 0) return 'zero';
+  if (count === 1) return 'one';
+  if (count === 2) return 'two';
+  return 'other';
 }
 
 /**
  * Get nested value from an object using dot-notation key.
  */
 function getNested(obj: unknown, key: string): unknown {
-  const parts = key.split(".");
+  const parts = key.split('.');
   let current: unknown = obj;
   for (const part of parts) {
-    if (current === null || current === undefined || typeof current !== "object") {
+    if (current === null || current === undefined || typeof current !== 'object') {
       return undefined;
     }
     current = (current as Record<string, unknown>)[part];
@@ -115,14 +90,19 @@ export function t(
   }
 
   // Pluralization: value is { one, other, ... }
-  if (params?.count !== undefined && typeof raw === "object" && raw !== null && !Array.isArray(raw)) {
+  if (
+    params?.count !== undefined &&
+    typeof raw === 'object' &&
+    raw !== null &&
+    !Array.isArray(raw)
+  ) {
     const pluralForm = getPluralForm(Number(params.count), locale);
     const pluralObj = raw as Record<PluralForm, string>;
     const pluralValue = pluralObj[pluralForm] ?? pluralObj.other ?? pluralObj.one ?? String(key);
     return interpolate(pluralValue, params);
   }
 
-  if (typeof raw === "string") {
+  if (typeof raw === 'string') {
     return interpolate(raw, params);
   }
 

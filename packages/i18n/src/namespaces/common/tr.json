@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "siteTitle": "MyClup | Spor Salonu Üyelik & Ders Rezervasyonu",
+    "siteDescription": "MyClup, spor salonlarının üyelik, ders ve rezervasyon yönetimini kolaylaştırır. Yakınınızdaki salonları keşfedin, online ders rezervasyonu yapın."
+  },
   "button": {
     "save": "Kaydet",
     "cancel": "İptal",

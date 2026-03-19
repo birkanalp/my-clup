@@ -10,6 +10,7 @@ This file records the canonical initial Epic backlog created in GitHub for MyClu
 - GitHub Project: `MyClup Development`
 
 Legacy note:
+
 - Existing issues `#1` through `#12` predate the Epic-first orchestration pass and remain a legacy task-level backlog.
 - Duplicate Epic issues `#20` through `#28` were created during a failed creation pass and were closed in favor of the canonical issues `#29` through `#37`.
 

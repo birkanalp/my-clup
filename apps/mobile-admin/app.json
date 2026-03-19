@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "MyClup Admin",
+    "slug": "myclup-admin",
+    "version": "0.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": { "supportsTablet": true, "bundleIdentifier": "com.myclup.admin" },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.myclup.admin"
+    },
+    "plugins": ["expo-router", "expo-localization"]
+  }
+}

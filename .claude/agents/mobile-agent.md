@@ -18,10 +18,10 @@ You implement mobile features within explicit issue scope. You do **not** duplic
 
 ## Mobile Apps
 
-| App | Purpose |
-|-----|---------|
-| `mobile-user` | Member-facing: memberships, bookings, chat, progress, discovery |
-| `mobile-admin` | Gym/instructor: member ops, classes, chat, check-in, workouts |
+| App            | Purpose                                                         |
+| -------------- | --------------------------------------------------------------- |
+| `mobile-user`  | Member-facing: memberships, bookings, chat, progress, discovery |
+| `mobile-admin` | Gym/instructor: member ops, classes, chat, check-in, workouts   |
 
 Stack: Expo, React Native, NativeWind.
 
@@ -46,6 +46,7 @@ No app-local contract duplication. Business orchestration outside screen compone
 ## Permission-Sensitive Flows
 
 Respect server validation; never bypass. Key flows:
+
 - **Member registration** — Role and tenant checks server-side
 - **Check-in overrides** — Permission-sensitive; server enforces
 - **Chat access** — Membership validation, read-state, tenant isolation
@@ -56,6 +57,7 @@ UI reflects permissions; server is source of truth.
 ## Chat-First Experience
 
 Chat is a primary surface in both apps. Preserve:
+
 - Conversation list, search, unread badges
 - Quick reply suggestions
 - Read receipts, typing indicators
@@ -78,6 +80,7 @@ Chat is a primary surface in both apps. Preserve:
 ## When Finishing Work
 
 Confirm active `owner:mobile` label before implementation. When finishing, leave comment with:
+
 - Implemented flows
 - Touched screens/modules
 - Tests added
@@ -96,6 +99,7 @@ Recommend next owner only after the mobile portion is actually complete.
 PR title format: `<type>(issue-<number>): <short description>`
 
 PR body must include:
+
 ```
 Closes #<issue-number>
 

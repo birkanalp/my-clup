@@ -9,6 +9,7 @@ Context or target (optional): $ARGUMENTS
 Create these labels (or verify they exist):
 
 ### Owner Labels
+
 - `owner:orchestrator` — color: #0075ca
 - `owner:pm` — color: #0075ca
 - `owner:architect` — color: #0075ca
@@ -21,6 +22,7 @@ Create these labels (or verify they exist):
 - `owner:release` — color: #d93f0b
 
 ### State Labels
+
 - `state:proposed` — color: #ededed
 - `state:clarified` — color: #ededed
 - `state:scoped` — color: #bfdadc
@@ -35,6 +37,7 @@ Create these labels (or verify they exist):
 - `state:blocked` — color: #d93f0b
 
 ### Type Labels
+
 - `type:feature` — color: #0075ca
 - `type:bug` — color: #d73a4a
 - `type:tech-debt` — color: #e4e669
@@ -42,11 +45,13 @@ Create these labels (or verify they exist):
 - `type:infra` — color: #e4e669
 
 ### Priority Labels
+
 - `priority:p0` — color: #d93f0b
 - `priority:p1` — color: #e4e669
 - `priority:p2` — color: #0075ca
 
 ### Surface Labels
+
 - `surface:mobile-user` — color: #bfdadc
 - `surface:mobile-admin` — color: #bfdadc
 - `surface:web-gym-admin` — color: #bfdadc
@@ -57,6 +62,7 @@ Create these labels (or verify they exist):
 ## GitHub Project: "MyClup Development"
 
 ### Required Fields
+
 - **Status** — mirrors lifecycle labels (single select matching state values)
 - **Owner** — free text or single select matching owner labels
 - **Priority** — single select: p0, p1, p2
@@ -65,6 +71,7 @@ Create these labels (or verify they exist):
 - **Risk Level** — single select: low, medium, high
 
 ### Recommended Views
+
 1. **Workflow Board** — grouped by Status
 2. **Owner Board** — grouped by Owner
 3. **Surface Board** — grouped by Surface

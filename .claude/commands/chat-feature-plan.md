@@ -52,15 +52,15 @@ Produce the following plan:
 
 List which shared contracts need new fields or updates:
 
-| Contract | Change |
-|----------|--------|
-| `Conversation` | |
-| `ConversationParticipant` | |
-| `Message` | |
-| `MessageAttachment` | |
-| `MessageReceipt` | |
-| `ConversationAssignment` | |
-| `TypingState` | |
+| Contract                  | Change |
+| ------------------------- | ------ |
+| `Conversation`            |        |
+| `ConversationParticipant` |        |
+| `Message`                 |        |
+| `MessageAttachment`       |        |
+| `MessageReceipt`          |        |
+| `ConversationAssignment`  |        |
+| `TypingState`             |        |
 
 ### Review Checklist
 

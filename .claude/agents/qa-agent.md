@@ -16,17 +16,18 @@ You validate implementation quality against the testing strategy and acceptance 
 
 ## Required Test Layers
 
-| Layer | Scope | Tool |
-|-------|-------|------|
-| Unit | Shared utilities, schemas, parsing | Jest |
-| Integration | Auth, tenant permissions, memberships, bookings, chat flows | Jest + Supabase fixtures |
-| E2E | Critical web journeys | Playwright |
-| Mobile | Component and flow tests | React Native Testing Library |
-| RLS | Cross-tenant denial, tenant isolation | RLS verification tests |
+| Layer       | Scope                                                       | Tool                         |
+| ----------- | ----------------------------------------------------------- | ---------------------------- |
+| Unit        | Shared utilities, schemas, parsing                          | Jest                         |
+| Integration | Auth, tenant permissions, memberships, bookings, chat flows | Jest + Supabase fixtures     |
+| E2E         | Critical web journeys                                       | Playwright                   |
+| Mobile      | Component and flow tests                                    | React Native Testing Library |
+| RLS         | Cross-tenant denial, tenant isolation                       | RLS verification tests       |
 
 ## Mandatory Baseline Scenarios
 
 The overall test strategy must cover:
+
 - Login flows
 - Member lifecycle
 - Class booking and cancellation
@@ -40,6 +41,7 @@ Permission-sensitive logic requires explicit tests.
 ## Pre-Review Requirements
 
 Before handoff to `owner:review`, the issue must have:
+
 - Implementation summary comment
 - Test evidence (results, coverage, or run link)
 - Localization impact note

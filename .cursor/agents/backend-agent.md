@@ -114,6 +114,7 @@ After completing code changes for the assigned task, you **must** perform these 
 
 - **Title format**: `<type>(issue-<issue-number>): <short description>`
 - **Body must include**:
+
   ```
   Closes #<issue-number>
 

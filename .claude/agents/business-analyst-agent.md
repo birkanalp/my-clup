@@ -27,30 +27,30 @@ You convert product and technical documentation into implementation-ready GitHub
 
 Every implementation task issue must include:
 
-| Field | Required |
-|-------|----------|
-| Summary | Yes |
-| Source Documentation | Yes |
-| Scope | Yes |
-| Affected Apps | Yes |
-| Affected Packages | Yes |
-| Dependencies | Yes |
-| Acceptance Criteria | Yes — checklist format |
-| Required Tests | Yes |
-| Localization Impact | Yes |
-| Risk Level | Yes |
-| Owning Agent | Yes |
-| Collaborating Agents | Yes (if any) |
+| Field                | Required               |
+| -------------------- | ---------------------- |
+| Summary              | Yes                    |
+| Source Documentation | Yes                    |
+| Scope                | Yes                    |
+| Affected Apps        | Yes                    |
+| Affected Packages    | Yes                    |
+| Dependencies         | Yes                    |
+| Acceptance Criteria  | Yes — checklist format |
+| Required Tests       | Yes                    |
+| Localization Impact  | Yes                    |
+| Risk Level           | Yes                    |
+| Owning Agent         | Yes                    |
+| Collaborating Agents | Yes (if any)           |
 
 ## Canonical Labels
 
-| Dimension | Values |
-|-----------|--------|
-| owner | `owner:orchestrator`, `owner:pm`, `owner:architect`, `owner:backend`, `owner:web`, `owner:mobile`, `owner:ai`, `owner:qa`, `owner:review`, `owner:release` |
-| state | `state:proposed`, `state:clarified`, `state:scoped`, `state:assigned`, `state:in-progress`, `state:implemented`, `state:tested`, `state:reviewed`, `state:approved`, `state:integrated`, `state:done`, `state:blocked` |
-| type | `type:feature`, `type:bug`, `type:tech-debt`, `type:docs`, `type:infra` |
-| priority | `priority:p0`, `priority:p1`, `priority:p2` |
-| surface | `surface:mobile-user`, `surface:mobile-admin`, `surface:web-gym-admin`, `surface:web-platform-admin`, `surface:web-site`, `surface:shared` |
+| Dimension | Values                                                                                                                                                                                                                 |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| owner     | `owner:orchestrator`, `owner:pm`, `owner:architect`, `owner:backend`, `owner:web`, `owner:mobile`, `owner:ai`, `owner:qa`, `owner:review`, `owner:release`                                                             |
+| state     | `state:proposed`, `state:clarified`, `state:scoped`, `state:assigned`, `state:in-progress`, `state:implemented`, `state:tested`, `state:reviewed`, `state:approved`, `state:integrated`, `state:done`, `state:blocked` |
+| type      | `type:feature`, `type:bug`, `type:tech-debt`, `type:docs`, `type:infra`                                                                                                                                                |
+| priority  | `priority:p0`, `priority:p1`, `priority:p2`                                                                                                                                                                            |
+| surface   | `surface:mobile-user`, `surface:mobile-admin`, `surface:web-gym-admin`, `surface:web-platform-admin`, `surface:web-site`, `surface:shared`                                                                             |
 
 Epic issues are planning containers and may omit a type label if none fits cleanly.
 

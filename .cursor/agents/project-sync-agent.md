@@ -27,24 +27,24 @@ Ensure Issue truth and Project truth never diverge. Every Epic and task must be 
 
 ## Field Mapping Reference (docs/github-project-setup.md)
 
-| Label / Source | Project Field | Value |
-|----------------|---------------|-------|
-| state:proposed | Status | proposed |
-| state:clarified | Status | clarified |
-| state:scoped | Status | scoped |
-| state:assigned | Status | assigned |
-| state:in-progress | Status | in-progress |
-| state:implemented | Status | implemented |
-| state:tested | Status | tested |
-| state:reviewed | Status | reviewed |
-| state:approved | Status | approved |
-| state:integrated | Status | integrated |
-| state:done | Status | done |
-| state:blocked | Status | blocked |
-| owner:* | Owner | label value |
-| priority:p0 | Priority | p0 |
-| type:infra | Type | infra |
-| surface:shared | Surface | shared |
+| Label / Source    | Project Field | Value       |
+| ----------------- | ------------- | ----------- |
+| state:proposed    | Status        | proposed    |
+| state:clarified   | Status        | clarified   |
+| state:scoped      | Status        | scoped      |
+| state:assigned    | Status        | assigned    |
+| state:in-progress | Status        | in-progress |
+| state:implemented | Status        | implemented |
+| state:tested      | Status        | tested      |
+| state:reviewed    | Status        | reviewed    |
+| state:approved    | Status        | approved    |
+| state:integrated  | Status        | integrated  |
+| state:done        | Status        | done        |
+| state:blocked     | Status        | blocked     |
+| owner:\*          | Owner         | label value |
+| priority:p0       | Priority      | p0          |
+| type:infra        | Type          | infra       |
+| surface:shared    | Surface       | shared      |
 
 ## Comment Behavior
 

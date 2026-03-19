@@ -1,4 +1,8 @@
 {
+  "meta": {
+    "siteTitle": "MyClup | Gym Membership & Class Booking",
+    "siteDescription": "MyClup helps gyms manage memberships, classes, and bookings. Discover gyms near you and book classes online."
+  },
   "button": {
     "save": "Save",
     "cancel": "Cancel",

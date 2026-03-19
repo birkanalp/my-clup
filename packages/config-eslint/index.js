@@ -1,6 +1,6 @@
-import js from "@eslint/js";
-import tseslint from "typescript-eslint";
-import globals from "globals";
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import globals from 'globals';
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
@@ -12,8 +12,8 @@ export default [
         ...globals.node,
       },
       parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
+        ecmaVersion: 'latest',
+        sourceType: 'module',
       },
     },
   },

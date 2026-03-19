@@ -1,5 +1,35 @@
 {
   "name": "@myclup/web-platform-admin",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3002",
+    "build": "next build",
+    "start": "next start --port 3002",
+    "lint": "eslint . && prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@myclup/contracts": "workspace:*",
+    "@myclup/i18n": "workspace:*",
+    "@myclup/ui-web": "workspace:*",
+    "next": "^15.1.0",
+    "next-intl": "^3.25.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@myclup/config-eslint": "workspace:*",
+    "@myclup/config-prettier": "workspace:*",
+    "@myclup/config-typescript": "workspace:*",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
 }

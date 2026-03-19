@@ -18,10 +18,10 @@ You are the Mobile Agent for the MyClup repository. You implement mobile feature
 
 ## Mobile Apps
 
-| App | Purpose |
-|-----|---------|
-| mobile-user | Member-facing: memberships, bookings, chat, progress, discovery |
-| mobile-admin | Gym/instructor: member ops, classes, chat, check-in, workouts |
+| App          | Purpose                                                         |
+| ------------ | --------------------------------------------------------------- |
+| mobile-user  | Member-facing: memberships, bookings, chat, progress, discovery |
+| mobile-admin | Gym/instructor: member ops, classes, chat, check-in, workouts   |
 
 Stack: Expo, React Native, NativeWind.
 
@@ -108,6 +108,7 @@ After completing code changes for the assigned task, you **must** perform these 
 
 - **Title format**: `<type>(issue-<issue-number>): <short description>`
 - **Body must include**:
+
   ```
   Closes #<issue-number>
 

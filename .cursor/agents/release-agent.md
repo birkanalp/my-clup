@@ -63,9 +63,11 @@ Keep or move to `state:blocked` when blockers remain unresolved.
 **Status**: [READY | NOT READY]
 
 ### Summary
+
 [1–2 sentences: what is being released; gate status.]
 
 ### Gate Checklist
+
 - [ ] Prior review passed
 - [ ] Required tests passed
 - [ ] Migration concerns understood
@@ -73,12 +75,15 @@ Keep or move to `state:blocked` when blockers remain unresolved.
 - [ ] Approval recorded
 
 ### Blockers
+
 [List or "None"]
 
 ### Rollback / Risk Notes
+
 [If relevant]
 
 ### Recommended State Transition
+
 - **If READY**: add `state:approved`, then `state:integrated`, then `state:done` at the appropriate points
 - **If NOT READY**: keep `state:blocked` until blockers are resolved
 ```

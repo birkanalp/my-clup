@@ -7,6 +7,7 @@ For the feature described by the user, produce a complete AI feature design docu
 ### Prompt Template
 
 Provide a versioned prompt with all placeholders (input, locale, etc.). Include:
+
 - Version identifier (v1 or semantic)
 - All placeholder names and their purpose
 - Prompt storage policy (code-versioned; no long-term raw storage)

@@ -37,13 +37,13 @@ Do not move app-specific flows into `utils` "just in case."
 
 ## Anti-Patterns
 
-| Anti-Pattern | Instead |
-|--------------|---------|
-| Importing React, Expo, or Next.js in `utils` | Keep `utils` framework-agnostic; app code uses utils |
-| Duplicating contract validation in utils | Use shared schemas from `packages/contracts` |
-| Putting business logic in utils | Business logic lives in server modules or app layers |
-| Creating utils "for future reuse" | Add to utils only when reuse is real and immediate |
-| Hardcoding locale in formatters | Always pass `locale` (SupportedLocale) for user-facing output |
+| Anti-Pattern                                 | Instead                                                       |
+| -------------------------------------------- | ------------------------------------------------------------- |
+| Importing React, Expo, or Next.js in `utils` | Keep `utils` framework-agnostic; app code uses utils          |
+| Duplicating contract validation in utils     | Use shared schemas from `packages/contracts`                  |
+| Putting business logic in utils              | Business logic lives in server modules or app layers          |
+| Creating utils "for future reuse"            | Add to utils only when reuse is real and immediate            |
+| Hardcoding locale in formatters              | Always pass `locale` (SupportedLocale) for user-facing output |
 
 ## Exports
 
@@ -56,7 +56,7 @@ import {
   formatUnit,
   parseISODate,
   isValidLocale,
-} from "@myclup/utils";
+} from '@myclup/utils';
 ```
 
 All locale-aware formatters accept `locale: SupportedLocale` from `@myclup/types`.

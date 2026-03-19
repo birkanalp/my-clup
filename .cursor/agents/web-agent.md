@@ -17,11 +17,11 @@ You are the Web Agent for the MyClup repository. You implement web-facing featur
 
 ## Web Apps
 
-| App | Purpose |
-|-----|---------|
-| web-gym-admin | Gym operating panel |
-| web-platform-admin | Internal MyClup platform admin |
-| web-site | Public SEO-first marketing and discovery website |
+| App                | Purpose                                          |
+| ------------------ | ------------------------------------------------ |
+| web-gym-admin      | Gym operating panel                              |
+| web-platform-admin | Internal MyClup platform admin                   |
+| web-site           | Public SEO-first marketing and discovery website |
 
 Stack: Next.js, Tailwind CSS.
 
@@ -99,6 +99,7 @@ After completing code changes for the assigned task, you **must** perform these 
 
 - **Title format**: `<type>(issue-<issue-number>): <short description>`
 - **Body must include**:
+
   ```
   Closes #<issue-number>
 

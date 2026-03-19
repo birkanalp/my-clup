@@ -1,4 +1,5 @@
 # Epic #15 — Authentication, Identity, Tenant Model, and Permissions
+
 ## Task Decomposition for GitHub Issues
 
 **Part of Epic #15**
@@ -658,16 +659,16 @@ Add typed auth methods to `packages/api-client` for whoami, session, and profile
 
 ## Prioritized Task List (Execution Order)
 
-| Order | Task   | Summary                                              | Owner   |
-|-------|--------|------------------------------------------------------|---------|
-| 1     | 15.1   | Database schema (tenant, profiles, roles, audit)    | backend |
-| 2     | 15.2   | Auth and profile contracts                           | backend |
-| 3     | 15.3   | Supabase Auth provider configuration                 | backend |
-| 4     | 15.4   | Server-side auth helpers                             | backend |
-| 5     | 15.6   | Audit logging service                                | backend |
-| 6     | 15.5   | Permission resolution and enforcement helpers       | backend |
-| 7     | 15.7   | Auth API routes and BFF session handling            | backend |
-| 8     | 15.8   | api-client auth methods                              | backend |
+| Order | Task | Summary                                          | Owner   |
+| ----- | ---- | ------------------------------------------------ | ------- |
+| 1     | 15.1 | Database schema (tenant, profiles, roles, audit) | backend |
+| 2     | 15.2 | Auth and profile contracts                       | backend |
+| 3     | 15.3 | Supabase Auth provider configuration             | backend |
+| 4     | 15.4 | Server-side auth helpers                         | backend |
+| 5     | 15.6 | Audit logging service                            | backend |
+| 6     | 15.5 | Permission resolution and enforcement helpers    | backend |
+| 7     | 15.7 | Auth API routes and BFF session handling         | backend |
+| 8     | 15.8 | api-client auth methods                          | backend |
 
 ---
 
