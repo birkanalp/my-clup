@@ -20,11 +20,7 @@ function formatTime(iso: string): string {
   }
 }
 
-export function MessageBubble({
-  message,
-  isOwn,
-  showReadReceipt = false,
-}: MessageBubbleProps) {
+export function MessageBubble({ message, isOwn, showReadReceipt = false }: MessageBubbleProps) {
   const { t } = useTranslation('chat');
   const time = formatTime(message.createdAt);
 
@@ -35,12 +31,8 @@ export function MessageBubble({
           {message.content}
         </Text>
         <View style={styles.footer}>
-          <Text style={[styles.time, isOwn ? styles.timeOwn : styles.timeOther]}>
-            {time}
-          </Text>
-          {isOwn && showReadReceipt && (
-            <Text style={styles.receipt}>{t('status.read')}</Text>
-          )}
+          <Text style={[styles.time, isOwn ? styles.timeOwn : styles.timeOther]}>{time}</Text>
+          {isOwn && showReadReceipt && <Text style={styles.receipt}>{t('status.read')}</Text>}
         </View>
       </View>
     </View>

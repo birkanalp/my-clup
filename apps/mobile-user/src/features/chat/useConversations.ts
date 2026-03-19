@@ -19,7 +19,9 @@ export function useConversations() {
     try {
       const res = await api.chat.conversations.list({ cursor, limit: 20 });
       setItems((prev) =>
-        append ? [...prev, ...res.items] as ConversationWithUnread[] : (res.items as ConversationWithUnread[])
+        append
+          ? ([...prev, ...res.items] as ConversationWithUnread[])
+          : (res.items as ConversationWithUnread[])
       );
       setNextCursor(res.nextCursor);
     } catch (e) {

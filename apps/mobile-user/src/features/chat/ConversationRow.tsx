@@ -22,11 +22,7 @@ function getConversationTitleKey(conversation: Conversation): string {
   }
 }
 
-export function ConversationRow({
-  conversation,
-  unreadCount = 0,
-  onPress,
-}: ConversationRowProps) {
+export function ConversationRow({ conversation, unreadCount = 0, onPress }: ConversationRowProps) {
   const { t } = useTranslation('chat');
   const titleKey = getConversationTitleKey(conversation);
   const title = t(titleKey);
@@ -43,9 +39,7 @@ export function ConversationRow({
       </View>
       {unreadCount > 0 && (
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>
-            {unreadCount > 99 ? '99+' : unreadCount}
-          </Text>
+          <Text style={styles.badgeText}>{unreadCount > 99 ? '99+' : unreadCount}</Text>
         </View>
       )}
     </TouchableOpacity>

@@ -22,7 +22,9 @@ export function useCurrentUser(): string | null {
 
     fetchUser();
 
-    const { data: { subscription } } = supabase?.auth.onAuthStateChange(() => {
+    const {
+      data: { subscription },
+    } = supabase?.auth.onAuthStateChange(() => {
       fetchUser();
     }) ?? { data: { subscription: { unsubscribe: () => {} } } };
 

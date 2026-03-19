@@ -95,15 +95,10 @@ export function MessageThread({
       )}
       {typingNames.length > 0 && (
         <View style={styles.typingBar}>
-          <Text style={styles.typingText}>
-            {t('label.typing', { name: typingNames[0] })}
-          </Text>
+          <Text style={styles.typingText}>{t('label.typing', { name: typingNames[0] })}</Text>
         </View>
       )}
-      <MessageInput
-        onSend={handleSend}
-        onTypingChange={onTypingChange}
-      />
+      <MessageInput onSend={handleSend} onTypingChange={onTypingChange} />
     </KeyboardAvoidingView>
   );
 }

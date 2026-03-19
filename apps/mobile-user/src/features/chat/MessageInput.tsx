@@ -11,11 +11,7 @@ type MessageInputProps = {
   onTypingChange?: (typing: boolean) => void;
 };
 
-export function MessageInput({
-  onSend,
-  disabled = false,
-  onTypingChange,
-}: MessageInputProps) {
+export function MessageInput({ onSend, disabled = false, onTypingChange }: MessageInputProps) {
   const { t } = useTranslation('chat');
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
@@ -35,32 +31,30 @@ export function MessageInput({
 
   return (
     <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder={t('input.placeholder')}
-          placeholderTextColor="#999"
-          value={text}
-          onChangeText={setText}
-          onSubmitEditing={handleSend}
-          returnKeyType="send"
-          multiline
-          maxLength={4000}
-          editable={!disabled && !sending}
-          onFocus={() => onTypingChange?.(true)}
-          onBlur={() => onTypingChange?.(false)}
-          onSelectionChange={() => {
-            if (text.length > 0) onTypingChange?.(true);
-          }}
-        />
-        <TouchableOpacity
-          style={[styles.sendButton, (!text.trim() || disabled || sending) && styles.sendDisabled]}
-          onPress={handleSend}
-          disabled={!text.trim() || disabled || sending}
-        >
-          <Text style={styles.sendText}>
-            {sending ? t('status.sending') : t('input.send')}
-          </Text>
-        </TouchableOpacity>
+      <TextInput
+        style={styles.input}
+        placeholder={t('input.placeholder')}
+        placeholderTextColor="#999"
+        value={text}
+        onChangeText={setText}
+        onSubmitEditing={handleSend}
+        returnKeyType="send"
+        multiline
+        maxLength={4000}
+        editable={!disabled && !sending}
+        onFocus={() => onTypingChange?.(true)}
+        onBlur={() => onTypingChange?.(false)}
+        onSelectionChange={() => {
+          if (text.length > 0) onTypingChange?.(true);
+        }}
+      />
+      <TouchableOpacity
+        style={[styles.sendButton, (!text.trim() || disabled || sending) && styles.sendDisabled]}
+        onPress={handleSend}
+        disabled={!text.trim() || disabled || sending}
+      >
+        <Text style={styles.sendText}>{sending ? t('status.sending') : t('input.send')}</Text>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -1,14 +1,7 @@
 /**
  * Conversation list with pull-to-refresh and unread badges.
  */
-import {
-  View,
-  Text,
-  FlatList,
-  RefreshControl,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, FlatList, RefreshControl, StyleSheet, ActivityIndicator } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ConversationRow } from './ConversationRow';
 import type { Conversation } from '@myclup/contracts/chat';
@@ -63,9 +56,7 @@ export function ConversationList({
           onPress={() => onSelectConversation(item.id)}
         />
       )}
-      refreshControl={
-        <RefreshControl refreshing={loading} onRefresh={onRefresh} />
-      }
+      refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh} />}
       onEndReached={nextCursor ? onLoadMore : undefined}
       onEndReachedThreshold={0.3}
       ListFooterComponent={
