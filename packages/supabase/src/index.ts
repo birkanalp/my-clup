@@ -69,3 +69,17 @@ export {
   updateMembershipPlan,
   validateMembershipAccess,
 } from './membership/index';
+
+export {
+  applyDiscount,
+  createInvoice,
+  getReceivableDetail,
+  getInvoiceDetail,
+  listInstallments,
+  listInvoices,
+  listPayments,
+  listReceivables,
+  logPayment,
+  settleReceivable,
+  triggerPaymentReminder,
+} from './billing/index';
