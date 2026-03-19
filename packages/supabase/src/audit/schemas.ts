@@ -56,6 +56,15 @@ export const crossTenantSupportPayloadSchema = z.object({
   reason: z.string().optional(),
 });
 
+/** Chat assignment: staff assignment or reassignment of conversation */
+export const chatAssignmentPayloadSchema = z.object({
+  assigned_by_user_id: uuidSchema,
+  assigned_to_user_id: uuidSchema,
+  assigned_at: z.string(),
+  assigned_from_user_id: uuidSchema.nullable().optional(),
+  assignment_id: uuidSchema.optional(),
+});
+
 /** Map event type to payload schema */
 export const PAYLOAD_SCHEMAS: Partial<Record<AuditEventType, z.ZodType>> = {
   role_change: roleChangePayloadSchema,
@@ -64,6 +73,7 @@ export const PAYLOAD_SCHEMAS: Partial<Record<AuditEventType, z.ZodType>> = {
   refund: refundPayloadSchema,
   admin_impersonation: adminImpersonationPayloadSchema,
   cross_tenant_support: crossTenantSupportPayloadSchema,
+  chat_assignment: chatAssignmentPayloadSchema,
 };
 
 /** Tenant context attached to all audit events */
@@ -78,4 +88,5 @@ export type MembershipExtensionPayload = z.infer<typeof membershipExtensionPaylo
 export type RefundPayload = z.infer<typeof refundPayloadSchema>;
 export type AdminImpersonationPayload = z.infer<typeof adminImpersonationPayloadSchema>;
 export type CrossTenantSupportPayload = z.infer<typeof crossTenantSupportPayloadSchema>;
+export type ChatAssignmentPayload = z.infer<typeof chatAssignmentPayloadSchema>;
 export type TenantContext = z.infer<typeof tenantContextSchema>;

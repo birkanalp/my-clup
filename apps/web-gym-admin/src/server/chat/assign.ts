@@ -14,10 +14,9 @@ import {
   createServerClient,
   requirePermission,
   NotFoundError,
+  writeAuditEvent,
+  AUDIT_EVENT_TYPES,
 } from '@myclup/supabase';
-
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
-const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 function dbToAssignment(row: {
   id: string;
@@ -48,11 +47,14 @@ export async function assignConversation(
 ): Promise<ConversationAssignment | null> {
   const currentUser = await getCurrentUser(req);
   if (!currentUser) return null;
-  if (!SUPABASE_URL || !SERVICE_ROLE_KEY) return null;
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+  if (!supabaseUrl || !serviceRoleKey) return null;
 
   const client = createServerClient({
-    supabaseUrl: SUPABASE_URL,
-    serviceRoleKey: SERVICE_ROLE_KEY,
+    supabaseUrl,
+    serviceRoleKey,
   });
 
   const userId = currentUser.user.id;
@@ -71,6 +73,15 @@ export async function assignConversation(
   await requirePermission(client, userId, scope, 'chat:write');
 
   const now = new Date().toISOString();
+
+  // Fetch current assignment(s) before unassign to capture "from whom" for audit
+  const { data: previousAssignments } = await client
+    .from('conversation_assignments')
+    .select('assigned_to_user_id')
+    .eq('conversation_id', conversationId)
+    .is('unassigned_at', null);
+  const assignedFromUserId =
+    previousAssignments?.[0]?.assigned_to_user_id ?? null;
 
   // Unassign current active assignment(s)
   await client
@@ -96,6 +107,21 @@ export async function assignConversation(
     console.error('[chat/assign] error:', error);
     throw new Error('Failed to assign conversation');
   }
+
+  await writeAuditEvent(client, {
+    event_type: AUDIT_EVENT_TYPES.chat_assignment,
+    actor_id: userId,
+    target_type: 'conversation_assignments',
+    target_id: (inserted as { id: string }).id,
+    payload: {
+      assigned_by_user_id: userId,
+      assigned_to_user_id: input.assignedToUserId,
+      assigned_at: now,
+      assigned_from_user_id: assignedFromUserId ?? undefined,
+      assignment_id: (inserted as { id: string }).id,
+    },
+    tenant_context: { gym_id: conv.gym_id, branch_id: conv.branch_id ?? undefined },
+  });
 
   return dbToAssignment(inserted as Parameters<typeof dbToAssignment>[0]);
 }
