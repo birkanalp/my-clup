@@ -4,13 +4,13 @@
  * Web and mobile apps must use this package for BFF calls. No app may introduce
  * a second network client.
  */
-export { createApiClient, ApiError, type ApiClientConfig, type ApiContract } from "./client";
-export { createHealthApi } from "./health";
-export type { PingResponse } from "@myclup/contracts/health";
+export { createApiClient, ApiError, type ApiClientConfig, type ApiContract } from './client';
+export { createHealthApi } from './health';
+export type { PingResponse } from '@myclup/contracts/health';
 
-import { createApiClient } from "./client";
-import { createHealthApi } from "./health";
-import type { ApiClientConfig } from "./client";
+import { createApiClient } from './client';
+import { createHealthApi } from './health';
+import type { ApiClientConfig } from './client';
 
 /**
  * Creates the full API surface with base URL and optional headers.

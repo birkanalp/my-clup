@@ -13,13 +13,13 @@ This document defines conventions for all BFF API routes in MyClup Next.js apps.
 
 ## HTTP Methods
 
-| Method | Semantics |
-|--------|-----------|
-| `GET` | Read; no request body |
-| `POST` | Create or action; request body validated with contract |
-| `PUT` | Replace; request body validated |
-| `PATCH` | Partial update; request body validated |
-| `DELETE` | Remove; query params or body when needed |
+| Method   | Semantics                                              |
+| -------- | ------------------------------------------------------ |
+| `GET`    | Read; no request body                                  |
+| `POST`   | Create or action; request body validated with contract |
+| `PUT`    | Replace; request body validated                        |
+| `PATCH`  | Partial update; request body validated                 |
+| `DELETE` | Remove; query params or body when needed               |
 
 ## Validation Boundary
 
@@ -35,13 +35,13 @@ The reusable handler pattern enforces this: raw body → parse → validate → 
 
 Standard error responses use JSON with consistent shape:
 
-| Status | Shape | Use |
-|--------|-------|-----|
-| 400 | `{ "error": "validation_error", "details": [...] }` | Zod validation failure |
-| 401 | `{ "error": "unauthorized" }` | Auth required (Epic #15) |
-| 403 | `{ "error": "forbidden" }` | Permission denied (Epic #15) |
-| 404 | `{ "error": "not_found" }` | Resource not found |
-| 500 | `{ "error": "internal_error" }` | Unexpected server error |
+| Status | Shape                                               | Use                          |
+| ------ | --------------------------------------------------- | ---------------------------- |
+| 400    | `{ "error": "validation_error", "details": [...] }` | Zod validation failure       |
+| 401    | `{ "error": "unauthorized" }`                       | Auth required (Epic #15)     |
+| 403    | `{ "error": "forbidden" }`                          | Permission denied (Epic #15) |
+| 404    | `{ "error": "not_found" }`                          | Resource not found           |
+| 500    | `{ "error": "internal_error" }`                     | Unexpected server error      |
 
 ## Handler Pattern
 
@@ -61,7 +61,7 @@ export const GET = withContractRoute(pingContract, async () => {
 
 // Server module: business logic
 export async function ping(): Promise<RawPingResult> {
-  return { status: "ok", timestamp: new Date().toISOString() };
+  return { status: 'ok', timestamp: new Date().toISOString() };
 }
 ```
 

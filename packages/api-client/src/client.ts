@@ -1,4 +1,4 @@
-import type { z } from "zod";
+import type { z } from 'zod';
 
 /** Contract shape: path, method, optional request schema, response schema. */
 export type ApiContract<TRequest = unknown, TResponse = unknown> = {
@@ -26,7 +26,7 @@ export class ApiError extends Error {
     public readonly body?: string
   ) {
     super(message);
-    this.name = "ApiError";
+    this.name = 'ApiError';
   }
 }
 
@@ -35,7 +35,7 @@ export class ApiError extends Error {
  * All BFF calls from web and mobile apps should go through this client.
  */
 export function createApiClient(config: ApiClientConfig) {
-  const baseUrl = config.baseUrl.replace(/\/$/, "");
+  const baseUrl = config.baseUrl.replace(/\/$/, '');
   const headers = config.headers ?? {};
   const doFetch = config.fetch ?? fetch;
 
@@ -43,17 +43,14 @@ export function createApiClient(config: ApiClientConfig) {
    * Performs a contract-based request. Fetches the endpoint, parses the response
    * with contract.response.parse(), and returns the typed result.
    */
-  async function request<T>(
-    contract: ApiContract<unknown, T>,
-    requestData?: unknown
-  ): Promise<T> {
+  async function request<T>(contract: ApiContract<unknown, T>, requestData?: unknown): Promise<T> {
     const url = `${baseUrl}${contract.path}`;
     const init: RequestInit = {
       method: contract.method,
-      headers: { "Content-Type": "application/json", ...headers },
+      headers: { 'Content-Type': 'application/json', ...headers },
     };
 
-    if (requestData !== undefined && contract.method !== "GET") {
+    if (requestData !== undefined && contract.method !== 'GET') {
       init.body = JSON.stringify(requestData);
     }
 
@@ -61,11 +58,7 @@ export function createApiClient(config: ApiClientConfig) {
 
     if (!res.ok) {
       const body = await res.text();
-      throw new ApiError(
-        `API request failed: ${res.status} ${res.statusText}`,
-        res.status,
-        body
-      );
+      throw new ApiError(`API request failed: ${res.status} ${res.statusText}`, res.status, body);
     }
 
     const json = await res.json();

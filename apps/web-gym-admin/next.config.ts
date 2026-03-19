@@ -1,7 +1,7 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@myclup/contracts"],
+  transpilePackages: ['@myclup/contracts'],
 };
 
 export default nextConfig;

@@ -7,8 +7,8 @@
  *
  * Route handlers must not contain business logic; they delegate to server modules.
  */
-import type { NextRequest } from "next/server";
-import { z } from "zod";
+import type { NextRequest } from 'next/server';
+import { z } from 'zod';
 
 /** Contract shape: path, method, optional request schema, response schema. */
 type ApiContract = {
@@ -19,15 +19,8 @@ type ApiContract = {
 };
 
 /** Standard error response shape. */
-function errorResponse(
-  status: number,
-  error: string,
-  details?: unknown
-): Response {
-  const body =
-    details !== undefined
-      ? { error, details }
-      : { error };
+function errorResponse(status: number, error: string, details?: unknown): Response {
+  const body = details !== undefined ? { error, details } : { error };
   return Response.json(body, { status });
 }
 
@@ -51,11 +44,11 @@ export function withContractRoute<TRequest, TResponse>(
     try {
       let validatedRequest: TRequest | undefined;
 
-      if (contract.method !== "GET" && contract.request) {
+      if (contract.method !== 'GET' && contract.request) {
         const rawBody = await request.json();
         const parsed = contract.request.safeParse(rawBody);
         if (!parsed.success) {
-          return errorResponse(400, "validation_error", parsed.error.flatten());
+          return errorResponse(400, 'validation_error', parsed.error.flatten());
         }
         validatedRequest = parsed.data;
       }
@@ -63,14 +56,14 @@ export function withContractRoute<TRequest, TResponse>(
       const result = await handler(validatedRequest);
       const validated = contract.response.safeParse(result);
       if (!validated.success) {
-        return errorResponse(500, "internal_error");
+        return errorResponse(500, 'internal_error');
       }
       return Response.json(validated.data);
     } catch (err) {
       if (err instanceof SyntaxError) {
-        return errorResponse(400, "validation_error", "Invalid JSON body");
+        return errorResponse(400, 'validation_error', 'Invalid JSON body');
       }
-      return errorResponse(500, "internal_error");
+      return errorResponse(500, 'internal_error');
     }
   };
 }

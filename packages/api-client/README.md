@@ -20,10 +20,10 @@ The package is part of the monorepo. Add it as a dependency:
 
 ```typescript
 // apps/web-gym-admin or apps/web-site
-import { createApi } from "@myclup/api-client";
+import { createApi } from '@myclup/api-client';
 
 const api = createApi({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000",
+  baseUrl: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000',
   headers: {
     // Auth headers injected when session is available (Epic #15)
     // Authorization: `Bearer ${token}`,
@@ -44,10 +44,10 @@ const result = await api.health.ping();
 
 ```typescript
 // apps/mobile-user or apps/mobile-admin
-import { createApi } from "@myclup/api-client";
+import { createApi } from '@myclup/api-client';
 
 const api = createApi({
-  baseUrl: process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:3000",
+  baseUrl: process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000',
   headers: {
     // Auth headers when token is available (Epic #15)
     // Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const result = await api.health.ping();
 All domain methods are typed and validated against shared contracts from `@myclup/contracts`:
 
 ```typescript
-const api = createApi({ baseUrl: "https://api.example.com" });
+const api = createApi({ baseUrl: 'https://api.example.com' });
 
 // health.ping() — GET /api/v1/health/ping
 const ping = await api.health.ping();
