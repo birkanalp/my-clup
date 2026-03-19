@@ -1,5 +1,6 @@
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { ScreenContainer } from '@myclup/ui-native';
 import { ConversationList } from '../../src/features/chat/ConversationList';
 import { useConversations } from '../../src/features/chat/useConversations';
 
@@ -12,7 +13,7 @@ export default function ChatIndexScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScreenContainer style={styles.container}>
       <ConversationList
         items={items}
         loading={loading}
@@ -22,7 +23,7 @@ export default function ChatIndexScreen() {
         onSelectConversation={handleSelect}
         nextCursor={nextCursor}
       />
-    </View>
+    </ScreenContainer>
   );
 }
 

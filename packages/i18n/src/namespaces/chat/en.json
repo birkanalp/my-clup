@@ -4,9 +4,17 @@
   },
   "list": {
     "title": "Chat",
+    "subtitle": "Stay close to your gym support and instructors in one place.",
     "loading": "Loading conversations...",
+    "loadingTitle": "Loading your conversations",
+    "loadingBody": "Fetching the latest member chat threads.",
     "error": "Failed to load conversations",
+    "errorTitle": "Chat list unavailable",
+    "errorBody": "We could not load your conversations right now. Try again.",
     "empty": "No conversations yet",
+    "emptyTitle": "No conversations yet",
+    "emptyBody": "Your support and coaching conversations will appear here.",
+    "retry": "Try again",
     "filterAll": "All",
     "filterUnread": "Unread",
     "filterAssigned": "Assigned to me",
@@ -31,7 +39,16 @@
   "conversation": {
     "withGym": "Gym support",
     "withInstructor": "Instructor",
-    "direct": "Direct message"
+    "direct": "Direct message",
+    "group": "Group chat",
+    "broadcast": "Announcements",
+    "type": {
+      "support": "Support thread",
+      "instructor": "Instructor thread",
+      "direct": "Direct conversation",
+      "group": "Group conversation",
+      "broadcast": "Broadcast thread"
+    }
   },
   "input": {
     "placeholder": "Type a message...",
@@ -47,6 +64,17 @@
   },
   "empty": {
     "noMessages": "No messages yet. Start the conversation!"
+  },
+  "thread": {
+    "title": "Conversation",
+    "subtitle": "Messages stay synced with your gym support flow.",
+    "loadingTitle": "Loading conversation",
+    "loadingBody": "Pulling the latest messages and read state.",
+    "errorTitle": "Conversation unavailable",
+    "errorBody": "We could not load this chat right now.",
+    "emptyTitle": "No messages yet",
+    "emptyBody": "Send the first message to start this conversation.",
+    "composerHint": "Messages send through the existing realtime chat channel."
   },
   "status": {
     "sending": "Sending...",

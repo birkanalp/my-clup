@@ -1,20 +1,13 @@
-/**
- * Message thread with optimistic send, Realtime updates, typing indicator.
- */
-import { useCallback, useRef, useEffect } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import { useCallback, useEffect, useRef } from 'react';
+import { View, FlatList, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Card } from '@myclup/ui-native';
 import type { Message } from '@myclup/contracts/chat';
 import { MessageBubble } from './MessageBubble';
 import { MessageInput } from './MessageInput';
+import { AppStateBlock } from '../../components/AppStateBlock';
+import { AppText } from '../../components/AppText';
+import { appTheme } from '../../theme/appTheme';
 
 type MessageThreadProps = {
   conversationId?: string;
@@ -23,7 +16,7 @@ type MessageThreadProps = {
   loading: boolean;
   error: Error | null;
   onSendMessage: (content: string) => Promise<void>;
-  typingNames: string[];
+  typingLabel: string | null;
   onTypingChange: (typing: boolean) => void;
 };
 
@@ -33,7 +26,7 @@ export function MessageThread({
   loading,
   error,
   onSendMessage,
-  typingNames,
+  typingLabel,
   onTypingChange,
 }: MessageThreadProps) {
   const { t } = useTranslation('chat');
@@ -54,9 +47,11 @@ export function MessageThread({
 
   if (error) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.errorText}>{error.message}</Text>
-      </View>
+      <AppStateBlock
+        icon="message-alert-outline"
+        title={t('thread.errorTitle')}
+        description={t('thread.errorBody')}
+      />
     );
   }
 
@@ -67,37 +62,47 @@ export function MessageThread({
       keyboardVerticalOffset={90}
     >
       {loading && messages.length === 0 ? (
-        <View style={styles.centered}>
-          <ActivityIndicator size="large" />
-        </View>
-      ) : (
-        <FlatList
-          ref={flatListRef}
-          data={messages}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <MessageBubble
-              message={item}
-              isOwn={item.senderId === currentUserId}
-              showReadReceipt={item.senderId === currentUserId}
-            />
-          )}
-          ListEmptyComponent={
-            <View style={styles.empty}>
-              <Text style={styles.emptyText}>{t('empty.noMessages')}</Text>
-            </View>
-          }
-          contentContainerStyle={[
-            styles.listContent,
-            messages.length === 0 && styles.listContentEmpty,
-          ]}
+        <AppStateBlock
+          loading
+          title={t('thread.loadingTitle')}
+          description={t('thread.loadingBody')}
         />
+      ) : (
+        <Card style={styles.threadCard}>
+          <FlatList
+            ref={flatListRef}
+            data={messages}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <MessageBubble
+                message={item}
+                isOwn={item.senderId === currentUserId}
+                showReadReceipt={item.senderId === currentUserId}
+              />
+            )}
+            ListEmptyComponent={
+              <View style={styles.empty}>
+                <AppStateBlock
+                  icon="message-text-outline"
+                  title={t('thread.emptyTitle')}
+                  description={t('thread.emptyBody')}
+                />
+              </View>
+            }
+            contentContainerStyle={[
+              styles.listContent,
+              messages.length === 0 && styles.listContentEmpty,
+            ]}
+          />
+        </Card>
       )}
-      {typingNames.length > 0 && (
+      {typingLabel ? (
         <View style={styles.typingBar}>
-          <Text style={styles.typingText}>{t('label.typing', { name: typingNames[0] })}</Text>
+          <AppText variant="caption" tone="soft" style={styles.typingText}>
+            {typingLabel}
+          </AppText>
         </View>
-      )}
+      ) : null}
       <MessageInput onSend={handleSend} onTypingChange={onTypingChange} />
     </KeyboardAvoidingView>
   );
@@ -106,41 +111,32 @@ export function MessageThread({
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+    gap: appTheme.spacing.sm,
   },
-  centered: {
+  threadCard: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 0,
+    paddingVertical: appTheme.spacing.sm,
+    backgroundColor: 'rgba(255,255,255,0.94)',
   },
   empty: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 48,
-  },
-  emptyText: {
-    fontSize: 16,
-    color: '#666',
-  },
-  errorText: {
-    fontSize: 14,
-    color: '#c62828',
+    paddingHorizontal: appTheme.spacing.md,
+    paddingVertical: appTheme.spacing.xl,
   },
   listContent: {
-    paddingVertical: 16,
+    paddingVertical: appTheme.spacing.sm,
     flexGrow: 1,
   },
   listContentEmpty: {
     justifyContent: 'center',
   },
   typingBar: {
-    paddingHorizontal: 16,
+    paddingHorizontal: appTheme.spacing.md,
     paddingVertical: 6,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius: appTheme.radii.md,
   },
   typingText: {
-    fontSize: 13,
-    color: '#666',
     fontStyle: 'italic',
   },
 });

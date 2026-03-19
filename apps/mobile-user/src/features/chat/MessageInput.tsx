@@ -1,9 +1,9 @@
-/**
- * Message input with send button.
- */
 import { useState, useCallback } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { AppIcon } from '../../components/AppIcon';
+import { AppText } from '../../components/AppText';
+import { appTheme } from '../../theme/appTheme';
 
 type MessageInputProps = {
   onSend: (content: string) => void | Promise<void>;
@@ -18,7 +18,10 @@ export function MessageInput({ onSend, disabled = false, onTypingChange }: Messa
 
   const handleSend = useCallback(async () => {
     const trimmed = text.trim();
-    if (!trimmed || disabled) return;
+    if (!trimmed || disabled) {
+      return;
+    }
+
     setText('');
     onTypingChange?.(false);
     setSending(true);
@@ -34,7 +37,7 @@ export function MessageInput({ onSend, disabled = false, onTypingChange }: Messa
       <TextInput
         style={styles.input}
         placeholder={t('input.placeholder')}
-        placeholderTextColor="#999"
+        placeholderTextColor={appTheme.colors.textSoft}
         value={text}
         onChangeText={setText}
         onSubmitEditing={handleSend}
@@ -45,16 +48,25 @@ export function MessageInput({ onSend, disabled = false, onTypingChange }: Messa
         onFocus={() => onTypingChange?.(true)}
         onBlur={() => onTypingChange?.(false)}
         onSelectionChange={() => {
-          if (text.length > 0) onTypingChange?.(true);
+          if (text.length > 0) {
+            onTypingChange?.(true);
+          }
         }}
       />
-      <TouchableOpacity
+      <Pressable
         style={[styles.sendButton, (!text.trim() || disabled || sending) && styles.sendDisabled]}
         onPress={handleSend}
         disabled={!text.trim() || disabled || sending}
       >
-        <Text style={styles.sendText}>{sending ? t('status.sending') : t('input.send')}</Text>
-      </TouchableOpacity>
+        <AppIcon
+          name={sending ? 'progress-clock' : 'send'}
+          size={18}
+          color={appTheme.colors.primaryText}
+        />
+        <AppText tone="inverse" style={styles.sendText}>
+          {sending ? t('status.sending') : t('input.send')}
+        </AppText>
+      </Pressable>
     </View>
   );
 }
@@ -65,8 +77,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     padding: 12,
     borderTopWidth: 1,
-    borderTopColor: '#eee',
-    backgroundColor: '#fff',
+    borderTopColor: appTheme.colors.border,
+    backgroundColor: 'rgba(255,255,255,0.96)',
+    borderRadius: appTheme.radii.xl,
     gap: 8,
   },
   input: {
@@ -75,24 +88,27 @@ const styles = StyleSheet.create({
     maxHeight: 100,
     paddingHorizontal: 14,
     paddingVertical: 10,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: appTheme.colors.surfaceMuted,
     borderRadius: 20,
     fontSize: 16,
-    color: '#111',
+    color: appTheme.colors.text,
+    fontFamily: appTheme.fontFamily,
   },
   sendButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
     paddingHorizontal: 16,
     paddingVertical: 10,
-    backgroundColor: '#2196f3',
+    backgroundColor: appTheme.colors.primary,
     borderRadius: 20,
     justifyContent: 'center',
     minHeight: 40,
   },
   sendDisabled: {
-    backgroundColor: '#b0bec5',
+    backgroundColor: '#9fb1bf',
   },
   sendText: {
-    color: '#fff',
     fontWeight: '600',
     fontSize: 15,
   },
