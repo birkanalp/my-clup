@@ -97,7 +97,7 @@ export const assignConversationContract = {
   response: ConversationAssignmentSchema,
 } as const;
 
-// --- Validate chat subscription (Realtime channel) ---
+// --- Validate chat subscription (channel validation for Realtime) ---
 
 export const validateChatSubscribeContract = {
   path: '/api/v1/chat/conversations/:id/subscribe',

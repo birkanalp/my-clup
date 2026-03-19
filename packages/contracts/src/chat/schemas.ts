@@ -146,16 +146,16 @@ export const GetConversationResponseSchema = ConversationSchema.extend({
 });
 export type GetConversationResponse = z.infer<typeof GetConversationResponseSchema>;
 
-/** List conversations response (cursor-paginated). */
-export const ListConversationsResponseSchema = createCursorPageResultSchema(ConversationSchema);
-
-/** List messages response (cursor-paginated). */
-export const ListMessagesResponseSchema = createCursorPageResultSchema(MessageSchema);
-
-/** Chat Realtime channel validation response (Task 17.5). */
+/** Chat Realtime channel validation response. Used by client to subscribe via Supabase Realtime. */
 export const ChatSubscribeResponseSchema = z.object({
   channelName: z.string(),
   gymId: z.string().uuid(),
   conversationId: z.string().uuid(),
 });
 export type ChatSubscribeResponse = z.infer<typeof ChatSubscribeResponseSchema>;
+
+/** List conversations response (cursor-paginated). */
+export const ListConversationsResponseSchema = createCursorPageResultSchema(ConversationSchema);
+
+/** List messages response (cursor-paginated). */
+export const ListMessagesResponseSchema = createCursorPageResultSchema(MessageSchema);

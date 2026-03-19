@@ -38,9 +38,9 @@ export type ApiClientConfig = {
   fetch?: typeof fetch;
 };
 
-/** Options for path and query param substitution. */
+/** Options for contract-based requests (path param substitution, query params). */
 export type RequestOptions = {
-  /** Substitute :param in path (e.g. { id: "123" } for /conversations/:id). */
+  /** Substitute :paramName in contract.path with pathParams.paramName. */
   pathParams?: Record<string, string>;
   /** Append as query string for GET (e.g. { gymId: "xxx", locale: "tr" }). */
   queryParams?: Record<string, string | number | boolean | undefined>;
@@ -71,7 +71,9 @@ export function createApiClient(config: ApiClientConfig) {
    * Performs a contract-based request. Fetches the endpoint, parses the response
    * with contract.response.parse(), and returns the typed result.
    *
-   * Supports pathParams (substitute :param in path) and queryParams (append for GET).
+   * Path params: Pass options.pathParams to substitute :paramName in the path.
+   * Query params: Pass options.queryParams for GET requests (e.g. templates, quick-replies).
+   * GET with requestData: When requestData is a plain object, it is serialized as query string.
    */
   async function request<T>(
     contract: ApiContract<unknown, T>,
@@ -99,8 +101,22 @@ export function createApiClient(config: ApiClientConfig) {
       headers: { 'Content-Type': 'application/json', ...staticHeaders, ...authHeaders },
     };
 
-    if (requestData !== undefined && contract.method !== 'GET') {
-      init.body = JSON.stringify(requestData);
+    if (requestData !== undefined) {
+      if (contract.method === 'GET') {
+        const params = new URLSearchParams();
+        const obj = requestData as Record<string, unknown>;
+        if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+          for (const [k, v] of Object.entries(obj)) {
+            if (v !== undefined && v !== null) {
+              params.set(k, String(v));
+            }
+          }
+        }
+        const query = params.toString();
+        if (query) url += `?${query}`;
+      } else {
+        init.body = JSON.stringify(requestData);
+      }
     }
 
     const res = await doFetch(url, init);

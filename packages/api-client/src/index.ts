@@ -24,6 +24,7 @@ export {
 } from './client';
 export { createHealthApi } from './health';
 export { createAuthApi } from './auth';
+export { createChatApi } from './chat';
 export type { PingResponse } from '@myclup/contracts/health';
 export type {
   WhoamiResponse,
@@ -31,10 +32,24 @@ export type {
   ProfilePatchRequest,
   ProfilePatchResponse,
 } from '@myclup/contracts/auth';
+export type {
+  AssignConversationInput,
+  Conversation,
+  ConversationAssignment,
+  CreateConversationInput,
+  CreateMessageInput,
+  CursorPageParams,
+  CursorPageResult,
+  GetConversationResponse,
+  Message,
+  MessageReceiptUpdate,
+  TypingState,
+} from '@myclup/contracts/chat';
 
 import { createApiClient } from './client';
 import { createHealthApi } from './health';
 import { createAuthApi } from './auth';
+import { createChatApi } from './chat';
 import type { ApiClientConfig } from './client';
 
 /**
@@ -48,11 +63,13 @@ import type { ApiClientConfig } from './client';
  * });
  * const result = await api.health.ping();
  * const user = await api.auth.whoami();
+ * const conversations = await api.chat.conversations.list();
  */
 export function createApi(config: ApiClientConfig) {
   const client = createApiClient(config);
   return {
     health: createHealthApi(client.request),
     auth: createAuthApi(client.request),
+    chat: createChatApi(client.request),
   };
 }
