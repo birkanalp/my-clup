@@ -25,6 +25,7 @@ dist
 out
 build
 .expo
+*.tsbuildinfo
 
 # Test outputs
 coverage

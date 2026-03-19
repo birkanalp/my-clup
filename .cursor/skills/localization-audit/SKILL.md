@@ -11,12 +11,12 @@ Scan code changes and verify localization coverage for client-facing features. O
 
 ## Verification Checklist
 
-| Check | Look for |
-|-------|----------|
-| **No hardcoded strings** | Literal strings in JSX, `children`, `label`, `placeholder`, `title`, `alt`, error messages, button text |
-| **Translation keys exist** | `t()`, `useTranslation()`, or equivalent with key; keys present in translation files |
+| Check                       | Look for                                                                                                             |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| **No hardcoded strings**    | Literal strings in JSX, `children`, `label`, `placeholder`, `title`, `alt`, error messages, button text              |
+| **Translation keys exist**  | `t()`, `useTranslation()`, or equivalent with key; keys present in translation files                                 |
 | **Locale-aware formatting** | Dates, times, numbers, currencies, units use shared locale utilities (not raw `toLocaleString` without locale param) |
-| **Fallback behavior** | Missing translation handling; no empty strings or raw key names shown to users |
+| **Fallback behavior**       | Missing translation handling; no empty strings or raw key names shown to users                                       |
 
 ## In-Scope Paths
 
@@ -37,22 +37,22 @@ Emit this structure for each audit:
 
 ## Missing Translations
 
-| Location | String | Recommendation |
-|----------|--------|----------------|
+| Location    | String         | Recommendation                                     |
+| ----------- | -------------- | -------------------------------------------------- |
 | [file:line] | [literal text] | Add key `[suggested.key]` to translation resources |
 
 ## Unsafe Strings
 
-| Location | Issue | Recommendation |
-|----------|-------|----------------|
+| Location    | Issue                                  | Recommendation                                      |
+| ----------- | -------------------------------------- | --------------------------------------------------- |
 | [file:line] | [hardcoded string / placeholder / alt] | Replace with `t('key')` or translation-driven value |
 
 ## Locale Issues
 
-| Location | Issue | Recommendation |
-|----------|-------|----------------|
+| Location    | Issue                        | Recommendation                                           |
+| ----------- | ---------------------------- | -------------------------------------------------------- |
 | [file:line] | [Date/number without locale] | Use `formatDate(value, locale)` or shared locale utility |
-| [file:line] | [Currency without locale] | Use `formatCurrency(value, locale)` |
+| [file:line] | [Currency without locale]    | Use `formatCurrency(value, locale)`                      |
 
 ## Recommended Fixes
 

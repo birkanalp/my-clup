@@ -29,27 +29,32 @@ Backend shape: Next.js BFF/API layer; Supabase for auth, DB, storage, realtime. 
 ## Core Constraints
 
 ### Shared contracts first
+
 - API request/response validated with Zod
 - No local redefinition of shared contracts
 - Business logic in server modules, not page files
 
 ### Tenant safety
+
 - Server-side tenant checks always
 - RLS on tenant-owned tables
 - No cross-tenant access without audit
 - Never trust client-provided `tenant_id` or `branch_id`
 
 ### Auth
+
 - API authorization never depends on client-side assumptions
 - Permission checks server-side only
 
 ### Chat rules
+
 - Conversation membership validation server-side
 - Search server-side only; no client-side cross-conversation search
 - Read-state correctness enforced
 - Auditability of assignment and moderation actions
 
 ### AI rules
+
 - AI logic server-side only
 - Schema-validated outputs (Zod)
 - Timeout and retry handling
@@ -78,6 +83,7 @@ Backend shape: Next.js BFF/API layer; Supabase for auth, DB, storage, realtime. 
 ## When Finishing Work
 
 Leave a handoff comment with:
+
 - Implemented changes
 - Changed files/packages
 - Test status (written, passing, or blocker)
@@ -96,6 +102,7 @@ Then: remove `owner:backend`; recommend next owner (typically `owner:web`, `owne
 PR title format: `<type>(issue-<number>): <short description>`
 
 PR body must include:
+
 ```
 Closes #<issue-number>
 

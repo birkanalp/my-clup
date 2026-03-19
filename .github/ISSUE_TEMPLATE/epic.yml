@@ -1,7 +1,7 @@
 name: Epic
 description: Planning container for a large initiative with child implementation issues
-title: "[Epic] "
-labels: ["state:proposed"]
+title: '[Epic] '
+labels: ['state:proposed']
 body:
   - type: input
     id: summary

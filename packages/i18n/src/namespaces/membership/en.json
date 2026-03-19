@@ -1,0 +1,19 @@
+{
+  "status": {
+    "active": "Active",
+    "expired": "Expired",
+    "cancelled": "Cancelled",
+    "pending": "Pending"
+  },
+  "type": {
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "classPack": "Class pack",
+    "trial": "Trial"
+  },
+  "label": {
+    "validUntil": "Valid until",
+    "startDate": "Start date",
+    "endDate": "End date"
+  }
+}

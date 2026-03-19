@@ -20,13 +20,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
-          cache: "pnpm"
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
 
       - name: Install dependencies
         env:
-          NODE_OPTIONS: "--max-old-space-size=4096"
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+          NODE_OPTIONS: '--max-old-space-size=4096'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: pnpm install --frozen-lockfile
 
       - name: Lint

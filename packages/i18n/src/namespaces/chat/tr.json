@@ -1,0 +1,21 @@
+{
+  "input": {
+    "placeholder": "Mesaj yazın...",
+    "send": "Gönder"
+  },
+  "label": {
+    "unread": "Okunmamış",
+    "online": "Çevrimiçi",
+    "offline": "Çevrimdışı",
+    "typing": "{{name}} yazıyor..."
+  },
+  "empty": {
+    "noMessages": "Henüz mesaj yok. Konuşmayı başlatın!"
+  },
+  "status": {
+    "sending": "Gönderiliyor...",
+    "sent": "Gönderildi",
+    "delivered": "İletildi",
+    "read": "Okundu"
+  }
+}

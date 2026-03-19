@@ -1,0 +1,19 @@
+{
+  "welcome": "Welcome, {{name}}!",
+  "login": {
+    "title": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "forgotPassword": "Forgot password?"
+  },
+  "logout": "Sign out",
+  "session": {
+    "expired": "Your session has expired. Please sign in again.",
+    "invalid": "Invalid session"
+  },
+  "register": {
+    "title": "Create account",
+    "submit": "Create account"
+  }
+}

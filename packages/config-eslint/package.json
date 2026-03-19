@@ -18,7 +18,11 @@
     "typescript": ">=5.0.0"
   },
   "peerDependenciesMeta": {
-    "@myclup/config-typescript": { "optional": true },
-    "typescript": { "optional": true }
+    "@myclup/config-typescript": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
   }
 }

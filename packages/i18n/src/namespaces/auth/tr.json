@@ -1,0 +1,19 @@
+{
+  "welcome": "Hoş geldin, {{name}}!",
+  "login": {
+    "title": "Giriş yap",
+    "email": "E-posta",
+    "password": "Şifre",
+    "submit": "Giriş yap",
+    "forgotPassword": "Şifremi unuttum?"
+  },
+  "logout": "Çıkış yap",
+  "session": {
+    "expired": "Oturumunuz sona erdi. Lütfen tekrar giriş yapın.",
+    "invalid": "Geçersiz oturum"
+  },
+  "register": {
+    "title": "Hesap oluştur",
+    "submit": "Hesap oluştur"
+  }
+}

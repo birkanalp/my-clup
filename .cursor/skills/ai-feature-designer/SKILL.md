@@ -43,7 +43,7 @@ Example: "Given the following workout text: {{input}}\n\nFormat as structured ex
 import { z } from 'zod';
 
 export const [Feature]OutputSchema = z.object({
-  // ... validated structure
+// ... validated structure
 });
 export type [Feature]Output = z.infer<typeof [Feature]OutputSchema>;
 \`\`\`
@@ -75,7 +75,7 @@ export type [Feature]Output = z.infer<typeof [Feature]OutputSchema>;
 
 ## Feature Flag Considerations
 
-- **Flag name**: [e.g., AI_[FEATURE]_ENABLED]
+- **Flag name**: [e.g., AI\_[FEATURE]\_ENABLED]
 - **Default**: [enabled/disabled]
 - **Behavior when disabled**: [Fallback path — e.g., no-op, return input, show "unavailable"]
 - **Kill switch**: Must allow disabling without deploy

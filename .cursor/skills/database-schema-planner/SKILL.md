@@ -38,25 +38,25 @@ Emit this structure for each domain feature:
 
 ## Entity Overview
 
-| Entity | Table | Tenant-scoped | Branch-scoped |
-|--------|-------|---------------|---------------|
-| [Entity] | [table_name] | yes/no | yes/no |
+| Entity   | Table        | Tenant-scoped | Branch-scoped |
+| -------- | ------------ | ------------- | ------------- |
+| [Entity] | [table_name] | yes/no        | yes/no        |
 
 ## Table Schemas
 
 \`\`\`sql
 -- table_name
 CREATE TABLE public.[table_name] (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  gym_id UUID NOT NULL REFERENCES public.gyms(id),
-  branch_id UUID REFERENCES public.branches(id),  -- if branch-scoped
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
-  -- ... domain columns
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+gym_id UUID NOT NULL REFERENCES public.gyms(id),
+branch_id UUID REFERENCES public.branches(id), -- if branch-scoped
+created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+-- ... domain columns
 );
 
-CREATE INDEX idx_[table]_gym_id ON public.[table_name](gym_id);
-CREATE INDEX idx_[table]_branch_id ON public.[table_name](branch_id) WHERE branch_id IS NOT NULL;
+CREATE INDEX idx*[table]\_gym_id ON public.[table_name](gym_id);
+CREATE INDEX idx*[table]\_branch_id ON public.[table_name](branch_id) WHERE branch_id IS NOT NULL;
 \`\`\`
 
 ## Relationship Diagram (Text)

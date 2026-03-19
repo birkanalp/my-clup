@@ -1,5 +1,38 @@
 {
   "name": "@myclup/mobile-user",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "lint": "eslint . && prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@myclup/i18n": "workspace:*",
+    "@myclup/types": "workspace:*",
+    "@myclup/ui-native": "workspace:*",
+    "@myclup/utils": "workspace:*",
+    "@react-native-async-storage/async-storage": "1.23.1",
+    "expo": "~52.0.0",
+    "expo-localization": "~16.0.0",
+    "expo-router": "~4.0.0",
+    "i18next": "^23.16.0",
+    "react": "18.3.1",
+    "react-i18next": "^15.1.0",
+    "react-native": "0.76.5"
+  },
+  "devDependencies": {
+    "@myclup/config-eslint": "workspace:*",
+    "@myclup/config-prettier": "workspace:*",
+    "@myclup/config-typescript": "workspace:*",
+    "@types/react": "~18.3.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
 }

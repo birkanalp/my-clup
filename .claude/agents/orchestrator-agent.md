@@ -54,6 +54,7 @@ Every implementation issue before execution must include:
 ## Handoff Protocol
 
 When ownership changes, require a handoff comment containing:
+
 - what was completed
 - what remains
 - affected files or packages
@@ -66,6 +67,7 @@ Do not hand off unless the current stage is actually complete.
 ## Implementation-to-QA Gate
 
 A task **cannot advance to QA** unless:
+
 - Code changes are committed
 - A remote branch exists
 - A GitHub Pull Request exists
@@ -74,6 +76,7 @@ A task **cannot advance to QA** unless:
 ## Parallel Execution Rules
 
 Parallel execution is allowed **only when**:
+
 - file ownership does not overlap
 - package ownership does not overlap
 - database and API contracts are already aligned
@@ -83,19 +86,20 @@ If scopes overlap, sequence the work or route the shared boundary to the product
 
 ## Implementation Agent Routing
 
-| Task type | Owner |
-|-----------|-------|
-| API routes, Supabase, backend infra | backend-agent |
-| Package boundary / architecture | product-architecture-agent |
-| Web surfaces (Next.js) | web-agent |
-| Mobile surfaces (Expo) | mobile-agent |
-| AI service logic | ai-agent |
+| Task type                           | Owner                      |
+| ----------------------------------- | -------------------------- |
+| API routes, Supabase, backend infra | backend-agent              |
+| Package boundary / architecture     | product-architecture-agent |
+| Web surfaces (Next.js)              | web-agent                  |
+| Mobile surfaces (Expo)              | mobile-agent               |
+| AI service logic                    | ai-agent                   |
 
 `owner:review` and `owner:qa` must never be used as implementation owners.
 
 ## After Review Approval
 
 Automatically:
+
 1. Finalize the completed task → `state:done`
 2. Activate the next dependency-ready tasks → `state:assigned`
 3. Assign the correct next owner label

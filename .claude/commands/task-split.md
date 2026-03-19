@@ -7,6 +7,7 @@ Read `docs/07-technical-plan.md`, `AGENT.md`, and the relevant product plan doc 
 ## Step 1: Identify Task Categories
 
 Determine which categories are needed for this feature:
+
 - **Contracts** — Zod schemas, types, API contracts
 - **Backend** — API routes, server logic, Supabase, RLS
 - **Mobile** — Expo screens and flows
@@ -33,17 +34,21 @@ For each task:
 **Next handoff label**: `owner:[next-agent]`
 
 **Files or packages in scope**:
+
 - `packages/[package]/src/...`
 - `apps/[app]/src/...`
 
 **Dependencies**:
+
 - Depends on: [Task name] — [reason]
 
 **Acceptance criteria**:
+
 - [ ] [criterion 1]
 - [ ] [criterion 2]
 
 **Required tests**:
+
 - [ ] [test type]: [what to test]
 
 **Localization impact**: [Yes/No — details]
@@ -56,6 +61,7 @@ For each task:
 ## Step 4: Overlap Warning
 
 For any two tasks marked as safe to parallelize, explicitly confirm:
+
 - [ ] File ownership does not overlap
 - [ ] Package ownership does not overlap
 - [ ] Database/API contracts are already aligned

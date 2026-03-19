@@ -12,31 +12,32 @@ pnpm install
 
 ## Commands
 
-| Script | Description |
-|-------|-------------|
-| `pnpm install` | Install dependencies (or `pnpm i`) |
-| `pnpm run build` | Build all packages (Turborepo) |
-| `pnpm run lint` | Lint (ESLint + Prettier check) |
-| `pnpm run typecheck` | TypeScript check |
-| `pnpm run test` | Unit tests (Vitest) |
-| `pnpm run clean` | Clear turbo cache, force rebuild |
+| Script               | Description                        |
+| -------------------- | ---------------------------------- |
+| `pnpm install`       | Install dependencies (or `pnpm i`) |
+| `pnpm run build`     | Build all packages (Turborepo)     |
+| `pnpm run lint`      | Lint (ESLint + Prettier check)     |
+| `pnpm run typecheck` | TypeScript check                   |
+| `pnpm run test`      | Unit tests (Vitest)                |
+| `pnpm run clean`     | Clear turbo cache, force rebuild   |
 
 ## Environment Setup
 
 ### Required Variables
 
 1. Copy `.env.example` to `.env` or `.env.local`:
+
    ```bash
    cp .env.example .env.local
    ```
 
 2. Fill in the placeholder values. The example file documents three categories:
 
-   | Category | Description | Example |
-   |----------|-------------|---------|
-   | **App public** | Safe for client bundles (`NEXT_PUBLIC_*`, `EXPO_PUBLIC_*`) | `NEXT_PUBLIC_SUPABASE_URL` |
-   | **Shared runtime** | Non-secret, server or build-time | `NODE_ENV`, `NEXT_PUBLIC_DEFAULT_LOCALE` |
-   | **Secret server-only** | Never expose to clients | `SUPABASE_SERVICE_ROLE_KEY` |
+   | Category               | Description                                                | Example                                  |
+   | ---------------------- | ---------------------------------------------------------- | ---------------------------------------- |
+   | **App public**         | Safe for client bundles (`NEXT_PUBLIC_*`, `EXPO_PUBLIC_*`) | `NEXT_PUBLIC_SUPABASE_URL`               |
+   | **Shared runtime**     | Non-secret, server or build-time                           | `NODE_ENV`, `NEXT_PUBLIC_DEFAULT_LOCALE` |
+   | **Secret server-only** | Never expose to clients                                    | `SUPABASE_SERVICE_ROLE_KEY`              |
 
 3. **Secrets** (Supabase keys, OAuth secrets, webhook secrets) must never be committed. They are gitignored via `.env`, `.env.local`, `.env.development`, `.env.production`, and `.env.*.local`.
 

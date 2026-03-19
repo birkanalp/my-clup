@@ -1,0 +1,21 @@
+{
+  "input": {
+    "placeholder": "Type a message...",
+    "send": "Send"
+  },
+  "label": {
+    "unread": "Unread",
+    "online": "Online",
+    "offline": "Offline",
+    "typing": "{{name}} is typing..."
+  },
+  "empty": {
+    "noMessages": "No messages yet. Start the conversation!"
+  },
+  "status": {
+    "sending": "Sending...",
+    "sent": "Sent",
+    "delivered": "Delivered",
+    "read": "Read"
+  }
+}

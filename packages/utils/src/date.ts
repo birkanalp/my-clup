@@ -7,7 +7,7 @@
  * Returns null if the input is invalid or not a valid ISO date.
  */
 export function parseISODate(value: string | null | undefined): Date | null {
-  if (value == null || typeof value !== "string" || value.trim() === "") {
+  if (value == null || typeof value !== 'string' || value.trim() === '') {
     return null;
   }
   const trimmed = value.trim();
