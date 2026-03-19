@@ -24,6 +24,14 @@
     "./chat": {
       "types": "./dist/chat/index.d.ts",
       "default": "./dist/chat/index.js"
+    },
+    "./membership": {
+      "types": "./dist/membership/index.d.ts",
+      "default": "./dist/membership/index.js"
+    },
+    "./billing": {
+      "types": "./dist/billing/index.d.ts",
+      "default": "./dist/billing/index.js"
     }
   },
   "scripts": {
