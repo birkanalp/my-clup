@@ -24,6 +24,15 @@ vi.mock('@myclup/supabase', async (importOriginal) => {
 
 import * as supabase from '@myclup/supabase';
 
+/** Minimal User-shaped mock for getCurrentUser; satisfies CurrentUser['user'] */
+const mockUser = {
+  id: 'user-actor',
+  app_metadata: {},
+  user_metadata: {},
+  aud: 'authenticated',
+  created_at: '2024-01-01T00:00:00Z',
+} as supabase.CurrentUser['user'];
+
 const mockGetCurrentUser = vi.mocked(supabase.getCurrentUser);
 const mockCreateServerClient = vi.mocked(supabase.createServerClient);
 const mockRequirePermission = vi.mocked(supabase.requirePermission);
@@ -89,7 +98,7 @@ describe('assignConversation', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockGetCurrentUser.mockResolvedValue({
-      user: { id: 'user-actor' },
+      user: mockUser,
       profile: {} as supabase.Profile,
     });
     const mockClient = createMockClient();
