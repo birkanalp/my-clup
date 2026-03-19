@@ -11,7 +11,7 @@ export default function ChatLayout() {
         headerTitle: t('list.title'),
       }}
     >
-      <Stack.Screen name="index" options={{ title: t('list.title') }} />
+      <Stack.Screen name="index" options={{ headerShown: false, title: t('list.title') }} />
       <Stack.Screen name="[id]" options={{ title: t('list.title') }} />
     </Stack>
   );

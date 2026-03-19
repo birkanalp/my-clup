@@ -20,6 +20,77 @@
     "success": "Başarılı",
     "noResults": "Sonuç bulunamadı"
   },
+  "shell": {
+    "eyebrow": "Üye deneyimi",
+    "subtitle": "Erişim, sohbet ve üye işlemleri için tek kabuk.",
+    "app": "Üye uygulaması",
+    "home": "Ana sayfa",
+    "membership": "Üyelik",
+    "chat": "Sohbet"
+  },
+  "dashboard": {
+    "heroTitle": "Gününüz tek dokunuş uzağınızda",
+    "heroSubtitle": "Üyeliğinizi kontrol edin, en son sohbete geçin ya da bir sonraki üye işlemine hızla ulaşın.",
+    "membershipTitle": "Üyelik durumu",
+    "membershipSubtitle": "Güncel planı ve bir sonraki aksiyon noktasını görün.",
+    "messagesTitle": "Son mesajlar",
+    "messagesSubtitle": "En yeni görüşmeleri önce yakalayın.",
+    "quickActionsTitle": "Hızlı işlemler",
+    "quickActionsSubtitle": "En sık kullanılan üye işlemleri elinizin altında olsun.",
+    "paymentsTitle": "Ödeme hatırlatması",
+    "paymentsSubtitle": "Faturalama ve yenileme hatırlatıcıları için yer tutucu.",
+    "notificationsTitle": "Bildirim hazırlığı",
+    "notificationsSubtitle": "Uyarılar, hatırlatıcılar ve durum güncellemeleri için hazır."
+  },
+  "membershipDashboard": {
+    "active": "Aktif üyelik",
+    "noActive": "Henüz aktif üyelik yok",
+    "renewalDue": "Yenileme zamanı",
+    "remainingSessions": "Kalan seans",
+    "errorTitle": "Üyelik bilgileri yüklenemedi",
+    "errorBody": "Üyelik özetini yenilemek için tekrar deneyin."
+  },
+  "messagesDashboard": {
+    "emptyTitle": "Henüz mesaj yok",
+    "emptyBody": "Bir sohbet başladığında mesaj kutunuz burada görünecek.",
+    "errorTitle": "Mesajlar yüklenemedi",
+    "errorBody": "En son görüşmeleri yenilemek için tekrar deneyin.",
+    "loadingTitle": "Mesajlar yükleniyor...",
+    "updatedAt": "{{date}} tarihinde güncellendi",
+    "unreadCount": {
+      "one": "{{count}} okunmamış",
+      "other": "{{count}} okunmamış"
+    }
+  },
+  "quickActions": {
+    "bookClass": "Ders rezervasyonu",
+    "openChat": "Sohbeti aç",
+    "showQr": "QR göster",
+    "renewMembership": "Üyeliği yenile",
+    "bookClassHint": "Rezervasyon akışı bir sonraki alanda gelecek.",
+    "openChatHint": "Son görüşmeyi sürdürün.",
+    "showQrHint": "Üye kartını üyelik ekranında açın.",
+    "renewMembershipHint": "Erişim süresi dolmadan yenileyin.",
+    "comingSoon": "Yakında"
+  },
+  "paymentsDashboard": {
+    "body": "Ödeme veya yenileme hatırlatıcıları hazır olduğunda burada görünecek."
+  },
+  "notificationsDashboard": {
+    "body": "Bu alan push ve uygulama içi bildirimler için ayrıldı."
+  },
+  "cta": {
+    "openMembership": "Üyeliği aç",
+    "openChat": "Sohbeti aç",
+    "renewNow": "Şimdi yenile",
+    "retry": "Tekrar dene"
+  },
+  "state": {
+    "loading": "Pano yükleniyor...",
+    "noMembership": "Aktif üyelik bulunamadı",
+    "noMessages": "Henüz son mesaj yok",
+    "error": "Bir şeyler ters gitti"
+  },
   "items_count": {
     "one": "{{count}} öğe",
     "other": "{{count}} öğe"

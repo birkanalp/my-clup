@@ -20,6 +20,77 @@
     "success": "Success",
     "noResults": "No results found"
   },
+  "shell": {
+    "eyebrow": "Member experience",
+    "subtitle": "One shell for access, conversations, and member actions.",
+    "app": "Member app",
+    "home": "Home",
+    "membership": "Membership",
+    "chat": "Chat"
+  },
+  "dashboard": {
+    "heroTitle": "Your day, one tap away",
+    "heroSubtitle": "Check your membership, open the latest conversation, or jump into the next member action.",
+    "membershipTitle": "Membership status",
+    "membershipSubtitle": "See the current plan and the next action point.",
+    "messagesTitle": "Latest messages",
+    "messagesSubtitle": "Catch the newest conversations first.",
+    "quickActionsTitle": "Quick actions",
+    "quickActionsSubtitle": "Keep the most common member tasks within reach.",
+    "paymentsTitle": "Payment reminder",
+    "paymentsSubtitle": "Placeholder for billing nudges and renewal reminders.",
+    "notificationsTitle": "Notification-ready",
+    "notificationsSubtitle": "Ready for alerts, reminders, and status updates."
+  },
+  "membershipDashboard": {
+    "active": "Active membership",
+    "noActive": "No active membership yet",
+    "renewalDue": "Renewal window",
+    "remainingSessions": "Remaining sessions",
+    "errorTitle": "Membership could not be loaded",
+    "errorBody": "Try again to refresh the membership summary."
+  },
+  "messagesDashboard": {
+    "emptyTitle": "No messages yet",
+    "emptyBody": "Your chat inbox will appear here once a conversation starts.",
+    "errorTitle": "Messages could not be loaded",
+    "errorBody": "Try again to refresh the latest conversations.",
+    "loadingTitle": "Loading messages...",
+    "updatedAt": "Updated {{date}}",
+    "unreadCount": {
+      "one": "{{count}} unread",
+      "other": "{{count}} unread"
+    }
+  },
+  "quickActions": {
+    "bookClass": "Book class",
+    "openChat": "Open chat",
+    "showQr": "Show QR",
+    "renewMembership": "Renew membership",
+    "bookClassHint": "Booking lands in the next surface.",
+    "openChatHint": "Continue the latest conversation.",
+    "showQrHint": "Open the member pass in membership.",
+    "renewMembershipHint": "Renew before your access expires.",
+    "comingSoon": "Coming soon"
+  },
+  "paymentsDashboard": {
+    "body": "When payment or renewal reminders are ready, they will surface here."
+  },
+  "notificationsDashboard": {
+    "body": "This slot is reserved for push and in-app notifications."
+  },
+  "cta": {
+    "openMembership": "Open membership",
+    "openChat": "Open chat",
+    "renewNow": "Renew now",
+    "retry": "Retry"
+  },
+  "state": {
+    "loading": "Loading dashboard...",
+    "noMembership": "No active membership available",
+    "noMessages": "No recent messages yet",
+    "error": "Something went wrong"
+  },
   "items_count": {
     "one": "{{count}} item",
     "other": "{{count}} items"
