@@ -11,6 +11,7 @@
 import { z } from 'zod';
 import {
   AssignConversationInputSchema,
+  ChatSubscribeResponseSchema,
   ConversationAssignmentSchema,
   ConversationSchema,
   CreateConversationInputSchema,
@@ -87,4 +88,13 @@ export const assignConversationContract = {
   method: 'POST' as const,
   request: AssignConversationInputSchema,
   response: ConversationAssignmentSchema,
+} as const;
+
+// --- Validate chat subscription (channel validation for Realtime) ---
+
+export const validateChatSubscribeContract = {
+  path: '/api/v1/chat/conversations/:id/subscribe',
+  method: 'GET' as const,
+  request: GetByIdRequestSchema,
+  response: ChatSubscribeResponseSchema,
 } as const;
