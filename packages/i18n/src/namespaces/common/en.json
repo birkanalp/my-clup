@@ -83,8 +83,47 @@
   "cta": {
     "openMembership": "Open membership",
     "openChat": "Open chat",
+    "openNotifications": "Open notifications",
+    "openProfile": "Open profile",
     "renewNow": "Renew now",
     "retry": "Retry"
+  },
+  "notifications": {
+    "heroTitle": "Notifications and reminders",
+    "heroSubtitle": "See what needs your attention now, and what will land here once delivery channels go live.",
+    "centerTitle": "Member signal center",
+    "centerSubtitle": "Current reminders come from existing membership and chat data. Future transport-backed alerts stay explicit placeholders.",
+    "loadingTitle": "Loading notifications...",
+    "loadingBody": "Checking membership urgency and unread conversations.",
+    "errorTitle": "Notifications could not be loaded",
+    "errorBody": "Try again to refresh the latest member signals.",
+    "membershipExpiredTitle": "Membership has expired",
+    "membershipExpiredBody": "Renew now to restore access and keep the member surface current.",
+    "membershipExpiringTitle": "Membership is nearing renewal",
+    "membershipExpiringBody": "Renew before the access window closes to avoid interruption.",
+    "chatUnreadTitle": "Unread chat follow-up",
+    "chatUnreadBodySingle": "You have {{count}} unread message waiting in the latest conversation.",
+    "chatUnreadBodyMany": "You have {{count}} unread messages across active conversations.",
+    "caughtUpTitle": "All caught up",
+    "caughtUpBody": "There are no urgent member reminders right now. This center will keep future alerts in one place.",
+    "bookingPlaceholderTitle": "Booking reminders",
+    "bookingPlaceholderBody": "Class reminders and waitlist nudges will appear here after the booking surface is wired.",
+    "updatesPlaceholderTitle": "Push and campaign alerts",
+    "updatesPlaceholderBody": "Push, campaign, and app update alerts remain placeholders until delivery transport is enabled.",
+    "quickLinksTitle": "Keep moving",
+    "quickLinksSubtitle": "Jump directly into the member surfaces connected to these reminders.",
+    "stats": {
+      "unreadMessages": "Unread messages",
+      "actionNeeded": "Action needed",
+      "clear": "Clear",
+      "membership": "Membership"
+    },
+    "status": {
+      "primary": "Active signal",
+      "success": "Up to date",
+      "warning": "Needs action",
+      "neutral": "Coming next"
+    }
   },
   "profile": {
     "title": "Profile and settings",
