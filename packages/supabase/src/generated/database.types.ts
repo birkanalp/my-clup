@@ -4,7 +4,7 @@
  * This file is the canonical location for output from:
  *   supabase gen types typescript --project-id <id> > src/generated/database.types.ts
  *
- * Manually aligned with migrations in supabase/migrations/ (Task 15.1).
+ * Manually aligned with migrations in supabase/migrations/ (Task 15.1, Task 17.1).
  * Regenerate with `supabase gen types` when linked to a live project.
  *
  * See packages/supabase/README.md for type generation instructions.
@@ -27,6 +27,14 @@ export type AppRole =
   | 'branch_manager'
   | 'branch_instructor'
   | 'branch_staff';
+
+export type ConversationType =
+  | 'direct'
+  | 'support'
+  | 'instructor'
+  | 'group'
+  | 'broadcast'
+  | 'internal_staff';
 
 export interface Database {
   public: {
@@ -205,11 +213,162 @@ export interface Database {
         };
         Relationships: [];
       };
+      conversations: {
+        Row: {
+          id: string;
+          gym_id: string;
+          branch_id: string | null;
+          type: ConversationType;
+          metadata: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          gym_id: string;
+          branch_id?: string | null;
+          type: ConversationType;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          type?: ConversationType;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      conversation_participants: {
+        Row: {
+          conversation_id: string;
+          user_id: string;
+          role: string;
+          joined_at: string;
+        };
+        Insert: {
+          conversation_id: string;
+          user_id: string;
+          role?: string;
+          joined_at?: string;
+        };
+        Update: {
+          conversation_id?: string;
+          user_id?: string;
+          role?: string;
+          joined_at?: string;
+        };
+        Relationships: [];
+      };
+      messages: {
+        Row: {
+          id: string;
+          conversation_id: string;
+          sender_id: string;
+          content: string;
+          dedupe_key: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          conversation_id: string;
+          sender_id: string;
+          content?: string;
+          dedupe_key?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          conversation_id?: string;
+          sender_id?: string;
+          content?: string;
+          dedupe_key?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      message_attachments: {
+        Row: {
+          id: string;
+          message_id: string;
+          storage_path: string;
+          mime_type: string | null;
+          filename: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          message_id: string;
+          storage_path: string;
+          mime_type?: string | null;
+          filename?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          message_id?: string;
+          storage_path?: string;
+          mime_type?: string | null;
+          filename?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      message_receipts: {
+        Row: {
+          message_id: string;
+          participant_id: string;
+          read_at: string;
+        };
+        Insert: {
+          message_id: string;
+          participant_id: string;
+          read_at?: string;
+        };
+        Update: {
+          message_id?: string;
+          participant_id?: string;
+          read_at?: string;
+        };
+        Relationships: [];
+      };
+      conversation_assignments: {
+        Row: {
+          id: string;
+          conversation_id: string;
+          assigned_to_user_id: string;
+          assigned_at: string;
+          assigned_by_user_id: string | null;
+          unassigned_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          conversation_id: string;
+          assigned_to_user_id: string;
+          assigned_at?: string;
+          assigned_by_user_id?: string | null;
+          unassigned_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          conversation_id?: string;
+          assigned_to_user_id?: string;
+          assigned_at?: string;
+          assigned_by_user_id?: string | null;
+          unassigned_at?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: {
       app_role: AppRole;
+      conversation_type: ConversationType;
     };
   };
 }
