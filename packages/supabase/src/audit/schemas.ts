@@ -35,6 +35,40 @@ export const membershipExtensionPayloadSchema = z.object({
   reason: z.string().optional(),
 });
 
+export const membershipAssignmentPayloadSchema = z.object({
+  membership_id: uuidSchema,
+  member_id: uuidSchema,
+  plan_id: uuidSchema,
+  valid_from: z.string(),
+  valid_until: z.string().nullable(),
+});
+
+export const membershipRenewalPayloadSchema = z.object({
+  membership_id: uuidSchema,
+  previous_end_at: z.string().nullable(),
+  new_end_at: z.string(),
+  added_session_count: z.number().int().nonnegative().optional(),
+});
+
+export const membershipFreezePayloadSchema = z.object({
+  membership_id: uuidSchema,
+  freeze_start_at: z.string(),
+  freeze_end_at: z.string(),
+  reason: z.string().optional(),
+});
+
+export const membershipCancellationPayloadSchema = z.object({
+  membership_id: uuidSchema,
+  cancelled_at: z.string(),
+  reason: z.string().optional(),
+});
+
+export const membershipAccessDeniedPayloadSchema = z.object({
+  membership_id: uuidSchema,
+  branch_id: uuidSchema,
+  reason: z.enum(['expired', 'cancelled', 'frozen', 'branch_not_entitled']),
+});
+
 /** Refund: refund processed */
 export const refundPayloadSchema = z.object({
   payment_id: z.string().optional(),
@@ -70,6 +104,11 @@ export const PAYLOAD_SCHEMAS: Partial<Record<AuditEventType, z.ZodType>> = {
   role_change: roleChangePayloadSchema,
   billing_override: billingOverridePayloadSchema,
   membership_extension: membershipExtensionPayloadSchema,
+  membership_assignment: membershipAssignmentPayloadSchema,
+  membership_renewal: membershipRenewalPayloadSchema,
+  membership_freeze: membershipFreezePayloadSchema,
+  membership_cancellation: membershipCancellationPayloadSchema,
+  membership_access_denied: membershipAccessDeniedPayloadSchema,
   refund: refundPayloadSchema,
   admin_impersonation: adminImpersonationPayloadSchema,
   cross_tenant_support: crossTenantSupportPayloadSchema,
@@ -85,6 +124,11 @@ export const tenantContextSchema = z.object({
 export type RoleChangePayload = z.infer<typeof roleChangePayloadSchema>;
 export type BillingOverridePayload = z.infer<typeof billingOverridePayloadSchema>;
 export type MembershipExtensionPayload = z.infer<typeof membershipExtensionPayloadSchema>;
+export type MembershipAssignmentPayload = z.infer<typeof membershipAssignmentPayloadSchema>;
+export type MembershipRenewalPayload = z.infer<typeof membershipRenewalPayloadSchema>;
+export type MembershipFreezePayload = z.infer<typeof membershipFreezePayloadSchema>;
+export type MembershipCancellationPayload = z.infer<typeof membershipCancellationPayloadSchema>;
+export type MembershipAccessDeniedPayload = z.infer<typeof membershipAccessDeniedPayloadSchema>;
 export type RefundPayload = z.infer<typeof refundPayloadSchema>;
 export type AdminImpersonationPayload = z.infer<typeof adminImpersonationPayloadSchema>;
 export type CrossTenantSupportPayload = z.infer<typeof crossTenantSupportPayloadSchema>;

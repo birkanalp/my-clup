@@ -47,6 +47,34 @@ export interface MembershipPlan {
   updatedAt: string;
 }
 
+export interface CreateMembershipPlanRequest {
+  gymId: string;
+  branchId?: string | null;
+  name: string;
+  type: MembershipPlanType;
+  durationDays?: number | null;
+  sessionCount?: number | null;
+  freezeRule: FreezeRule;
+  branchRestrictionEnabled: boolean;
+  allowedBranchIds: string[];
+  pricingTiers: PricingTier[];
+  discountRules: DiscountRule[];
+  trialEnabled: boolean;
+}
+
+export type CreateMembershipPlanResponse = MembershipPlan;
+
+export type UpdateMembershipPlanRequest = Partial<
+  Omit<CreateMembershipPlanRequest, 'gymId' | 'branchId'>
+>;
+
+export type UpdateMembershipPlanResponse = MembershipPlan;
+
+export interface DeactivateMembershipPlanResponse {
+  planId: string;
+  deactivated: true;
+}
+
 export interface MembershipInstance {
   id: string;
   planId: string;
@@ -69,6 +97,33 @@ export interface RenewMembershipRequest {
   renewedUntil: string;
   addedSessionCount?: number;
 }
+
+export interface ListMembershipInstancesRequest {
+  gymId?: string;
+  branchId?: string;
+  memberId?: string;
+  status?: MembershipStatus;
+  cursor?: string;
+  limit?: number;
+}
+
+export interface ListMembershipInstancesResponse {
+  items: MembershipInstance[];
+  nextCursor: string | null;
+}
+
+export interface AssignMembershipInstanceRequest {
+  planId: string;
+  memberId: string;
+  gymId: string;
+  branchId?: string | null;
+  validFrom: string;
+  validUntil: string | null;
+  remainingSessions?: number | null;
+  entitledBranchIds: string[];
+}
+
+export type AssignMembershipInstanceResponse = MembershipInstance;
 
 export interface FreezeMembershipRequest {
   membershipInstanceId: string;

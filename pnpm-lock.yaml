@@ -518,6 +518,9 @@ importers:
 
   packages/supabase:
     dependencies:
+      '@myclup/contracts':
+        specifier: workspace:^
+        version: link:../contracts
       '@myclup/types':
         specifier: workspace:^
         version: link:../types
