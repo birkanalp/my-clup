@@ -268,7 +268,9 @@ describe('booking contracts', () => {
     expect(cancelBookingContract.path).toBe('/api/v1/bookings/:id/cancel');
     expect(joinWaitlistContract.path).toBe('/api/v1/bookings/waitlists');
     expect(updateAttendanceContract.path).toBe('/api/v1/bookings/:id/attendance');
-    expect(listInstructorAvailabilityContract.path).toBe('/api/v1/bookings/instructor-availability');
+    expect(listInstructorAvailabilityContract.path).toBe(
+      '/api/v1/bookings/instructor-availability'
+    );
   });
 
   it('validates instructor availability list filters', () => {
