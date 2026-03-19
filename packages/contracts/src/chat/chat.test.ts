@@ -23,6 +23,8 @@ import {
   sendMessageContract,
   markReadContract,
   assignConversationContract,
+  validateChatSubscribeContract,
+  ChatSubscribeResponseSchema,
 } from './index';
 
 const validUuid = '550e8400-e29b-41d4-a716-446655440000';
@@ -287,6 +289,15 @@ describe('chat contracts', () => {
         })
       ).toBeDefined();
     });
+
+    it('ChatSubscribeResponseSchema validates channel params for Realtime subscription', () => {
+      const response = {
+        channelName: `chat:${validUuid}:${validUuid}`,
+        gymId: validUuid,
+        conversationId: validUuid,
+      };
+      expect(ChatSubscribeResponseSchema.parse(response)).toEqual(response);
+    });
   });
 
   describe('contract objects', () => {
@@ -320,6 +331,12 @@ describe('chat contracts', () => {
     it('assignConversationContract uses POST', () => {
       expect(assignConversationContract.path).toBe('/api/v1/chat/conversations/:id/assign');
       expect(assignConversationContract.method).toBe('POST');
+    });
+
+    it('validateChatSubscribeContract returns channel params for Realtime', () => {
+      expect(validateChatSubscribeContract.path).toBe('/api/v1/chat/conversations/:id/subscribe');
+      expect(validateChatSubscribeContract.method).toBe('GET');
+      expect(validateChatSubscribeContract.response).toBe(ChatSubscribeResponseSchema);
     });
   });
 });

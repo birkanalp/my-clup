@@ -10,6 +10,7 @@
 
 export {
   AssignConversationInputSchema,
+  ChatSubscribeResponseSchema,
   ConversationAssignmentSchema,
   ConversationMetadataSchema,
   ConversationParticipantSchema,
@@ -30,6 +31,7 @@ export {
 } from './schemas';
 export type {
   AssignConversationInput,
+  ChatSubscribeResponse,
   Conversation,
   ConversationAssignment,
   ConversationMetadata,
@@ -55,4 +57,5 @@ export {
   listMessagesContract,
   markReadContract,
   sendMessageContract,
+  validateChatSubscribeContract,
 } from './contracts';
