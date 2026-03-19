@@ -14,9 +14,7 @@ function LocaleLink({ locale, children }: { locale: string; children: React.Reac
   const pathname = usePathname();
   return (
     <Link href={pathname} locale={locale}>
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}{' '}
-      {/* React 18/19 types conflict */}
-      {children as any}
+      {children}
     </Link>
   );
 }
