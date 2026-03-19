@@ -13,5 +13,9 @@ export default defineConfig({
   test: {
     globals: true,
     include: ['**/*.test.ts', '**/*.test.tsx'],
+    env: {
+      NEXT_PUBLIC_SUPABASE_URL: 'https://test.supabase.co',
+      SUPABASE_SERVICE_ROLE_KEY: 'test-service-role-key',
+    },
   },
 });
