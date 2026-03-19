@@ -1,5 +1,5 @@
-import { defineRouting } from "next-intl/routing";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@myclup/i18n";
+import { defineRouting } from 'next-intl/routing';
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from '@myclup/i18n';
 
 export const routing = defineRouting({
   locales: [...SUPPORTED_LOCALES],

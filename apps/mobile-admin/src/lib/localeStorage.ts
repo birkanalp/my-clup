@@ -2,9 +2,9 @@
  * AsyncStorage helpers for persisted locale preference.
  * Keys and values align with SupportedLocale from @myclup/types.
  */
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LOCALE_STORAGE_KEY = "@myclup/locale";
+const LOCALE_STORAGE_KEY = '@myclup/locale';
 
 export async function getStoredLocale(): Promise<string | undefined> {
   try {

@@ -1,4 +1,4 @@
-import "./globals.css";
+import './globals.css';
 
 /**
  * Minimal root layout. Locale-specific layout and metadata live in [locale]/layout.tsx.

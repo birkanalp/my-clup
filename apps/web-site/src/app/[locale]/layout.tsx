@@ -1,10 +1,10 @@
-import { NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { getMessages } from "next-intl/server";
-import type { Metadata } from "next";
-import { routing } from "@/i18n/routing";
-import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { NextIntlClientProvider } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { getMessages } from 'next-intl/server';
+import type { Metadata } from 'next';
+import { routing } from '@/i18n/routing';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 
 type Props = {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ export function generateStaticParams() {
 }
 
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? "https://myclup.com";
+  return process.env.NEXT_PUBLIC_SITE_URL ?? 'https://myclup.com';
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
 
-  const t = await getTranslations({ locale, namespace: "common" });
+  const t = await getTranslations({ locale, namespace: 'common' });
   const baseUrl = getBaseUrl();
 
   const canonicalPath = `/${locale}`;
@@ -37,12 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: t("meta.siteTitle"),
-    description: t("meta.siteDescription"),
+    title: t('meta.siteTitle'),
+    description: t('meta.siteDescription'),
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        "x-default": `${baseUrl}/${routing.defaultLocale}`,
+        'x-default': `${baseUrl}/${routing.defaultLocale}`,
         ...alternateLanguages,
       },
     },

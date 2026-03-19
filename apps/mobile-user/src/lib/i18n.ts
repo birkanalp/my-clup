@@ -2,13 +2,13 @@
  * i18next instance for mobile-user.
  * Resources from @myclup/i18n; fallback en then key.
  */
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import { FALLBACK_LOCALE, type SupportedLocale } from "@myclup/types";
-import { i18nextResources } from "@myclup/i18n";
-import { isValidLocale } from "@myclup/utils";
-import { getStoredLocale, setStoredLocale } from "./localeStorage";
-import { detectDeviceLocale } from "./locale";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import { FALLBACK_LOCALE, type SupportedLocale } from '@myclup/types';
+import { i18nextResources } from '@myclup/i18n';
+import { isValidLocale } from '@myclup/utils';
+import { getStoredLocale, setStoredLocale } from './localeStorage';
+import { detectDeviceLocale } from './locale';
 
 export type { SupportedLocale };
 
@@ -33,8 +33,8 @@ export async function initI18n(): Promise<void> {
     resources: i18nextResources,
     lng: locale,
     fallbackLng: FALLBACK_LOCALE,
-    defaultNS: "common",
-    ns: ["common", "auth", "membership", "chat", "errors"],
+    defaultNS: 'common',
+    ns: ['common', 'auth', 'membership', 'chat', 'errors'],
     interpolation: {
       escapeValue: false, // React escapes by default
     },

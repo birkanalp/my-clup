@@ -1,17 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useLocale } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
-import { SUPPORTED_LOCALES } from "@myclup/i18n";
+import React from 'react';
+import { useLocale } from 'next-intl';
+import { Link, usePathname } from '@/i18n/navigation';
+import { SUPPORTED_LOCALES } from '@myclup/i18n';
 
-function LocaleLink({
-  locale,
-  children,
-}: {
-  locale: string;
-  children: React.ReactNode;
-}) {
+function LocaleLink({ locale, children }: { locale: string; children: React.ReactNode }) {
   const pathname = usePathname();
   return (
     <Link href={pathname} locale={locale}>
@@ -24,19 +18,12 @@ export function LocaleSwitcher() {
   const locale = useLocale();
 
   return (
-    <nav
-      className="flex gap-3"
-      role="navigation"
-      aria-label="Language selection"
-    >
+    <nav className="flex gap-3" role="navigation" aria-label="Language selection">
       <ul className="flex list-none gap-2 p-0 m-0">
         {SUPPORTED_LOCALES.map((code) => (
           <li key={code}>
             {code === locale ? (
-              <span
-                className="cursor-default font-semibold no-underline"
-                aria-current="true"
-              >
+              <span className="cursor-default font-semibold no-underline" aria-current="true">
                 {code.toUpperCase()}
               </span>
             ) : (
