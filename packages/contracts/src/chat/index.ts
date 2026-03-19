@@ -50,12 +50,38 @@ export type {
 } from './schemas';
 
 export {
+  ListQuickRepliesParamsSchema,
+  ListQuickRepliesResponseSchema,
+  ListTemplatesParamsSchema,
+  ListTemplatesResponseSchema,
+  MessageTemplateSchema,
+  MessageTemplateVariantSchema,
+  QuickReplySchema,
+  QuickReplyVariantSchema,
+  SendTemplateInputSchema,
+} from './templates-schemas';
+export type {
+  ListQuickRepliesParams,
+  ListQuickRepliesResponse,
+  ListTemplatesParams,
+  ListTemplatesResponse,
+  MessageTemplate,
+  MessageTemplateVariant,
+  QuickReply,
+  QuickReplyVariant,
+  SendTemplateInput,
+} from './templates-schemas';
+
+export {
   assignConversationContract,
   createConversationContract,
   getConversationContract,
   listConversationsContract,
   listMessagesContract,
+  listQuickRepliesContract,
+  listTemplatesContract,
   markReadContract,
   sendMessageContract,
+  sendTemplateContract,
   validateChatSubscribeContract,
 } from './contracts';

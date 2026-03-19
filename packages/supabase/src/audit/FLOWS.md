@@ -12,6 +12,21 @@ Per `docs/07-technical-plan.md` §9.2 and `.cursor/rules/server-side-auth-permis
 | **Refund**               | `refund`               | After refund is processed                             | Include payment_id, amount_cents                                        |
 | **Admin impersonation**  | `admin_impersonation`  | Before impersonation start; after impersonation end   | `action: "start"` or `action: "end"`                                    |
 | **Cross-tenant support** | `cross_tenant_support` | Before/after platform support accesses another tenant | target_gym_id, target_branch_id (optional)                              |
+| **Chat assignment**      | `chat_assignment`      | After successful conversation assign/reassign         | assigned_by, assigned_to, assigned_at, assigned_from (reassignment)     |
+
+## Chat Moderation Hook Points
+
+Per `.cursor/rules/chat-first-realtime-safety.mdc`, staff-assigned chat reassignments and important moderation actions must preserve auditability. The following moderation hook points are documented for future implementation; each **must** call `writeAuditEvent` when implemented:
+
+| Hook Point            | When to Audit                                      | Target Entity               | Payload Notes                                    |
+| --------------------- | -------------------------------------------------- | --------------------------- | ------------------------------------------------ |
+| **Conversation flag** | After staff flags a conversation for review        | `conversations`             | flag_reason, flagged_by, conversation_id         |
+| **Message flag**      | After staff flags a message                        | `messages`                  | message_id, flag_reason, conversation_id         |
+| **Participant mute**  | After staff mutes a participant in a conv          | `conversation_participants` | participant_id, muted_until, reason              |
+| **Message delete**    | After staff soft-deletes a message                 | `messages`                  | message_id, deleted_by, reason (moderation only) |
+| **Reassignment**      | Implemented: `assignConversation` in web-gym-admin | `conversation_assignments`  | See chat_assignment flow above                   |
+
+Full moderation UI and platform admin oversight views are out of scope for Epic 17; these hooks define integration points when those features are built.
 
 ## Call Pattern
 
