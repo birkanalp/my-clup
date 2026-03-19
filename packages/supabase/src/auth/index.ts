@@ -25,16 +25,6 @@
  * - createUserScopedClient uses user JWT; RLS enforces tenant isolation
  */
 
-export {
-  getSession,
-  type AuthRequest,
-} from "./get-session";
-export {
-  getCurrentUser,
-  type CurrentUser,
-  type Profile,
-} from "./get-current-user";
-export {
-  createUserScopedClient,
-  type UserScopedSupabaseClient,
-} from "./create-user-scoped-client";
+export { getSession, type AuthRequest } from './get-session';
+export { getCurrentUser, type CurrentUser, type Profile } from './get-current-user';
+export { createUserScopedClient, type UserScopedSupabaseClient } from './create-user-scoped-client';

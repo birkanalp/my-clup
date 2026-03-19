@@ -27,6 +27,6 @@ export {
   type CurrentUser,
   type Profile,
   type UserScopedSupabaseClient,
-} from "./auth/index";
+} from './auth/index';
 
-export type { Database, Json } from "./generated/database.types";
+export type { Database, Json } from './generated/database.types';

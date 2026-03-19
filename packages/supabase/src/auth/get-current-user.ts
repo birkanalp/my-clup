@@ -6,13 +6,13 @@
  * Uses getSession for validation, then fetches profile from profiles table.
  */
 
-import type { User } from "@supabase/supabase-js";
-import type { Database } from "../generated/database.types";
-import { createServerClient } from "../client/create-server-client";
-import { getSession } from "./get-session";
-import type { AuthRequest } from "./get-session";
+import type { User } from '@supabase/supabase-js';
+import type { Database } from '../generated/database.types';
+import { createServerClient } from '../client/create-server-client';
+import { getSession } from './get-session';
+import type { AuthRequest } from './get-session';
 
-export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
+export type Profile = Database['public']['Tables']['profiles']['Row'];
 
 export interface CurrentUser {
   user: User;
@@ -28,15 +28,12 @@ export interface CurrentUser {
  * @param req - Request (NextRequest, standard Request)
  * @returns { user, profile } or null
  */
-export async function getCurrentUser(
-  req: AuthRequest
-): Promise<CurrentUser | null> {
+export async function getCurrentUser(req: AuthRequest): Promise<CurrentUser | null> {
   const session = await getSession(req);
   if (!session) return null;
 
-  const supabaseUrl =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "";
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
   if (!supabaseUrl?.trim() || !serviceRoleKey?.trim()) {
     return null;
@@ -48,9 +45,9 @@ export async function getCurrentUser(
   });
 
   const { data: profile, error } = await client
-    .from("profiles")
-    .select("*")
-    .eq("user_id", session.user.id)
+    .from('profiles')
+    .select('*')
+    .eq('user_id', session.user.id)
     .single();
 
   if (error || !profile) return null;
