@@ -25,6 +25,7 @@ export {
 export { createHealthApi } from './health';
 export { createAuthApi } from './auth';
 export { createChatApi } from './chat';
+export { createMembershipApi } from './membership';
 export type { PingResponse } from '@myclup/contracts/health';
 export type {
   WhoamiResponse,
@@ -45,11 +46,35 @@ export type {
   MessageReceiptUpdate,
   TypingState,
 } from '@myclup/contracts/chat';
+export type {
+  CancelMembershipRequest,
+  CancelMembershipResponse,
+  FreezeMembershipRequest,
+  FreezeMembershipResponse,
+  GetMembershipInstanceResponse,
+  ListMembershipPlansRequest,
+  ListMembershipPlansResponse,
+  MembershipInstance,
+  MembershipPlan,
+  RenewMembershipRequest,
+  RenewMembershipResponse,
+  ValidateMembershipAccessRequest,
+  ValidateMembershipAccessResponse,
+} from '@myclup/contracts/membership';
+export type {
+  Invoice,
+  ListInvoicesRequest,
+  ListInvoicesResponse,
+  ListPaymentsRequest,
+  ListPaymentsResponse,
+  Payment,
+} from '@myclup/contracts/billing';
 
 import { createApiClient } from './client';
 import { createHealthApi } from './health';
 import { createAuthApi } from './auth';
 import { createChatApi } from './chat';
+import { createMembershipApi } from './membership';
 import type { ApiClientConfig } from './client';
 
 /**
@@ -71,5 +96,6 @@ export function createApi(config: ApiClientConfig) {
     health: createHealthApi(client.request),
     auth: createAuthApi(client.request),
     chat: createChatApi(client.request),
+    membership: createMembershipApi(client.request),
   };
 }

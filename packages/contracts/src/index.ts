@@ -5,6 +5,8 @@
  * API versioning: /api/v1.
  */
 export * from './auth';
+export * from './billing';
 export * from './chat';
 export * from './health';
 export * from './locale';
+export * from './membership';
