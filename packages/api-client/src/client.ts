@@ -38,6 +38,12 @@ export type ApiClientConfig = {
   fetch?: typeof fetch;
 };
 
+/** Options for contract-based requests (path param substitution, etc.). */
+export type RequestOptions = {
+  /** Substitute :paramName in contract.path with pathParams.paramName. */
+  pathParams?: Record<string, string>;
+};
+
 /** Thrown when the API returns a non-2xx status or response fails validation. */
 export class ApiError extends Error {
   constructor(
@@ -65,17 +71,47 @@ export function createApiClient(config: ApiClientConfig) {
    *
    * When getAuthHeaders is configured, it is called before each request and its
    * result is merged with static headers (auth headers take precedence).
+   *
+   * Path params: Pass options.pathParams to substitute :paramName in the path
+   * (e.g. pathParams: { id: "uuid" } for /api/v1/chat/conversations/:id).
+   *
+   * GET requests: When requestData is a plain object, it is serialized as
+   * query string (e.g. { cursor: "x", limit: 20 } -> ?cursor=x&limit=20).
    */
-  async function request<T>(contract: ApiContract<unknown, T>, requestData?: unknown): Promise<T> {
+  async function request<T>(
+    contract: ApiContract<unknown, T>,
+    requestData?: unknown,
+    options?: RequestOptions
+  ): Promise<T> {
     const authHeaders = config.getAuthHeaders ? await config.getAuthHeaders() : {};
-    const url = `${baseUrl}${contract.path}`;
+    let path = contract.path;
+    if (options?.pathParams) {
+      for (const [key, value] of Object.entries(options.pathParams)) {
+        path = path.replace(`:${key}`, encodeURIComponent(value));
+      }
+    }
+    let url = `${baseUrl}${path}`;
     const init: RequestInit = {
       method: contract.method,
       headers: { 'Content-Type': 'application/json', ...staticHeaders, ...authHeaders },
     };
 
-    if (requestData !== undefined && contract.method !== 'GET') {
-      init.body = JSON.stringify(requestData);
+    if (requestData !== undefined) {
+      if (contract.method === 'GET') {
+        const params = new URLSearchParams();
+        const obj = requestData as Record<string, unknown>;
+        if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+          for (const [k, v] of Object.entries(obj)) {
+            if (v !== undefined && v !== null) {
+              params.set(k, String(v));
+            }
+          }
+        }
+        const query = params.toString();
+        if (query) url += `?${query}`;
+      } else {
+        init.body = JSON.stringify(requestData);
+      }
     }
 
     const res = await doFetch(url, init);
