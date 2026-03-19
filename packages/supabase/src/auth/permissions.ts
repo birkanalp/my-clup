@@ -38,6 +38,19 @@ export class ForbiddenError extends Error {
 }
 
 /**
+ * Thrown when a requested resource does not exist.
+ * Callers should map this to a 404 response.
+ */
+export class NotFoundError extends Error {
+  readonly statusCode = 404;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'NotFoundError';
+  }
+}
+
+/**
  * Role → FeaturePermission mapping.
  *
  * Platform admins have full access to everything.

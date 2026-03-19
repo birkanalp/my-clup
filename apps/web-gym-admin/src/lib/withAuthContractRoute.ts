@@ -12,7 +12,7 @@
 
 import type { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { ForbiddenError } from '@myclup/supabase';
+import { ForbiddenError, NotFoundError } from '@myclup/supabase';
 
 /** Contract shape: path, method, optional request schema, response schema. */
 type ApiContract = {
@@ -77,6 +77,9 @@ export function withAuthContractRoute<TRequest, TResponse>(
     } catch (err) {
       if (err instanceof ForbiddenError) {
         return errorResponse(403, 'forbidden');
+      }
+      if (err instanceof NotFoundError) {
+        return errorResponse(404, 'not_found');
       }
       if (err instanceof SyntaxError) {
         return errorResponse(400, 'validation_error', 'Invalid JSON body');

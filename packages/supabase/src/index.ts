@@ -27,6 +27,7 @@ export {
   checkPermission,
   requirePermission,
   ForbiddenError,
+  NotFoundError,
   ROLE_PERMISSIONS,
   type AuthRequest,
   type CurrentUser,
