@@ -11,6 +11,7 @@
 import { z } from 'zod';
 import {
   AssignConversationInputSchema,
+  ChatSubscribeResponseSchema,
   ConversationAssignmentSchema,
   ConversationSchema,
   CreateConversationInputSchema,
@@ -22,6 +23,13 @@ import {
   MessageReceiptUpdateSchema,
   MessageSchema,
 } from './schemas';
+import {
+  ListQuickRepliesParamsSchema,
+  ListQuickRepliesResponseSchema,
+  ListTemplatesParamsSchema,
+  ListTemplatesResponseSchema,
+  SendTemplateInputSchema,
+} from './templates-schemas';
 
 /** Empty request for GET by path param. */
 const GetByIdRequestSchema = z.object({});
@@ -87,4 +95,36 @@ export const assignConversationContract = {
   method: 'POST' as const,
   request: AssignConversationInputSchema,
   response: ConversationAssignmentSchema,
+} as const;
+
+// --- Validate chat subscription (Realtime channel) ---
+
+export const validateChatSubscribeContract = {
+  path: '/api/v1/chat/conversations/:id/subscribe',
+  method: 'GET' as const,
+  request: GetByIdRequestSchema,
+  response: ChatSubscribeResponseSchema,
+} as const;
+
+// --- Task 17.6: Templates and quick replies ---
+
+export const listTemplatesContract = {
+  path: '/api/v1/chat/templates',
+  method: 'GET' as const,
+  request: ListTemplatesParamsSchema,
+  response: ListTemplatesResponseSchema,
+} as const;
+
+export const sendTemplateContract = {
+  path: '/api/v1/chat/conversations/:id/messages/template',
+  method: 'POST' as const,
+  request: SendTemplateInputSchema,
+  response: MessageSchema,
+} as const;
+
+export const listQuickRepliesContract = {
+  path: '/api/v1/chat/quick-replies',
+  method: 'GET' as const,
+  request: ListQuickRepliesParamsSchema,
+  response: ListQuickRepliesResponseSchema,
 } as const;

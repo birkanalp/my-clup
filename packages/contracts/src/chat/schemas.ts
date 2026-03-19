@@ -151,3 +151,11 @@ export const ListConversationsResponseSchema = createCursorPageResultSchema(Conv
 
 /** List messages response (cursor-paginated). */
 export const ListMessagesResponseSchema = createCursorPageResultSchema(MessageSchema);
+
+/** Chat Realtime channel validation response (Task 17.5). */
+export const ChatSubscribeResponseSchema = z.object({
+  channelName: z.string(),
+  gymId: z.string().uuid(),
+  conversationId: z.string().uuid(),
+});
+export type ChatSubscribeResponse = z.infer<typeof ChatSubscribeResponseSchema>;

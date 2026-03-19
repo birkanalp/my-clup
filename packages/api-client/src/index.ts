@@ -15,7 +15,13 @@
  *   });
  *   const user = await api.auth.whoami();
  */
-export { createApiClient, ApiError, type ApiClientConfig, type ApiContract } from './client';
+export {
+  createApiClient,
+  ApiError,
+  type ApiClientConfig,
+  type ApiContract,
+  type RequestOptions,
+} from './client';
 export { createHealthApi } from './health';
 export { createAuthApi } from './auth';
 export type { PingResponse } from '@myclup/contracts/health';
