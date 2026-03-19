@@ -26,6 +26,9 @@ out
 build
 .expo
 
+# TypeScript incremental build cache
+*.tsbuildinfo
+
 # Test outputs
 coverage
 playwright-report
