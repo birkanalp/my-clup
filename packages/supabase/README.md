@@ -37,7 +37,8 @@ packages/supabase/
 
 ### Entry Points
 
-- **`@myclup/supabase`** — Main: `createServerClient`, `Database`, `Json`
+- **`@myclup/supabase`** — Main: `createServerClient`, auth helpers, `Database`, `Json`
+- **`@myclup/supabase/auth`** — Auth helpers (`getSession`, `getCurrentUser`, `createUserScopedClient`)
 - **`@myclup/supabase/client`** — Client factory only
 - **`@myclup/supabase/generated`** — Raw DB types (advanced use)
 
@@ -80,6 +81,60 @@ const { data, error } = await client.from('gyms').select('*').eq('id', gymId);
 ```
 
 **Important**: The service role key bypasses Row Level Security. Always verify tenant scope and user permissions server-side before any write or sensitive read.
+
+---
+
+## Auth Helpers (Server-Only)
+
+Use `@myclup/supabase/auth` for session validation and user-scoped clients in API routes and server modules.
+
+### Functions
+
+| Function                          | Purpose                                                             |
+| --------------------------------- | ------------------------------------------------------------------- |
+| `getSession(req)`                 | Extract and validate Supabase session; returns `Session \| null`    |
+| `getCurrentUser(req)`             | Return `{ user, profile }` or `null`; fetches from `profiles` table |
+| `createUserScopedClient(session)` | Create Supabase client with user JWT; RLS applies                   |
+
+### Supported Flows
+
+- **Cookie-based** (Next.js): Uses `@supabase/ssr` and `Cookie` header. For server components and API routes.
+- **Bearer-token** (Mobile): Uses `Authorization: Bearer <token>`. Mobile apps pass `session.access_token`.
+
+### Usage in API Routes
+
+```typescript
+import { getSession, getCurrentUser, createUserScopedClient } from '@myclup/supabase/auth';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export async function GET(req: NextRequest) {
+  const session = await getSession(req);
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const client = createUserScopedClient(session); // RLS applies
+  const { data } = await client.from('profiles').select('*').single();
+  return NextResponse.json(data);
+}
+
+export async function GET_profile(req: NextRequest) {
+  const current = await getCurrentUser(req);
+  if (!current) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  return NextResponse.json({ user: current.user, profile: current.profile });
+}
+```
+
+### Security Boundaries
+
+- **Never trust client-supplied `tenant_id` or `branch_id`** — derive from server context.
+- **Always validate** via `getSession` before any protected operation.
+- **`createUserScopedClient`** uses the user's JWT; RLS enforces tenant isolation.
+- **`getSession`** validates tokens via `auth.getUser()`; never trust cookie content alone.
+- Import only in BFF routes, API handlers, server actions — never in client code.
 
 ---
 
@@ -153,9 +208,65 @@ Run these checks before marking schema changes ready for merge.
 
 ## Environment Variables
 
-| Variable                    | Where        | Purpose                         |
-| --------------------------- | ------------ | ------------------------------- |
-| `NEXT_PUBLIC_SUPABASE_URL`  | BFF / server | Supabase project URL            |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server only  | Service role key (bypasses RLS) |
+| Variable                        | Where                 | Purpose                                                        |
+| ------------------------------- | --------------------- | -------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | BFF / server / client | Supabase project URL                                           |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | BFF / client          | Anonymous key for client-side auth; RLS enforces tenant safety |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Server only           | Service role key (bypasses RLS)                                |
 
-Never expose `SUPABASE_SERVICE_ROLE_KEY` to client bundles.
+Never expose `SUPABASE_SERVICE_ROLE_KEY` to client bundles. The anon key is safe for client use; RLS policies restrict data access.
+
+---
+
+## Supabase Auth Setup
+
+MyClup uses Supabase Auth for authentication. All auth flows go through Supabase; the BFF validates sessions and derives tenant scope server-side.
+
+### Environment Variables (Auth)
+
+| Variable                        | Required     | Purpose                                                         |
+| ------------------------------- | ------------ | --------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Yes          | Supabase project URL (e.g. `https://xxx.supabase.co`)           |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes          | Anonymous key for client auth; used by Supabase Auth client     |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Yes (server) | Service role key for server-side user admin, token verification |
+
+For mobile apps, use `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` as the Expo equivalents.
+
+### Auth Providers (Supabase Dashboard)
+
+Enable and configure providers in **Supabase Dashboard → Authentication → Providers**:
+
+| Provider             | Use case                       | Notes                                                 |
+| -------------------- | ------------------------------ | ----------------------------------------------------- |
+| **Email / Password** | Classic sign-up, gym staff     | Default; enable in Dashboard                          |
+| **Magic Link**       | Passwordless email login       | Enable "Email" provider, use magic link flow          |
+| **Phone OTP**        | SMS verification, mobile-first | Enable "Phone" provider; configure Twilio or built-in |
+| **OAuth**            | Social login                   | Google, Apple, Facebook, etc.                         |
+
+### OAuth Provider Configuration
+
+For OAuth providers, configure in Supabase Dashboard. Add the following env placeholders for server-side token exchange (obtain values from Supabase Auth providers config):
+
+| Variable                 | Provider  | Purpose                                                    |
+| ------------------------ | --------- | ---------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`       | Google    | OAuth client ID (optional if configured in Dashboard only) |
+| `GOOGLE_CLIENT_SECRET`   | Google    | OAuth client secret for token exchange                     |
+| `APPLE_CLIENT_ID`        | Apple     | Apple OAuth (Sign in with Apple)                           |
+| `APPLE_CLIENT_SECRET`    | Apple     | Apple secret (for token exchange)                          |
+| `FACEBOOK_CLIENT_ID`     | Facebook  | Facebook OAuth                                             |
+| `FACEBOOK_CLIENT_SECRET` | Facebook  | Facebook secret                                            |
+| `TWITTER_CLIENT_ID`      | Twitter/X | Twitter OAuth                                              |
+| `TWITTER_CLIENT_SECRET`  | Twitter/X | Twitter secret                                             |
+
+Supabase hosts the OAuth redirect URLs. Obtain redirect URI from Dashboard → Authentication → URL Configuration.
+
+### Future-Ready (Not Yet Implemented)
+
+| Feature                 | Description                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------ |
+| **Passkeys / WebAuthn** | Passwordless sign-in via device biometrics or security keys                          |
+| **Guest-to-Account**    | Upgrade anonymous sessions to full accounts (e.g. link guest cart to signed-up user) |
+| **SSO (SAML/OIDC)**     | Enterprise single sign-on for gym chains                                             |
+| **Provider linking**    | Link multiple auth providers (email + Google) to one account                         |
+
+When implementing these, follow Supabase Auth docs and extend this section. No secrets in repo; use env vars only.
