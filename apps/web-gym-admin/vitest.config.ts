@@ -5,6 +5,9 @@ import { defineConfig } from 'vitest/config';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  esbuild: {
+    jsx: 'automatic',
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname),
@@ -12,6 +15,8 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    environment: 'jsdom',
+    setupFiles: ['@testing-library/jest-dom/vitest'],
     include: ['**/*.test.ts', '**/*.test.tsx'],
     env: {
       NEXT_PUBLIC_SUPABASE_URL: 'https://test.supabase.co',
