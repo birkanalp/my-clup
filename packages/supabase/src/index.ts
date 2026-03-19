@@ -30,3 +30,10 @@ export {
 } from './auth/index';
 
 export type { Database, Json } from './generated/database.types';
+
+export {
+  writeAuditEvent,
+  AUDIT_EVENT_TYPES,
+  type WriteAuditEventParams,
+  type AuditEventType,
+} from './audit/index';

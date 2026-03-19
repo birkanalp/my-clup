@@ -56,6 +56,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       branches: {
         Row: {
@@ -82,6 +83,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       profiles: {
         Row: {
@@ -111,6 +113,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       user_role_assignments: {
         Row: {
@@ -140,6 +143,7 @@ export interface Database {
           granted_at?: string;
           granted_by?: string;
         };
+        Relationships: [];
       };
       gym_staff: {
         Row: {
@@ -166,6 +170,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       audit_events: {
         Row: {
@@ -198,6 +203,7 @@ export interface Database {
           tenant_context?: Json;
           created_at?: string;
         };
+        Relationships: [];
       };
     };
     Views: Record<string, never>;
