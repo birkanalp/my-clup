@@ -28,3 +28,11 @@
 export { getSession, type AuthRequest } from './get-session';
 export { getCurrentUser, type CurrentUser, type Profile } from './get-current-user';
 export { createUserScopedClient, type UserScopedSupabaseClient } from './create-user-scoped-client';
+export {
+  resolveTenantScope,
+  checkPermission,
+  requirePermission,
+  ForbiddenError,
+  ROLE_PERMISSIONS,
+  type AnyRole,
+} from './permissions';

@@ -190,6 +190,9 @@ importers:
 
   packages/supabase:
     dependencies:
+      '@myclup/types':
+        specifier: workspace:^
+        version: link:../types
       '@supabase/ssr':
         specifier: ^0.6.0
         version: 0.6.1(@supabase/supabase-js@2.99.2)
