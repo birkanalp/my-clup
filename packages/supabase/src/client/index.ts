@@ -7,4 +7,4 @@ export {
   createServerClient,
   type CreateServerClientOptions,
   type ServerSupabaseClient,
-} from "./create-server-client";
+} from './create-server-client';

@@ -6,13 +6,13 @@ Shared Supabase package for MyClup: database type generation, server-side client
 
 **Client apps must NOT import `@myclup/supabase`.**
 
-| Allowed | Forbidden |
-|---------|-----------|
-| Next.js BFF routes, API handlers | `apps/mobile-user` |
-| Server actions, server modules | `apps/mobile-admin` |
-| Build scripts, migrations | `apps/web-gym-admin` (UI code) |
-| | `apps/web-platform-admin` (UI code) |
-| | `apps/web-site` (UI code) |
+| Allowed                          | Forbidden                           |
+| -------------------------------- | ----------------------------------- |
+| Next.js BFF routes, API handlers | `apps/mobile-user`                  |
+| Server actions, server modules   | `apps/mobile-admin`                 |
+| Build scripts, migrations        | `apps/web-gym-admin` (UI code)      |
+|                                  | `apps/web-platform-admin` (UI code) |
+|                                  | `apps/web-site` (UI code)           |
 
 All Supabase access from client surfaces goes through the Next.js BFF and `@myclup/api-client`. Never call Supabase directly from client code.
 
@@ -67,7 +67,7 @@ pnpm --filter @myclup/supabase generate:types
 ## Server Client Usage
 
 ```typescript
-import { createServerClient } from "@myclup/supabase";
+import { createServerClient } from '@myclup/supabase';
 
 // In API route or server module — read from env
 const client = createServerClient({
@@ -76,7 +76,7 @@ const client = createServerClient({
 });
 
 // Client bypasses RLS; enforce tenant and permission checks in app logic
-const { data, error } = await client.from("gyms").select("*").eq("id", gymId);
+const { data, error } = await client.from('gyms').select('*').eq('id', gymId);
 ```
 
 **Important**: The service role key bypasses Row Level Security. Always verify tenant scope and user permissions server-side before any write or sensitive read.
@@ -98,6 +98,7 @@ pnpm exec supabase db push
 ```
 
 Migrations create `gyms`, `branches`, `profiles`, `user_role_assignments`, `gym_staff`, `audit_events` and RLS policies (Task 15.1).
+
 - **Naming**: snake_case for tables and columns
 - **IDs**: Use `uuid` for primary keys; `gen_random_uuid()` default
 - **Timestamps**: `created_at`, `updated_at` (timestamptz)
@@ -119,19 +120,23 @@ Migrations create `gyms`, `branches`, `profiles`, `user_role_assignments`, `gym_
 After applying migrations with `supabase db push`, verify tables and RLS are in place:
 
 1. **Verify tables exist** (psql or Supabase SQL editor):
+
    ```sql
    SELECT table_name FROM information_schema.tables
    WHERE table_schema = 'public'
    AND table_name IN ('gyms', 'branches', 'profiles', 'user_role_assignments', 'gym_staff', 'audit_events');
    ```
+
    Expected: 6 rows.
 
 2. **Verify RLS is enabled** on tenant-owned tables:
+
    ```sql
    SELECT relname, relrowsecurity FROM pg_class
    WHERE relname IN ('gyms', 'branches', 'profiles', 'user_role_assignments', 'gym_staff', 'audit_events')
    AND relnamespace = (SELECT oid FROM pg_namespace WHERE nspname = 'public');
    ```
+
    Expected: `relrowsecurity = true` for each.
 
 3. **Verify policies exist**:
@@ -148,9 +153,9 @@ Run these checks before marking schema changes ready for merge.
 
 ## Environment Variables
 
-| Variable | Where | Purpose |
-|----------|-------|---------|
-| `NEXT_PUBLIC_SUPABASE_URL` | BFF / server | Supabase project URL |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Service role key (bypasses RLS) |
+| Variable                    | Where        | Purpose                         |
+| --------------------------- | ------------ | ------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`  | BFF / server | Supabase project URL            |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server only  | Service role key (bypasses RLS) |
 
 Never expose `SUPABASE_SERVICE_ROLE_KEY` to client bundles.

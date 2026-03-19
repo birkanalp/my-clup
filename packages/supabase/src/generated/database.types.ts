@@ -12,27 +12,21 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[];
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type AppRole =
-  | "platform_admin"
-  | "platform_support"
-  | "platform_finance"
-  | "gym_owner"
-  | "gym_manager"
-  | "gym_staff"
-  | "gym_instructor"
-  | "gym_receptionist"
-  | "gym_sales"
-  | "branch_manager"
-  | "branch_instructor"
-  | "branch_staff";
+  | 'platform_admin'
+  | 'platform_support'
+  | 'platform_finance'
+  | 'gym_owner'
+  | 'gym_manager'
+  | 'gym_staff'
+  | 'gym_instructor'
+  | 'gym_receptionist'
+  | 'gym_sales'
+  | 'branch_manager'
+  | 'branch_instructor'
+  | 'branch_staff';
 
 export interface Database {
   public: {

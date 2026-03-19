@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 /** Request schema. session check is typically GET; no body. */
 export const SessionRequestSchema = z.object({});
@@ -12,8 +12,8 @@ export type SessionRequest = z.infer<typeof SessionRequestSchema>;
 export type SessionResponse = z.infer<typeof SessionResponseSchema>;
 
 export const sessionContract = {
-  path: "/api/v1/auth/session",
-  method: "GET" as const,
+  path: '/api/v1/auth/session',
+  method: 'GET' as const,
   request: SessionRequestSchema,
   response: SessionResponseSchema,
 } as const;

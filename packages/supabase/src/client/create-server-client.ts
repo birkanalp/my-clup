@@ -9,8 +9,8 @@
  * checks must be enforced in application logic—never rely on client-side checks.
  */
 
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "../generated/database.types";
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '../generated/database.types';
 
 export type ServerSupabaseClient = SupabaseClient<Database>;
 
@@ -35,19 +35,17 @@ export interface CreateServerClientOptions {
  * @returns Typed Supabase client for server use
  * @throws Error if supabaseUrl or serviceRoleKey are missing or invalid
  */
-export function createServerClient(
-  options: CreateServerClientOptions
-): ServerSupabaseClient {
+export function createServerClient(options: CreateServerClientOptions): ServerSupabaseClient {
   const { supabaseUrl, serviceRoleKey, options: clientOptions } = options;
 
   if (!supabaseUrl?.trim()) {
     throw new Error(
-      "createServerClient: supabaseUrl is required. Set NEXT_PUBLIC_SUPABASE_URL or SUPABASE_URL."
+      'createServerClient: supabaseUrl is required. Set NEXT_PUBLIC_SUPABASE_URL or SUPABASE_URL.'
     );
   }
   if (!serviceRoleKey?.trim()) {
     throw new Error(
-      "createServerClient: serviceRoleKey is required. Set SUPABASE_SERVICE_ROLE_KEY (server-only, never expose)."
+      'createServerClient: serviceRoleKey is required. Set SUPABASE_SERVICE_ROLE_KEY (server-only, never expose).'
     );
   }
 

@@ -17,6 +17,6 @@ export {
   createServerClient,
   type CreateServerClientOptions,
   type ServerSupabaseClient,
-} from "./client/index";
+} from './client/index';
 
-export type { Database, Json } from "./generated/database.types";
+export type { Database, Json } from './generated/database.types';

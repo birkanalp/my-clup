@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 /** Aligns with @myclup/types User */
 const UserSchema = z.object({
@@ -11,8 +11,8 @@ const UserSchema = z.object({
 
 /** Aligns with @myclup/types UserLocalePreference */
 const UserLocalePreferenceSchema = z.object({
-  locale: z.enum(["tr", "en"]),
-  fallbackLocale: z.enum(["tr", "en"]).optional(),
+  locale: z.enum(['tr', 'en']),
+  fallbackLocale: z.enum(['tr', 'en']).optional(),
 });
 
 /** Aligns with @myclup/types UserProfile */
@@ -33,18 +33,18 @@ const TenantScopeSchema = z.object({
 
 /** Aligns with @myclup/types RoleAssignment role union */
 const RoleSchema = z.enum([
-  "platform_admin",
-  "platform_support",
-  "platform_finance",
-  "gym_owner",
-  "gym_manager",
-  "gym_staff",
-  "gym_instructor",
-  "gym_receptionist",
-  "gym_sales",
-  "branch_manager",
-  "branch_instructor",
-  "branch_staff",
+  'platform_admin',
+  'platform_support',
+  'platform_finance',
+  'gym_owner',
+  'gym_manager',
+  'gym_staff',
+  'gym_instructor',
+  'gym_receptionist',
+  'gym_sales',
+  'branch_manager',
+  'branch_instructor',
+  'branch_staff',
 ]);
 
 /** Aligns with @myclup/types RoleAssignment */
@@ -72,8 +72,8 @@ export type WhoamiRequest = z.infer<typeof WhoamiRequestSchema>;
 export type WhoamiResponse = z.infer<typeof WhoamiResponseSchema>;
 
 export const whoamiContract = {
-  path: "/api/v1/auth/whoami",
-  method: "GET" as const,
+  path: '/api/v1/auth/whoami',
+  method: 'GET' as const,
   request: WhoamiRequestSchema,
   response: WhoamiResponseSchema,
 } as const;

@@ -4,12 +4,12 @@ Shared API schemas, Zod validation, and request/response contracts. Single sourc
 
 ## Ownership
 
-| Concern | Location |
-|---------|----------|
-| API schemas | `packages/contracts` |
-| Zod validation | `packages/contracts` |
-| Request/response contracts | `packages/contracts` |
-| Domain types (framework-agnostic) | `packages/types` |
+| Concern                           | Location             |
+| --------------------------------- | -------------------- |
+| API schemas                       | `packages/contracts` |
+| Zod validation                    | `packages/contracts` |
+| Request/response contracts        | `packages/contracts` |
+| Domain types (framework-agnostic) | `packages/types`     |
 
 - **Contract changes** must trigger updates in server implementation, `packages/api-client`, and affected app call sites.
 - **No duplication**: Apps must not redefine or copy contracts locally.
@@ -44,11 +44,11 @@ Every contract file defines:
 Example:
 
 ```typescript
-import { z } from "zod";
+import { z } from 'zod';
 
 export const PingRequestSchema = z.object({});
 export const PingResponseSchema = z.object({
-  status: z.literal("ok"),
+  status: z.literal('ok'),
   timestamp: z.string().datetime(),
 });
 
@@ -56,8 +56,8 @@ export type PingRequest = z.infer<typeof PingRequestSchema>;
 export type PingResponse = z.infer<typeof PingResponseSchema>;
 
 export const pingContract = {
-  path: "/api/v1/health/ping",
-  method: "GET" as const,
+  path: '/api/v1/health/ping',
+  method: 'GET' as const,
   request: PingRequestSchema,
   response: PingResponseSchema,
 } as const;
@@ -65,18 +65,18 @@ export const pingContract = {
 
 ## Package Entry Points
 
-| Import | Contents |
-|--------|----------|
-| `@myclup/contracts` | All contracts (re-exports from domain folders) |
-| `@myclup/contracts/health` | Health contracts only |
-| `@myclup/contracts/common` | Common schemas and utilities |
+| Import                     | Contents                                       |
+| -------------------------- | ---------------------------------------------- |
+| `@myclup/contracts`        | All contracts (re-exports from domain folders) |
+| `@myclup/contracts/health` | Health contracts only                          |
+| `@myclup/contracts/common` | Common schemas and utilities                   |
 
 ## Usage
 
 **Server (Next.js API route):**
 
 ```typescript
-import { pingContract } from "@myclup/contracts";
+import { pingContract } from '@myclup/contracts';
 
 const data = pingContract.response.parse(responseBody);
 ```
@@ -84,7 +84,7 @@ const data = pingContract.response.parse(responseBody);
 **Client (api-client or app):**
 
 ```typescript
-import { pingContract, PingResponse } from "@myclup/contracts";
+import { pingContract, PingResponse } from '@myclup/contracts';
 
 const res = await fetch(pingContract.path, { method: pingContract.method });
 const data = pingContract.response.parse(await res.json());
