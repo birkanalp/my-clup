@@ -7,6 +7,7 @@ describe('app shell navigation', () => {
       { href: '/', icon: 'view-dashboard-outline', labelKey: 'shell.home' },
       { href: '/membership', icon: 'credit-card-outline', labelKey: 'shell.membership' },
       { href: '/chat', icon: 'chat-outline', labelKey: 'shell.chat' },
+      { href: '/profile', icon: 'account-circle-outline', labelKey: 'shell.profile' },
     ]);
   });
 
@@ -15,6 +16,7 @@ describe('app shell navigation', () => {
     expect(isShellRouteActive('/membership', '/membership')).toBe(true);
     expect(isShellRouteActive('/membership/payments', '/membership')).toBe(true);
     expect(isShellRouteActive('/chat/abc', '/chat')).toBe(true);
+    expect(isShellRouteActive('/profile', '/profile')).toBe(true);
     expect(isShellRouteActive('/chat/abc', '/membership')).toBe(false);
   });
 });
