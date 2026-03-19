@@ -47,8 +47,7 @@ export async function assignConversation(
 ): Promise<ConversationAssignment | null> {
   const currentUser = await getCurrentUser(req);
   if (!currentUser) return null;
-  const supabaseUrl =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
   if (!supabaseUrl || !serviceRoleKey) return null;
 
@@ -80,8 +79,7 @@ export async function assignConversation(
     .select('assigned_to_user_id')
     .eq('conversation_id', conversationId)
     .is('unassigned_at', null);
-  const assignedFromUserId =
-    previousAssignments?.[0]?.assigned_to_user_id ?? null;
+  const assignedFromUserId = previousAssignments?.[0]?.assigned_to_user_id ?? null;
 
   // Unassign current active assignment(s)
   await client
