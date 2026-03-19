@@ -16,7 +16,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['@testing-library/jest-dom/vitest'],
+    setupFiles: [path.resolve(__dirname, 'src/test/setup.ts')],
     include: ['**/*.test.ts', '**/*.test.tsx'],
     env: {
       NEXT_PUBLIC_SUPABASE_URL: 'https://test.supabase.co',
