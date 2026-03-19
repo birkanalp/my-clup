@@ -26,7 +26,8 @@
     "app": "Üye uygulaması",
     "home": "Ana sayfa",
     "membership": "Üyelik",
-    "chat": "Sohbet"
+    "chat": "Sohbet",
+    "profile": "Profil"
   },
   "dashboard": {
     "heroTitle": "Gününüz tek dokunuş uzağınızda",
@@ -85,11 +86,149 @@
     "renewNow": "Şimdi yenile",
     "retry": "Tekrar dene"
   },
+  "profile": {
+    "title": "Profil ve ayarlar",
+    "subtitle": "Bugün desteklenen üye alanlarını yönet ve sıradaki ayar alanlarını tek ekranda gör.",
+    "loadingTitle": "Profil yükleniyor...",
+    "loadingBody": "Üye kimliği ve ayarlar yüzeyi getiriliyor.",
+    "errorTitle": "Profil yüklenemedi",
+    "errorBody": "Profil ve ayar verilerini yenilemek için tekrar deneyin.",
+    "supported": {
+      "title": "Düzenlenebilir temel alanlar",
+      "subtitle": "Bu alanlar mevcut auth profile API tarafından desteklenir."
+    },
+    "fields": {
+      "displayName": "Görünen ad",
+      "displayNamePlaceholder": "Üye olarak görünecek adınız",
+      "avatarUrl": "Avatar URL",
+      "avatarUrlPlaceholder": "https://example.com/avatar.png",
+      "language": "Dil tercihi"
+    },
+    "locale": {
+      "en": "İngilizce",
+      "tr": "Türkçe"
+    },
+    "actions": {
+      "save": "Profili kaydet",
+      "saving": "Kaydediliyor..."
+    },
+    "feedback": {
+      "saved": "Profil başarıyla güncellendi.",
+      "error": "Profil güncellenemedi. Tekrar deneyin.",
+      "noChanges": "Kaydedilecek profil değişikliği yok."
+    },
+    "identity": {
+      "email": "E-posta",
+      "phone": "Telefon",
+      "userId": "Üye ID"
+    },
+    "linkedGym": {
+      "title": "Bağlı salon bağlamı",
+      "subtitle": "Doğrulanmış tenant scope üzerinden çözülür.",
+      "gymId": "Salon",
+      "branchId": "Şube",
+      "roles": "Roller",
+      "allBranches": "Tüm şubeler"
+    },
+    "placeholders": {
+      "title": "Sıradaki ayar alanları",
+      "subtitle": "Persistence hazır olmasa da bu profil/ayar alanları görünür kalır.",
+      "emergencyTitle": "Acil durum kişisi",
+      "emergencyBody": "Üye profil persistence auth alanlarının ötesine genişlediğinde acil durum kişisi düzenleme burada açılacak.",
+      "healthTitle": "Sağlık notları",
+      "healthBody": "Sağlık notları ve waiver ilişkili profil alanları sonraki backed slice için ayrıldı.",
+      "notificationsTitle": "Bildirim ayarları",
+      "notificationsBody": "Push, rezervasyon ve ödeme bildirim tercihleri transport desteği aktif olduğunda bağlanacak.",
+      "privacyTitle": "Gizlilik kontrolleri",
+      "privacyBody": "Gizlilik ve onay kontrolleri, politika ve consent persistence hazır olduğunda burada görünecek.",
+      "agreementsTitle": "Üyelik sözleşmeleri",
+      "agreementsBody": "İmzalı formlar, waiver'lar ve üye sözleşmeleri daha sonraki doküman slice'ında burada yer alacak.",
+      "helpTitle": "Destek ve yardım merkezi",
+      "helpBody": "Bağlamsal yardım ve destek kısayolları shell düzeni değişmeden burada genişleyecek."
+    }
+  },
   "state": {
     "loading": "Pano yükleniyor...",
     "noMembership": "Aktif üyelik bulunamadı",
     "noMessages": "Henüz son mesaj yok",
     "error": "Bir şeyler ters gitti"
+  },
+  "profile": {
+    "heroBadge": "Profil ve ayarlar",
+    "heroTitle": "Hesabınız, ayarlarınız",
+    "heroSubtitle": "Uygulamanın desteklediği alanları güncelleyin ve hesap yüzeyinin geri kalanını inceleyin.",
+    "form": {
+      "title": "Profil detayları",
+      "subtitle": "Sadece desteklenen alanlar burada düzenlenebilir.",
+      "displayName": "Görünen ad",
+      "displayNamePlaceholder": "Görünen adınızı girin",
+      "displayNameHint": "Üye yüzeylerinde görünür.",
+      "avatarUrl": "Avatar URL",
+      "avatarUrlPlaceholder": "https://ornek.com/avatar.jpg",
+      "avatarUrlHint": "İsteğe bağlı genel görsel bağlantısı.",
+      "localePreference": "Dil tercihi",
+      "primaryLocale": "Birincil dil",
+      "fallbackLocale": "Yedek dil",
+      "fallbackNone": "Yedek yok",
+      "localeOption": {
+        "en": "İngilizce",
+        "tr": "Türkçe"
+      },
+      "saving": "Profil kaydediliyor...",
+      "updatedAt": "{{date}} tarihinde güncellendi"
+    },
+    "linkedGym": {
+      "title": "Bağlı salon bağlamı",
+      "subtitle": "Geçerli tenant kapsamı ve rol atamaları.",
+      "gymId": "Salon ID",
+      "branchId": "Şube ID",
+      "branchAny": "Tüm şubeler",
+      "roleCount": "{{count}} rol",
+      "roles": "Roller",
+      "noRoles": "Rol atanmadı"
+    },
+    "sections": {
+      "title": "Destek ve ayar yer tutucuları",
+      "subtitle": "Bu bölümler sonraki profil iterasyonları için ayrıldı.",
+      "emergencyContact": {
+        "title": "Acil durum kişisi",
+        "subtitle": "Acil durum kişisi detayları için yer tutucu.",
+        "body": "Acil durum kişisi yönetimi henüz bağlı değil."
+      },
+      "healthNotes": {
+        "title": "Sağlık notları",
+        "subtitle": "Sağlık ve erişilebilirlik notları için yer tutucu.",
+        "body": "Sağlık notu saklama henüz hazır değil."
+      },
+      "privacy": {
+        "title": "Gizlilik",
+        "subtitle": "Gizlilik kontrolleri ve paylaşım ayarları için yer tutucu.",
+        "body": "Gizlilik kontrolleri daha sonraki bir yüzeyde eklenecek."
+      },
+      "notifications": {
+        "title": "Bildirimler",
+        "subtitle": "Bildirim tercihleri için yer tutucu.",
+        "body": "Bildirim tercihleri henüz yapılandırılamıyor."
+      },
+      "agreements": {
+        "title": "Sözleşmeler",
+        "subtitle": "Onaylar ve politika kabulü için yer tutucu.",
+        "body": "Sözleşme yönetimi daha sonraki bir sürüm için planlandı."
+      },
+      "help": {
+        "title": "Yardım",
+        "subtitle": "Destek bağlantıları ve yönlendirme için yer tutucu.",
+        "body": "Yardım eylemleri daha sonra destek kaynaklarına bağlanacak."
+      }
+    },
+    "status": {
+      "comingSoon": "Yakında"
+    },
+    "state": {
+      "loading": "Profil yükleniyor...",
+      "error": "Profil yüklenemedi.",
+      "saveError": "Profil kaydedilemedi."
+    }
   },
   "items_count": {
     "one": "{{count}} öğe",

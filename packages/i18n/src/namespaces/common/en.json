@@ -26,7 +26,8 @@
     "app": "Member app",
     "home": "Home",
     "membership": "Membership",
-    "chat": "Chat"
+    "chat": "Chat",
+    "profile": "Profile"
   },
   "dashboard": {
     "heroTitle": "Your day, one tap away",
@@ -85,11 +86,149 @@
     "renewNow": "Renew now",
     "retry": "Retry"
   },
+  "profile": {
+    "title": "Profile and settings",
+    "subtitle": "Manage the member details supported today and track which settings arrive next.",
+    "loadingTitle": "Loading profile...",
+    "loadingBody": "Fetching your member identity and settings surface.",
+    "errorTitle": "Profile could not be loaded",
+    "errorBody": "Try again to refresh your profile and settings data.",
+    "supported": {
+      "title": "Editable basics",
+      "subtitle": "These fields are backed by the current auth profile API."
+    },
+    "fields": {
+      "displayName": "Display name",
+      "displayNamePlaceholder": "Your public member name",
+      "avatarUrl": "Avatar URL",
+      "avatarUrlPlaceholder": "https://example.com/avatar.png",
+      "language": "Language preference"
+    },
+    "locale": {
+      "en": "English",
+      "tr": "Turkish"
+    },
+    "actions": {
+      "save": "Save profile",
+      "saving": "Saving..."
+    },
+    "feedback": {
+      "saved": "Profile updated successfully.",
+      "error": "Profile update failed. Try again.",
+      "noChanges": "No profile changes to save."
+    },
+    "identity": {
+      "email": "Email",
+      "phone": "Phone",
+      "userId": "Member ID"
+    },
+    "linkedGym": {
+      "title": "Linked gym context",
+      "subtitle": "Resolved from the authenticated tenant scope.",
+      "gymId": "Gym",
+      "branchId": "Branch",
+      "roles": "Roles",
+      "allBranches": "All branches"
+    },
+    "placeholders": {
+      "title": "Next settings domains",
+      "subtitle": "These profile/settings areas stay visible even before persistence lands.",
+      "emergencyTitle": "Emergency contact",
+      "emergencyBody": "Emergency contact editing will land once member profile persistence expands beyond auth fields.",
+      "healthTitle": "Health notes",
+      "healthBody": "Health notes and waiver-aware profile notes are reserved for a future backed slice.",
+      "notificationsTitle": "Notification settings",
+      "notificationsBody": "Push, booking, and payment notification preferences will be wired when transport support is active.",
+      "privacyTitle": "Privacy controls",
+      "privacyBody": "Privacy and consent controls will surface here when policy and consent persistence is ready.",
+      "agreementsTitle": "Membership agreements",
+      "agreementsBody": "Signed forms, waivers, and member agreements will appear here in a later document slice.",
+      "helpTitle": "Support and help center",
+      "helpBody": "Contextual help and support shortcuts will expand here without changing the shell layout."
+    }
+  },
   "state": {
     "loading": "Loading dashboard...",
     "noMembership": "No active membership available",
     "noMessages": "No recent messages yet",
     "error": "Something went wrong"
+  },
+  "profile": {
+    "heroBadge": "Profile & settings",
+    "heroTitle": "Your account, your settings",
+    "heroSubtitle": "Update the fields the member app supports and review the rest of the account surface.",
+    "form": {
+      "title": "Profile details",
+      "subtitle": "Only supported fields can be edited here.",
+      "displayName": "Display name",
+      "displayNamePlaceholder": "Enter your display name",
+      "displayNameHint": "Shown across member surfaces.",
+      "avatarUrl": "Avatar URL",
+      "avatarUrlPlaceholder": "https://example.com/avatar.jpg",
+      "avatarUrlHint": "Optional public image URL.",
+      "localePreference": "Locale preference",
+      "primaryLocale": "Primary locale",
+      "fallbackLocale": "Fallback locale",
+      "fallbackNone": "No fallback",
+      "localeOption": {
+        "en": "English",
+        "tr": "Turkish"
+      },
+      "saving": "Saving profile...",
+      "updatedAt": "Updated {{date}}"
+    },
+    "linkedGym": {
+      "title": "Linked gym context",
+      "subtitle": "Current tenant scope and role assignments.",
+      "gymId": "Gym ID",
+      "branchId": "Branch ID",
+      "branchAny": "All branches",
+      "roleCount": "{{count}} roles",
+      "roles": "Roles",
+      "noRoles": "No roles assigned"
+    },
+    "sections": {
+      "title": "Support and settings placeholders",
+      "subtitle": "These sections are reserved for the next profile iterations.",
+      "emergencyContact": {
+        "title": "Emergency contact",
+        "subtitle": "Placeholder for emergency contact details.",
+        "body": "Emergency contact management is not connected yet."
+      },
+      "healthNotes": {
+        "title": "Health notes",
+        "subtitle": "Placeholder for health and accessibility notes.",
+        "body": "Health note storage is not available yet."
+      },
+      "privacy": {
+        "title": "Privacy",
+        "subtitle": "Placeholder for privacy controls and sharing settings.",
+        "body": "Privacy controls will be added in a later surface."
+      },
+      "notifications": {
+        "title": "Notifications",
+        "subtitle": "Placeholder for notification preferences.",
+        "body": "Notification preferences are not configurable yet."
+      },
+      "agreements": {
+        "title": "Agreements",
+        "subtitle": "Placeholder for consent and policy acknowledgements.",
+        "body": "Agreement management is planned for a later release."
+      },
+      "help": {
+        "title": "Help",
+        "subtitle": "Placeholder for support links and guidance.",
+        "body": "Help actions will connect to support resources later."
+      }
+    },
+    "status": {
+      "comingSoon": "Coming soon"
+    },
+    "state": {
+      "loading": "Loading profile...",
+      "error": "Profile could not be loaded.",
+      "saveError": "Profile could not be saved."
+    }
   },
   "items_count": {
     "one": "{{count}} item",
