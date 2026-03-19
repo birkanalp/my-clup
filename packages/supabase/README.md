@@ -169,11 +169,11 @@ MyClup uses Supabase Auth for authentication. All auth flows go through Supabase
 
 ### Environment Variables (Auth)
 
-| Variable | Required | Purpose |
-|----------|----------|---------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL (e.g. `https://xxx.supabase.co`) |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Anonymous key for client auth; used by Supabase Auth client |
-| `SUPABASE_SERVICE_ROLE_KEY` | Yes (server) | Service role key for server-side user admin, token verification |
+| Variable                        | Required     | Purpose                                                         |
+| ------------------------------- | ------------ | --------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Yes          | Supabase project URL (e.g. `https://xxx.supabase.co`)           |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes          | Anonymous key for client auth; used by Supabase Auth client     |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Yes (server) | Service role key for server-side user admin, token verification |
 
 For mobile apps, use `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` as the Expo equivalents.
 
@@ -181,37 +181,37 @@ For mobile apps, use `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_K
 
 Enable and configure providers in **Supabase Dashboard → Authentication → Providers**:
 
-| Provider | Use case | Notes |
-|----------|----------|-------|
-| **Email / Password** | Classic sign-up, gym staff | Default; enable in Dashboard |
-| **Magic Link** | Passwordless email login | Enable "Email" provider, use magic link flow |
-| **Phone OTP** | SMS verification, mobile-first | Enable "Phone" provider; configure Twilio or built-in |
-| **OAuth** | Social login | Google, Apple, Facebook, etc. |
+| Provider             | Use case                       | Notes                                                 |
+| -------------------- | ------------------------------ | ----------------------------------------------------- |
+| **Email / Password** | Classic sign-up, gym staff     | Default; enable in Dashboard                          |
+| **Magic Link**       | Passwordless email login       | Enable "Email" provider, use magic link flow          |
+| **Phone OTP**        | SMS verification, mobile-first | Enable "Phone" provider; configure Twilio or built-in |
+| **OAuth**            | Social login                   | Google, Apple, Facebook, etc.                         |
 
 ### OAuth Provider Configuration
 
 For OAuth providers, configure in Supabase Dashboard. Add the following env placeholders for server-side token exchange (obtain values from Supabase Auth providers config):
 
-| Variable | Provider | Purpose |
-|----------|----------|---------|
-| `GOOGLE_CLIENT_ID` | Google | OAuth client ID (optional if configured in Dashboard only) |
-| `GOOGLE_CLIENT_SECRET` | Google | OAuth client secret for token exchange |
-| `APPLE_CLIENT_ID` | Apple | Apple OAuth (Sign in with Apple) |
-| `APPLE_CLIENT_SECRET` | Apple | Apple secret (for token exchange) |
-| `FACEBOOK_CLIENT_ID` | Facebook | Facebook OAuth |
-| `FACEBOOK_CLIENT_SECRET` | Facebook | Facebook secret |
-| `TWITTER_CLIENT_ID` | Twitter/X | Twitter OAuth |
-| `TWITTER_CLIENT_SECRET` | Twitter/X | Twitter secret |
+| Variable                 | Provider  | Purpose                                                    |
+| ------------------------ | --------- | ---------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`       | Google    | OAuth client ID (optional if configured in Dashboard only) |
+| `GOOGLE_CLIENT_SECRET`   | Google    | OAuth client secret for token exchange                     |
+| `APPLE_CLIENT_ID`        | Apple     | Apple OAuth (Sign in with Apple)                           |
+| `APPLE_CLIENT_SECRET`    | Apple     | Apple secret (for token exchange)                          |
+| `FACEBOOK_CLIENT_ID`     | Facebook  | Facebook OAuth                                             |
+| `FACEBOOK_CLIENT_SECRET` | Facebook  | Facebook secret                                            |
+| `TWITTER_CLIENT_ID`      | Twitter/X | Twitter OAuth                                              |
+| `TWITTER_CLIENT_SECRET`  | Twitter/X | Twitter secret                                             |
 
 Supabase hosts the OAuth redirect URLs. Obtain redirect URI from Dashboard → Authentication → URL Configuration.
 
 ### Future-Ready (Not Yet Implemented)
 
-| Feature | Description |
-|---------|-------------|
-| **Passkeys / WebAuthn** | Passwordless sign-in via device biometrics or security keys |
-| **Guest-to-Account** | Upgrade anonymous sessions to full accounts (e.g. link guest cart to signed-up user) |
-| **SSO (SAML/OIDC)** | Enterprise single sign-on for gym chains |
-| **Provider linking** | Link multiple auth providers (email + Google) to one account |
+| Feature                 | Description                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------ |
+| **Passkeys / WebAuthn** | Passwordless sign-in via device biometrics or security keys                          |
+| **Guest-to-Account**    | Upgrade anonymous sessions to full accounts (e.g. link guest cart to signed-up user) |
+| **SSO (SAML/OIDC)**     | Enterprise single sign-on for gym chains                                             |
+| **Provider linking**    | Link multiple auth providers (email + Google) to one account                         |
 
 When implementing these, follow Supabase Auth docs and extend this section. No secrets in repo; use env vars only.
