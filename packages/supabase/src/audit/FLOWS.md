@@ -4,14 +4,14 @@ Per `docs/07-technical-plan.md` §9.2 and `.cursor/rules/server-side-auth-permis
 
 ## Mandatory Audit Flows
 
-| Flow | Event Type | When to Call | Notes |
-|------|------------|--------------|-------|
-| **Role change** | `role_change` | After successful role assignment create/update/delete | `user_role_assignments` or `gym_staff`; include previous_role, new_role |
-| **Billing override** | `billing_override` | After manual billing state change | Override of subscription, payment status, etc. |
-| **Membership extension** | `membership_extension` | After manual membership end-date extension | Manual extension of validity period |
-| **Refund** | `refund` | After refund is processed | Include payment_id, amount_cents |
-| **Admin impersonation** | `admin_impersonation` | Before impersonation start; after impersonation end | `action: "start"` or `action: "end"` |
-| **Cross-tenant support** | `cross_tenant_support` | Before/after platform support accesses another tenant | target_gym_id, target_branch_id (optional) |
+| Flow                     | Event Type             | When to Call                                          | Notes                                                                   |
+| ------------------------ | ---------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------- |
+| **Role change**          | `role_change`          | After successful role assignment create/update/delete | `user_role_assignments` or `gym_staff`; include previous_role, new_role |
+| **Billing override**     | `billing_override`     | After manual billing state change                     | Override of subscription, payment status, etc.                          |
+| **Membership extension** | `membership_extension` | After manual membership end-date extension            | Manual extension of validity period                                     |
+| **Refund**               | `refund`               | After refund is processed                             | Include payment_id, amount_cents                                        |
+| **Admin impersonation**  | `admin_impersonation`  | Before impersonation start; after impersonation end   | `action: "start"` or `action: "end"`                                    |
+| **Cross-tenant support** | `cross_tenant_support` | Before/after platform support accesses another tenant | target_gym_id, target_branch_id (optional)                              |
 
 ## Call Pattern
 
@@ -35,8 +35,8 @@ For flows with clear before/after semantics (e.g. impersonation):
 ## Example
 
 ```ts
-import { createServerClient } from "@myclup/supabase/client";
-import { writeAuditEvent, AUDIT_EVENT_TYPES } from "@myclup/supabase/audit";
+import { createServerClient } from '@myclup/supabase/client';
+import { writeAuditEvent, AUDIT_EVENT_TYPES } from '@myclup/supabase/audit';
 
 const client = createServerClient({
   supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -46,13 +46,13 @@ const client = createServerClient({
 await writeAuditEvent(client, {
   event_type: AUDIT_EVENT_TYPES.role_change,
   actor_id: currentUser.id,
-  target_type: "user_role_assignments",
+  target_type: 'user_role_assignments',
   target_id: assignmentId,
   payload: {
-    assignment_type: "user_role_assignments",
-    previous_role: "gym_staff",
-    new_role: "gym_manager",
-    reason: "Promotion",
+    assignment_type: 'user_role_assignments',
+    previous_role: 'gym_staff',
+    new_role: 'gym_manager',
+    reason: 'Promotion',
   },
   tenant_context: { gym_id: gymId, branch_id: branchId ?? undefined },
 });

@@ -5,15 +5,15 @@
  * consistent, validated audit data.
  */
 
-import { z } from "zod";
-import type { AuditEventType } from "./event-types";
+import { z } from 'zod';
+import type { AuditEventType } from './event-types';
 
 /** UUID string format */
 const uuidSchema = z.string().uuid();
 
 /** Role change: assignment modified (e.g. user_role_assignments, gym_staff) */
 export const roleChangePayloadSchema = z.object({
-  assignment_type: z.enum(["user_role_assignments", "gym_staff"]),
+  assignment_type: z.enum(['user_role_assignments', 'gym_staff']),
   previous_role: z.string().optional(),
   new_role: z.string(),
   reason: z.string().optional(),
@@ -45,7 +45,7 @@ export const refundPayloadSchema = z.object({
 /** Admin impersonation: platform/admin impersonates another user */
 export const adminImpersonationPayloadSchema = z.object({
   impersonated_user_id: uuidSchema,
-  action: z.enum(["start", "end"]),
+  action: z.enum(['start', 'end']),
 });
 
 /** Cross-tenant support: platform support accesses another tenant */

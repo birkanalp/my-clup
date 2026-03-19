@@ -7,11 +7,11 @@
  * @see FLOWS.md for which flows must call writeAuditEvent
  */
 
-import type { Database, Json } from "../generated/database.types";
-import type { ServerSupabaseClient } from "../client/create-server-client";
-import { PAYLOAD_SCHEMAS } from "./schemas";
-import type { AuditEventType } from "./event-types";
-import type { TenantContext } from "./schemas";
+import type { Database, Json } from '../generated/database.types';
+import type { ServerSupabaseClient } from '../client/create-server-client';
+import { PAYLOAD_SCHEMAS } from './schemas';
+import type { AuditEventType } from './event-types';
+import type { TenantContext } from './schemas';
 
 export interface WriteAuditEventParams {
   /** Event type (use AUDIT_EVENT_TYPES constants) */
@@ -48,13 +48,11 @@ export async function writeAuditEvent(
   if (schema) {
     const parsed = schema.safeParse(payload);
     if (!parsed.success) {
-      throw new Error(
-        `Audit payload validation failed for ${event_type}: ${parsed.error.message}`
-      );
+      throw new Error(`Audit payload validation failed for ${event_type}: ${parsed.error.message}`);
     }
   }
 
-  const row: Database["public"]["Tables"]["audit_events"]["Insert"] = {
+  const row: Database['public']['Tables']['audit_events']['Insert'] = {
     event_type,
     actor_id,
     target_type,
@@ -63,14 +61,10 @@ export async function writeAuditEvent(
     tenant_context: tenant_context as Json,
   };
 
-  const { data, error } = await client
-    .from("audit_events")
-    .insert(row)
-    .select("id")
-    .single();
+  const { data, error } = await client.from('audit_events').insert(row).select('id').single();
 
   if (error) {
-    console.error("[audit] writeAuditEvent failed:", error);
+    console.error('[audit] writeAuditEvent failed:', error);
     return null;
   }
 

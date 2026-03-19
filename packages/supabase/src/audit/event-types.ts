@@ -6,12 +6,12 @@
  */
 
 export const AUDIT_EVENT_TYPES = {
-  role_change: "role_change",
-  billing_override: "billing_override",
-  membership_extension: "membership_extension",
-  refund: "refund",
-  admin_impersonation: "admin_impersonation",
-  cross_tenant_support: "cross_tenant_support",
+  role_change: 'role_change',
+  billing_override: 'billing_override',
+  membership_extension: 'membership_extension',
+  refund: 'refund',
+  admin_impersonation: 'admin_impersonation',
+  cross_tenant_support: 'cross_tenant_support',
 } as const;
 
 export type AuditEventType = (typeof AUDIT_EVENT_TYPES)[keyof typeof AUDIT_EVENT_TYPES];
