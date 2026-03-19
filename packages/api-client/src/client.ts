@@ -38,10 +38,12 @@ export type ApiClientConfig = {
   fetch?: typeof fetch;
 };
 
-/** Options for contract-based requests (path param substitution, etc.). */
+/** Options for contract-based requests (path param substitution, query params). */
 export type RequestOptions = {
   /** Substitute :paramName in contract.path with pathParams.paramName. */
   pathParams?: Record<string, string>;
+  /** Append as query string for GET (e.g. { gymId: "xxx", locale: "tr" }). */
+  queryParams?: Record<string, string | number | boolean | undefined>;
 };
 
 /** Thrown when the API returns a non-2xx status or response fails validation. */
@@ -69,14 +71,9 @@ export function createApiClient(config: ApiClientConfig) {
    * Performs a contract-based request. Fetches the endpoint, parses the response
    * with contract.response.parse(), and returns the typed result.
    *
-   * When getAuthHeaders is configured, it is called before each request and its
-   * result is merged with static headers (auth headers take precedence).
-   *
-   * Path params: Pass options.pathParams to substitute :paramName in the path
-   * (e.g. pathParams: { id: "uuid" } for /api/v1/chat/conversations/:id).
-   *
-   * GET requests: When requestData is a plain object, it is serialized as
-   * query string (e.g. { cursor: "x", limit: 20 } -> ?cursor=x&limit=20).
+   * Path params: Pass options.pathParams to substitute :paramName in the path.
+   * Query params: Pass options.queryParams for GET requests (e.g. templates, quick-replies).
+   * GET with requestData: When requestData is a plain object, it is serialized as query string.
    */
   async function request<T>(
     contract: ApiContract<unknown, T>,
@@ -91,6 +88,14 @@ export function createApiClient(config: ApiClientConfig) {
       }
     }
     let url = `${baseUrl}${path}`;
+    if (options?.queryParams && Object.keys(options.queryParams).length > 0) {
+      const search = new URLSearchParams();
+      for (const [k, v] of Object.entries(options.queryParams)) {
+        if (v !== undefined && v !== null && v !== '') search.set(k, String(v));
+      }
+      const qs = search.toString();
+      if (qs) url += `?${qs}`;
+    }
     const init: RequestInit = {
       method: contract.method,
       headers: { 'Content-Type': 'application/json', ...staticHeaders, ...authHeaders },

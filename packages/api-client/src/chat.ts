@@ -1,12 +1,11 @@
 /**
  * Chat API namespace for the shared api-client.
  *
- * Provides typed methods for conversations (list, get, create, assign)
- * and messages (list, send, markRead). Uses path param substitution
- * for routes like /api/v1/chat/conversations/:id.
+ * Provides typed methods for conversations (list, get, create, assign),
+ * messages (list, send, markRead, sendTemplate), templates, and quick replies.
+ * Uses path param substitution for routes like /api/v1/chat/conversations/:id.
  *
- * Realtime subscription is handled in apps; broadcast/template methods
- * are out of scope (Task 17.6).
+ * Realtime subscription is handled in apps.
  */
 
 import type {
@@ -17,8 +16,13 @@ import type {
   CreateMessageInput,
   CursorPageParams,
   GetConversationResponse,
+  ListQuickRepliesParams,
+  ListTemplatesParams,
   Message,
   MessageReceiptUpdate,
+  MessageTemplate,
+  QuickReply,
+  SendTemplateInput,
 } from '@myclup/contracts/chat';
 import {
   assignConversationContract,
@@ -26,8 +30,11 @@ import {
   getConversationContract,
   listConversationsContract,
   listMessagesContract,
+  listQuickRepliesContract,
+  listTemplatesContract,
   markReadContract,
   sendMessageContract,
+  sendTemplateContract,
 } from '@myclup/contracts/chat';
 import type { ApiContract } from './client';
 import type { RequestOptions } from './client';
@@ -136,6 +143,54 @@ export function createChatApi(request: RequestFn) {
           markReadContract as ApiContract<MessageReceiptUpdate, MessageReceiptUpdate>,
           input ?? {},
           { pathParams: { id: messageId } }
+        );
+      },
+
+      /**
+       * POST /api/v1/chat/conversations/:id/messages/template
+       * Send a message using a template (locale fallback, variable interpolation).
+       */
+      async sendTemplate(conversationId: string, payload: SendTemplateInput): Promise<Message> {
+        return request(sendTemplateContract as ApiContract<SendTemplateInput, Message>, payload, {
+          pathParams: { id: conversationId },
+        });
+      },
+    },
+    templates: {
+      /**
+       * GET /api/v1/chat/templates
+       * List message templates for a gym (locale-aware).
+       */
+      async list(params: ListTemplatesParams): Promise<{ items: MessageTemplate[] }> {
+        return request(
+          listTemplatesContract as ApiContract<ListTemplatesParams, { items: MessageTemplate[] }>,
+          undefined,
+          {
+            queryParams: {
+              gymId: params.gymId,
+              locale: params.locale,
+              branchId: params.branchId ?? undefined,
+            },
+          }
+        );
+      },
+    },
+    quickReplies: {
+      /**
+       * GET /api/v1/chat/quick-replies
+       * List quick replies for a gym (locale-aware).
+       */
+      async list(params: ListQuickRepliesParams): Promise<{ items: QuickReply[] }> {
+        return request(
+          listQuickRepliesContract as ApiContract<ListQuickRepliesParams, { items: QuickReply[] }>,
+          undefined,
+          {
+            queryParams: {
+              gymId: params.gymId,
+              locale: params.locale,
+              branchId: params.branchId ?? undefined,
+            },
+          }
         );
       },
     },
