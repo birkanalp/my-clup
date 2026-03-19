@@ -1,10 +1,9 @@
-/**
- * Conversation list with pull-to-refresh and unread badges.
- */
-import { View, Text, FlatList, RefreshControl, StyleSheet, ActivityIndicator } from 'react-native';
+import type { Conversation } from '@myclup/contracts/chat';
+import { View, FlatList, RefreshControl, StyleSheet, ActivityIndicator } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ConversationRow } from './ConversationRow';
-import type { Conversation } from '@myclup/contracts/chat';
+import { AppStateBlock } from '../../components/AppStateBlock';
+import { appTheme } from '../../theme/appTheme';
 
 type ConversationWithUnread = Conversation & { unreadCount?: number };
 
@@ -31,17 +30,29 @@ export function ConversationList({
 
   if (error) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.errorText}>{error.message}</Text>
-      </View>
+      <AppStateBlock
+        icon="message-alert-outline"
+        title={t('list.error')}
+        description={t('list.errorBody')}
+        actionLabel={t('list.retry')}
+        onAction={onRefresh}
+      />
     );
   }
 
   if (!loading && items.length === 0) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.emptyText}>{t('list.empty')}</Text>
-      </View>
+      <AppStateBlock
+        icon="message-text-outline"
+        title={t('list.empty')}
+        description={t('list.emptyBody')}
+      />
+    );
+  }
+
+  if (loading && items.length === 0) {
+    return (
+      <AppStateBlock loading title={t('list.loadingTitle')} description={t('list.loadingBody')} />
     );
   }
 
@@ -62,7 +73,7 @@ export function ConversationList({
       ListFooterComponent={
         loading && items.length > 0 ? (
           <View style={styles.footer}>
-            <ActivityIndicator size="small" />
+            <ActivityIndicator size="small" color={appTheme.colors.primary} />
           </View>
         ) : null
       }
@@ -72,27 +83,13 @@ export function ConversationList({
 }
 
 const styles = StyleSheet.create({
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  emptyText: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-  },
-  errorText: {
-    fontSize: 14,
-    color: '#c62828',
-    textAlign: 'center',
-  },
   listContent: {
+    flexGrow: 1,
+    gap: appTheme.spacing.sm,
     paddingBottom: 16,
   },
   footer: {
-    padding: 16,
+    paddingVertical: 16,
     alignItems: 'center',
   },
 });

@@ -4,9 +4,17 @@
   },
   "list": {
     "title": "Sohbet",
+    "subtitle": "Salon destegi ve egitmen mesajlarini tek yerde takip edin.",
     "loading": "Konuşmalar yükleniyor...",
+    "loadingTitle": "Konusmalariniz yukleniyor",
+    "loadingBody": "Uye sohbetleri getiriliyor.",
     "error": "Konuşmalar yüklenemedi",
+    "errorTitle": "Sohbet listesi kullanilamiyor",
+    "errorBody": "Konusmalar su anda yuklenemedi. Tekrar deneyin.",
     "empty": "Henüz konuşma yok",
+    "emptyTitle": "Henuz konusma yok",
+    "emptyBody": "Destek ve kocluk konusmalariniz burada gorunecek.",
+    "retry": "Tekrar dene",
     "filterAll": "Tümü",
     "filterUnread": "Okunmamış",
     "filterAssigned": "Bana atanmış",
@@ -31,7 +39,16 @@
   "conversation": {
     "withGym": "Salon desteği",
     "withInstructor": "Eğitmen",
-    "direct": "Doğrudan mesaj"
+    "direct": "Doğrudan mesaj",
+    "group": "Grup sohbeti",
+    "broadcast": "Duyurular",
+    "type": {
+      "support": "Destek sohbeti",
+      "instructor": "Egitmen sohbeti",
+      "direct": "Dogrudan konusma",
+      "group": "Grup konusmasi",
+      "broadcast": "Duyuru akisi"
+    }
   },
   "input": {
     "placeholder": "Mesaj yazın...",
@@ -47,6 +64,17 @@
   },
   "empty": {
     "noMessages": "Henüz mesaj yok. Konuşmayı başlatın!"
+  },
+  "thread": {
+    "title": "Konusma",
+    "subtitle": "Mesajlariniz salon destek akisiyla senkron kalir.",
+    "loadingTitle": "Konusma yukleniyor",
+    "loadingBody": "Son mesajlar ve okunma durumu getiriliyor.",
+    "errorTitle": "Konusma kullanilamiyor",
+    "errorBody": "Bu sohbet su anda yuklenemedi.",
+    "emptyTitle": "Henuz mesaj yok",
+    "emptyBody": "Bu konusmayi baslatmak icin ilk mesaji gonderin.",
+    "composerHint": "Mesajlar mevcut realtime sohbet kanali uzerinden gonderilir."
   },
   "status": {
     "sending": "Gönderiliyor...",

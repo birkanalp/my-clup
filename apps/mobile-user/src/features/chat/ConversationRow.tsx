@@ -1,9 +1,9 @@
-/**
- * Conversation list row with optional unread badge.
- */
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { Conversation } from '@myclup/contracts/chat';
+import { AppIcon } from '../../components/AppIcon';
+import { AppText } from '../../components/AppText';
+import { appTheme } from '../../theme/appTheme';
 
 type ConversationRowProps = {
   conversation: Conversation;
@@ -22,27 +22,58 @@ function getConversationTitleKey(conversation: Conversation): string {
   }
 }
 
+function getConversationIcon(conversation: Conversation) {
+  switch (conversation.type) {
+    case 'support':
+      return 'lifebuoy';
+    case 'instructor':
+      return 'account-star-outline';
+    default:
+      return 'chat-processing-outline';
+  }
+}
+
+function formatUpdatedAt(iso: string, locale: string) {
+  try {
+    return new Intl.DateTimeFormat(locale, {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+}
+
 export function ConversationRow({ conversation, unreadCount = 0, onPress }: ConversationRowProps) {
-  const { t } = useTranslation('chat');
-  const titleKey = getConversationTitleKey(conversation);
-  const title = t(titleKey);
+  const { t, i18n } = useTranslation('chat');
 
   return (
-    <TouchableOpacity style={styles.row} onPress={onPress} activeOpacity={0.7}>
-      <View style={styles.content}>
-        <Text style={styles.title} numberOfLines={1}>
-          {title}
-        </Text>
-        <Text style={styles.meta} numberOfLines={1}>
-          {conversation.type}
-        </Text>
+    <Pressable style={styles.row} onPress={onPress}>
+      <View style={styles.iconWrap}>
+        <AppIcon
+          name={getConversationIcon(conversation)}
+          size={20}
+          color={appTheme.colors.primary}
+        />
       </View>
-      {unreadCount > 0 && (
+      <View style={styles.content}>
+        <AppText style={styles.title} numberOfLines={1}>
+          {t(getConversationTitleKey(conversation))}
+        </AppText>
+        <AppText variant="caption" tone="muted" numberOfLines={1}>
+          {formatUpdatedAt(conversation.updatedAt, i18n.resolvedLanguage ?? 'en')}
+        </AppText>
+      </View>
+      {unreadCount > 0 ? (
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>{unreadCount > 99 ? '99+' : unreadCount}</Text>
+          <AppText variant="caption" tone="inverse" style={styles.badgeText}>
+            {unreadCount > 99 ? '99+' : unreadCount}
+          </AppText>
         </View>
-      )}
-    </TouchableOpacity>
+      ) : null}
+    </Pressable>
   );
 }
 
@@ -50,37 +81,40 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    backgroundColor: '#fff',
+    gap: appTheme.spacing.md,
+    paddingHorizontal: appTheme.spacing.md,
+    paddingVertical: appTheme.spacing.md,
+    borderWidth: 1,
+    borderColor: appTheme.colors.border,
+    borderRadius: appTheme.radii.lg,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+  },
+  iconWrap: {
+    width: 42,
+    height: 42,
+    borderRadius: appTheme.radii.pill,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: appTheme.colors.primarySoft,
   },
   content: {
     flex: 1,
-    marginRight: 8,
   },
   title: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#111',
-  },
-  meta: {
-    fontSize: 13,
-    color: '#666',
-    marginTop: 2,
+    lineHeight: 22,
+    fontWeight: '700',
   },
   badge: {
-    minWidth: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: '#e53935',
+    minWidth: 26,
+    height: 26,
+    borderRadius: appTheme.radii.pill,
+    backgroundColor: appTheme.colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 6,
+    paddingHorizontal: 8,
   },
   badgeText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: '700',
   },
 });

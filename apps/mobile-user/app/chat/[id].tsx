@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import type { Message } from '@myclup/contracts/chat';
 import { MessageThread } from '../../src/features/chat/MessageThread';
 import { useMessages } from '../../src/features/chat/useMessages';
@@ -8,6 +9,7 @@ import { useCurrentUser } from '../../src/features/chat/useCurrentUser';
 
 export default function ChatDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { t } = useTranslation('chat');
   const conversationId = id ?? '';
   const currentUserId = useCurrentUser();
 
@@ -33,8 +35,6 @@ export default function ChatDetailScreen() {
     currentUserId,
     handleNewMessage
   );
-
-  const typingNames = typingUserIds.size > 0 ? ['Someone'] : [];
 
   const handleTypingChange = useCallback(
     (typing: boolean) => {
@@ -62,7 +62,7 @@ export default function ChatDetailScreen() {
       loading={loading}
       error={error}
       onSendMessage={handleSendMessage}
-      typingNames={typingNames}
+      typingLabel={typingUserIds.size > 0 ? t('label.typingSomeone') : null}
       onTypingChange={handleTypingChange}
     />
   );
