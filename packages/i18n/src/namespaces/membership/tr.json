@@ -1,0 +1,19 @@
+{
+  "status": {
+    "active": "Aktif",
+    "expired": "Süresi dolmuş",
+    "cancelled": "İptal edildi",
+    "pending": "Beklemede"
+  },
+  "type": {
+    "monthly": "Aylık",
+    "yearly": "Yıllık",
+    "classPack": "Ders paketi",
+    "trial": "Deneme"
+  },
+  "label": {
+    "validUntil": "Geçerlilik tarihi",
+    "startDate": "Başlangıç tarihi",
+    "endDate": "Bitiş tarihi"
+  }
+}

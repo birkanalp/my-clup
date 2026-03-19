@@ -1,0 +1,19 @@
+{
+  "validation": {
+    "required": "Bu alan zorunludur",
+    "invalidEmail": "Geçersiz e-posta adresi",
+    "min": "Minimum değer {{min}} olmalıdır.",
+    "minLength": "En az {{min}} karakter olmalıdır",
+    "maxLength": "En fazla {{max}} karakter olmalıdır"
+  },
+  "network": "Ağ hatası",
+  "networkDetails": {
+    "timeout": "İstek zaman aşımına uğradı. Lütfen tekrar deneyin.",
+    "offline": "Çevrimdışı görünüyorsunuz. Bağlantınızı kontrol edin.",
+    "generic": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin."
+  },
+  "auth": {
+    "invalidCredentials": "Geçersiz e-posta veya şifre",
+    "unauthorized": "Bu işlemi gerçekleştirmek için yetkiniz yok"
+  }
+}

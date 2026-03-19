@@ -1,0 +1,23 @@
+{
+  "button": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "close": "Close",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "label": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "noResults": "No results found"
+  },
+  "items_count": {
+    "one": "{{count}} item",
+    "other": "{{count}} items"
+  }
+}

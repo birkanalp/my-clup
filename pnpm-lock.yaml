@@ -191,6 +191,25 @@ importers:
         specifier: ^2.1.0
         version: 2.1.9(@types/node@22.19.15)
 
+  packages/i18n:
+    dependencies:
+      '@myclup/types':
+        specifier: workspace:*
+        version: link:../types
+    devDependencies:
+      '@myclup/config-typescript':
+        specifier: workspace:*
+        version: link:../config-typescript
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.19.15
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.0
+        version: 2.1.9(@types/node@22.19.15)
+
   packages/supabase:
     dependencies:
       '@myclup/types':

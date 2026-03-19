@@ -1,0 +1,23 @@
+{
+  "button": {
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "submit": "Gönder",
+    "close": "Kapat",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki"
+  },
+  "label": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "noResults": "Sonuç bulunamadı"
+  },
+  "items_count": {
+    "one": "{{count}} öğe",
+    "other": "{{count}} öğe"
+  }
+}
