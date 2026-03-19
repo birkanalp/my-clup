@@ -1,15 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import {
+  assignMembershipInstanceContract,
   cancelMembershipContract,
+  CreateMembershipPlanRequestSchema,
+  deactivateMembershipPlanContract,
   freezeMembershipContract,
   CancelMembershipRequestSchema,
   FreezeMembershipRequestSchema,
   getMembershipInstanceContract,
+  listMembershipInstancesContract,
   listMembershipPlansContract,
+  ListMembershipInstancesRequestSchema,
   MembershipInstanceSchema,
   MembershipPlanSchema,
   renewMembershipContract,
   RenewMembershipRequestSchema,
+  updateMembershipPlanContract,
   validateMembershipAccessContract,
   ValidateMembershipAccessRequestSchema,
 } from './index';
@@ -94,6 +100,24 @@ describe('membership contracts', () => {
   });
 
   describe('lifecycle request schemas', () => {
+    it('validates create membership plan request', () => {
+      const result = CreateMembershipPlanRequestSchema.safeParse({
+        gymId: validUuid,
+        branchId: null,
+        name: 'Monthly',
+        type: 'time_based',
+        durationDays: 30,
+        sessionCount: null,
+        freezeRule: { maxDays: 5, maxCountPerPeriod: 1, period: 'month' },
+        branchRestrictionEnabled: false,
+        allowedBranchIds: [],
+        pricingTiers: [{ label: 'Standard', amount: 1000, currency: 'TRY' }],
+        discountRules: [],
+        trialEnabled: false,
+      });
+      expect(result.success).toBe(true);
+    });
+
     it('validates renew request with added sessions', () => {
       expect(
         RenewMembershipRequestSchema.parse({
@@ -143,6 +167,11 @@ describe('membership contracts', () => {
         at: validDatetime,
       });
     });
+
+    it('applies default limit for list instances request', () => {
+      const parsed = ListMembershipInstancesRequestSchema.parse({});
+      expect(parsed.limit).toBe(20);
+    });
   });
 
   describe('contract objects', () => {
@@ -154,6 +183,20 @@ describe('membership contracts', () => {
     it('instance contract keeps :id placeholder', () => {
       expect(getMembershipInstanceContract.path).toBe('/api/v1/memberships/instances/:id');
       expect(getMembershipInstanceContract.method).toBe('GET');
+    });
+
+    it('plan write contracts use versioned paths', () => {
+      expect(updateMembershipPlanContract.path).toBe('/api/v1/memberships/plans/:id');
+      expect(updateMembershipPlanContract.method).toBe('PUT');
+      expect(deactivateMembershipPlanContract.path).toBe('/api/v1/memberships/plans/:id');
+      expect(deactivateMembershipPlanContract.method).toBe('DELETE');
+    });
+
+    it('instance list and assign contracts use /instances collection', () => {
+      expect(listMembershipInstancesContract.path).toBe('/api/v1/memberships/instances');
+      expect(listMembershipInstancesContract.method).toBe('GET');
+      expect(assignMembershipInstanceContract.path).toBe('/api/v1/memberships/instances');
+      expect(assignMembershipInstanceContract.method).toBe('POST');
     });
 
     it('renew/freeze/cancel use POST', () => {

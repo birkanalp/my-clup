@@ -36,6 +36,10 @@ export type ConversationType =
   | 'broadcast'
   | 'internal_staff';
 
+export type MembershipPlanType = 'time_based' | 'session_based' | 'personal_training';
+export type MembershipPlanStatus = 'active' | 'inactive';
+export type MembershipStatus = 'active' | 'frozen' | 'cancelled' | 'expired';
+
 export interface Database {
   public: {
     Tables: {
@@ -210,6 +214,117 @@ export interface Database {
           payload?: Json;
           tenant_context?: Json;
           created_at?: string;
+        };
+        Relationships: [];
+      };
+      membership_plans: {
+        Row: {
+          id: string;
+          gym_id: string;
+          branch_id: string | null;
+          name: string;
+          type: MembershipPlanType;
+          status: MembershipPlanStatus;
+          duration_days: number | null;
+          session_count: number | null;
+          freeze_rule: Json;
+          branch_restriction_enabled: boolean;
+          allowed_branch_ids: string[];
+          pricing_tiers: Json;
+          discount_rules: Json;
+          trial_enabled: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          gym_id: string;
+          branch_id?: string | null;
+          name: string;
+          type: MembershipPlanType;
+          status?: MembershipPlanStatus;
+          duration_days?: number | null;
+          session_count?: number | null;
+          freeze_rule?: Json;
+          branch_restriction_enabled?: boolean;
+          allowed_branch_ids?: string[];
+          pricing_tiers?: Json;
+          discount_rules?: Json;
+          trial_enabled?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          name?: string;
+          type?: MembershipPlanType;
+          status?: MembershipPlanStatus;
+          duration_days?: number | null;
+          session_count?: number | null;
+          freeze_rule?: Json;
+          branch_restriction_enabled?: boolean;
+          allowed_branch_ids?: string[];
+          pricing_tiers?: Json;
+          discount_rules?: Json;
+          trial_enabled?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      membership_instances: {
+        Row: {
+          id: string;
+          plan_id: string;
+          member_id: string;
+          gym_id: string;
+          branch_id: string | null;
+          status: MembershipStatus;
+          valid_from: string;
+          valid_until: string | null;
+          remaining_sessions: number | null;
+          entitled_branch_ids: string[];
+          freeze_start_at: string | null;
+          freeze_end_at: string | null;
+          cancelled_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          plan_id: string;
+          member_id: string;
+          gym_id: string;
+          branch_id?: string | null;
+          status?: MembershipStatus;
+          valid_from: string;
+          valid_until?: string | null;
+          remaining_sessions?: number | null;
+          entitled_branch_ids?: string[];
+          freeze_start_at?: string | null;
+          freeze_end_at?: string | null;
+          cancelled_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          plan_id?: string;
+          member_id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          status?: MembershipStatus;
+          valid_from?: string;
+          valid_until?: string | null;
+          remaining_sessions?: number | null;
+          entitled_branch_ids?: string[];
+          freeze_start_at?: string | null;
+          freeze_end_at?: string | null;
+          cancelled_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
         };
         Relationships: [];
       };

@@ -1,14 +1,23 @@
 import {
+  AssignMembershipInstanceRequestSchema,
+  AssignMembershipInstanceResponseSchema,
   CancelMembershipRequestSchema,
   CancelMembershipResponseSchema,
+  CreateMembershipPlanRequestSchema,
+  CreateMembershipPlanResponseSchema,
+  DeactivateMembershipPlanResponseSchema,
   FreezeMembershipRequestSchema,
   FreezeMembershipResponseSchema,
   GetMembershipInstanceRequestSchema,
   GetMembershipInstanceResponseSchema,
+  ListMembershipInstancesRequestSchema,
+  ListMembershipInstancesResponseSchema,
   ListMembershipPlansRequestSchema,
   ListMembershipPlansResponseSchema,
   RenewMembershipRequestSchema,
   RenewMembershipResponseSchema,
+  UpdateMembershipPlanRequestSchema,
+  UpdateMembershipPlanResponseSchema,
   ValidateMembershipAccessRequestSchema,
   ValidateMembershipAccessResponseSchema,
 } from './schemas';
@@ -18,6 +27,40 @@ export const listMembershipPlansContract = {
   method: 'GET' as const,
   request: ListMembershipPlansRequestSchema,
   response: ListMembershipPlansResponseSchema,
+} as const;
+
+export const createMembershipPlanContract = {
+  path: '/api/v1/memberships/plans',
+  method: 'POST' as const,
+  request: CreateMembershipPlanRequestSchema,
+  response: CreateMembershipPlanResponseSchema,
+} as const;
+
+export const updateMembershipPlanContract = {
+  path: '/api/v1/memberships/plans/:id',
+  method: 'PUT' as const,
+  request: UpdateMembershipPlanRequestSchema,
+  response: UpdateMembershipPlanResponseSchema,
+} as const;
+
+export const deactivateMembershipPlanContract = {
+  path: '/api/v1/memberships/plans/:id',
+  method: 'DELETE' as const,
+  response: DeactivateMembershipPlanResponseSchema,
+} as const;
+
+export const listMembershipInstancesContract = {
+  path: '/api/v1/memberships/instances',
+  method: 'GET' as const,
+  request: ListMembershipInstancesRequestSchema,
+  response: ListMembershipInstancesResponseSchema,
+} as const;
+
+export const assignMembershipInstanceContract = {
+  path: '/api/v1/memberships/instances',
+  method: 'POST' as const,
+  request: AssignMembershipInstanceRequestSchema,
+  response: AssignMembershipInstanceResponseSchema,
 } as const;
 
 export const getMembershipInstanceContract = {

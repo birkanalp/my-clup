@@ -54,3 +54,18 @@ export {
   CHAT_MESSAGES_SCHEMA,
   CHAT_MESSAGES_TABLE,
 } from './realtime/index';
+
+export {
+  assignMembershipInstance,
+  cancelMembership,
+  createMembershipPlan,
+  deactivateMembershipPlan,
+  freezeMembership,
+  getMembershipInstance,
+  getMembershipPlan,
+  listMembershipInstances,
+  listMembershipPlans,
+  renewMembership,
+  updateMembershipPlan,
+  validateMembershipAccess,
+} from './membership/index';

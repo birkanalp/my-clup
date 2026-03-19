@@ -45,42 +45,42 @@ export const DiscountRuleSchema = z.object({
 });
 export type DiscountRule = z.infer<typeof DiscountRuleSchema>;
 
-export const MembershipPlanSchema = z
-  .object({
-    id: UuidSchema,
-    gymId: UuidSchema,
-    branchId: UuidSchema.nullable(),
-    name: z.string().min(1),
-    type: MembershipPlanTypeSchema,
-    status: MembershipPlanStatusSchema,
-    durationDays: z.number().int().positive().nullable(),
-    sessionCount: z.number().int().positive().nullable(),
-    freezeRule: FreezeRuleSchema,
-    branchRestrictionEnabled: z.boolean(),
-    allowedBranchIds: z.array(UuidSchema),
-    pricingTiers: z.array(PricingTierSchema).min(1),
-    discountRules: z.array(DiscountRuleSchema),
-    trialEnabled: z.boolean(),
-    createdAt: IsoDatetimeSchema,
-    updatedAt: IsoDatetimeSchema,
-  })
-  .superRefine((value, ctx) => {
-    if (value.type === 'time_based' && value.durationDays === null) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['durationDays'],
-        message: 'durationDays is required for time_based plans',
-      });
-    }
+const MembershipPlanObjectSchema = z.object({
+  id: UuidSchema,
+  gymId: UuidSchema,
+  branchId: UuidSchema.nullable(),
+  name: z.string().min(1),
+  type: MembershipPlanTypeSchema,
+  status: MembershipPlanStatusSchema,
+  durationDays: z.number().int().positive().nullable(),
+  sessionCount: z.number().int().positive().nullable(),
+  freezeRule: FreezeRuleSchema,
+  branchRestrictionEnabled: z.boolean(),
+  allowedBranchIds: z.array(UuidSchema),
+  pricingTiers: z.array(PricingTierSchema).min(1),
+  discountRules: z.array(DiscountRuleSchema),
+  trialEnabled: z.boolean(),
+  createdAt: IsoDatetimeSchema,
+  updatedAt: IsoDatetimeSchema,
+});
 
-    if (value.type === 'session_based' && value.sessionCount === null) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['sessionCount'],
-        message: 'sessionCount is required for session_based plans',
-      });
-    }
-  });
+export const MembershipPlanSchema = MembershipPlanObjectSchema.superRefine((value, ctx) => {
+  if (value.type === 'time_based' && value.durationDays === null) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['durationDays'],
+      message: 'durationDays is required for time_based plans',
+    });
+  }
+
+  if (value.type === 'session_based' && value.sessionCount === null) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['sessionCount'],
+      message: 'sessionCount is required for session_based plans',
+    });
+  }
+});
 export type MembershipPlan = z.infer<typeof MembershipPlanSchema>;
 
 export const MembershipInstanceSchema = z.object({
@@ -182,8 +182,80 @@ export const ListMembershipPlansResponseSchema = z.object({
 });
 export type ListMembershipPlansResponse = z.infer<typeof ListMembershipPlansResponseSchema>;
 
+const MembershipPlanWriteSchema = MembershipPlanObjectSchema.pick({
+  name: true,
+  type: true,
+  durationDays: true,
+  sessionCount: true,
+  freezeRule: true,
+  branchRestrictionEnabled: true,
+  allowedBranchIds: true,
+  pricingTiers: true,
+  discountRules: true,
+  trialEnabled: true,
+});
+
+export const CreateMembershipPlanRequestSchema = MembershipPlanWriteSchema.extend({
+  gymId: UuidSchema,
+  branchId: UuidSchema.nullable().optional(),
+});
+export type CreateMembershipPlanRequest = z.infer<typeof CreateMembershipPlanRequestSchema>;
+
+export const CreateMembershipPlanResponseSchema = MembershipPlanSchema;
+export type CreateMembershipPlanResponse = z.infer<typeof CreateMembershipPlanResponseSchema>;
+
+export const UpdateMembershipPlanRequestSchema = MembershipPlanWriteSchema.partial();
+export type UpdateMembershipPlanRequest = z.infer<typeof UpdateMembershipPlanRequestSchema>;
+
+export const UpdateMembershipPlanResponseSchema = MembershipPlanSchema;
+export type UpdateMembershipPlanResponse = z.infer<typeof UpdateMembershipPlanResponseSchema>;
+
+export const DeactivateMembershipPlanRequestSchema = z.object({});
+export type DeactivateMembershipPlanRequest = z.infer<typeof DeactivateMembershipPlanRequestSchema>;
+
+export const DeactivateMembershipPlanResponseSchema = z.object({
+  planId: UuidSchema,
+  deactivated: z.literal(true),
+});
+export type DeactivateMembershipPlanResponse = z.infer<
+  typeof DeactivateMembershipPlanResponseSchema
+>;
+
 export const GetMembershipInstanceRequestSchema = z.object({});
 export type GetMembershipInstanceRequest = z.infer<typeof GetMembershipInstanceRequestSchema>;
 
 export const GetMembershipInstanceResponseSchema = MembershipInstanceSchema;
 export type GetMembershipInstanceResponse = z.infer<typeof GetMembershipInstanceResponseSchema>;
+
+export const ListMembershipInstancesRequestSchema = z.object({
+  gymId: UuidSchema.optional(),
+  branchId: UuidSchema.optional(),
+  memberId: UuidSchema.optional(),
+  status: MembershipStatusSchema.optional(),
+  cursor: z.string().optional(),
+  limit: z.number().int().min(1).max(100).default(20),
+});
+export type ListMembershipInstancesRequest = z.infer<typeof ListMembershipInstancesRequestSchema>;
+
+export const ListMembershipInstancesResponseSchema = z.object({
+  items: z.array(MembershipInstanceSchema),
+  nextCursor: z.string().nullable(),
+});
+export type ListMembershipInstancesResponse = z.infer<typeof ListMembershipInstancesResponseSchema>;
+
+export const AssignMembershipInstanceRequestSchema = z.object({
+  planId: UuidSchema,
+  memberId: UuidSchema,
+  gymId: UuidSchema,
+  branchId: UuidSchema.nullable().optional(),
+  validFrom: IsoDatetimeSchema,
+  validUntil: IsoDatetimeSchema.nullable(),
+  remainingSessions: z.number().int().nonnegative().nullable().optional(),
+  entitledBranchIds: z.array(UuidSchema).default([]),
+});
+export type AssignMembershipInstanceRequest = z.infer<typeof AssignMembershipInstanceRequestSchema>;
+
+export const AssignMembershipInstanceResponseSchema = MembershipInstanceSchema;
+export type AssignMembershipInstanceResponse = z.infer<
+  typeof AssignMembershipInstanceResponseSchema
+>;
