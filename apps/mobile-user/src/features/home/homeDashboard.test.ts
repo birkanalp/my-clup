@@ -33,4 +33,14 @@ describe('home dashboard helpers', () => {
       route: '/membership/renew',
     });
   });
+
+  it('keeps booking out of route wiring until scheduling is implemented', () => {
+    const quickActions = buildQuickActions();
+
+    expect(quickActions[0]).toMatchObject({
+      key: 'bookClass',
+      disabled: true,
+    });
+    expect(quickActions[0]?.route).toBeUndefined();
+  });
 });
