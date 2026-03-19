@@ -1,13 +1,26 @@
 import { describe, expect, it } from 'vitest';
 import {
+  applyDiscountContract,
+  ApplyDiscountRequestSchema,
+  createInvoiceContract,
+  getInvoiceDetailContract,
   InvoiceSchema,
+  listInstallmentsContract,
   listInvoicesContract,
   listPaymentsContract,
+  listReceivablesContract,
   ListInvoicesRequestSchema,
+  ListInstallmentsRequestSchema,
   ListPaymentsRequestSchema,
+  ListReceivablesRequestSchema,
+  logPaymentContract,
   PaymentReminderSchema,
   PaymentSchema,
   ReceivableSchema,
+  settleReceivableContract,
+  SettleReceivableRequestSchema,
+  triggerPaymentReminderContract,
+  TriggerPaymentReminderRequestSchema,
 } from './index';
 
 const validUuid = '550e8400-e29b-41d4-a716-446655440000';
@@ -113,6 +126,37 @@ describe('billing contracts', () => {
       const result = ListPaymentsRequestSchema.safeParse({ limit: 101 });
       expect(result.success).toBe(false);
     });
+
+    it('applies default limit for receivables and installments', () => {
+      expect(ListReceivablesRequestSchema.parse({})).toEqual({ limit: 20 });
+      expect(ListInstallmentsRequestSchema.parse({})).toEqual({ limit: 20 });
+    });
+
+    it('validates settle receivable payload', () => {
+      const result = SettleReceivableRequestSchema.safeParse({
+        amountPaid: 250,
+        settledAt: validDatetime,
+      });
+      expect(result.success).toBe(true);
+    });
+
+    it('validates discount and reminder payloads', () => {
+      const discount = ApplyDiscountRequestSchema.safeParse({
+        gymId: validUuid,
+        memberId: validUuid,
+        code: 'WELCOME10',
+        originalAmount: 1000,
+      });
+      expect(discount.success).toBe(true);
+
+      const reminder = TriggerPaymentReminderRequestSchema.safeParse({
+        gymId: validUuid,
+        memberId: validUuid,
+        channel: 'sms',
+        locale: 'tr',
+      });
+      expect(reminder.success).toBe(true);
+    });
   });
 
   describe('contract objects', () => {
@@ -124,6 +168,25 @@ describe('billing contracts', () => {
     it('listPaymentsContract uses versioned endpoint', () => {
       expect(listPaymentsContract.path).toBe('/api/v1/billing/payments');
       expect(listPaymentsContract.method).toBe('GET');
+    });
+
+    it('write and detail contracts use expected endpoints', () => {
+      expect(logPaymentContract.path).toBe('/api/v1/billing/payments');
+      expect(logPaymentContract.method).toBe('POST');
+      expect(createInvoiceContract.path).toBe('/api/v1/billing/invoices');
+      expect(createInvoiceContract.method).toBe('POST');
+      expect(getInvoiceDetailContract.path).toBe('/api/v1/billing/invoices/:id');
+      expect(getInvoiceDetailContract.method).toBe('GET');
+    });
+
+    it('receivable/installment/discount/reminder contracts are versioned', () => {
+      expect(listReceivablesContract.path).toBe('/api/v1/billing/receivables');
+      expect(listReceivablesContract.method).toBe('GET');
+      expect(settleReceivableContract.path).toBe('/api/v1/billing/receivables/:id/settle');
+      expect(settleReceivableContract.method).toBe('POST');
+      expect(listInstallmentsContract.path).toBe('/api/v1/billing/installments');
+      expect(applyDiscountContract.path).toBe('/api/v1/billing/discounts/apply');
+      expect(triggerPaymentReminderContract.path).toBe('/api/v1/billing/reminders/trigger');
     });
   });
 });

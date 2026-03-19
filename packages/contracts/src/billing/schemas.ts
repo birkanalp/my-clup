@@ -95,6 +95,25 @@ export const PaymentReminderSchema = z.object({
 });
 export type PaymentReminder = z.infer<typeof PaymentReminderSchema>;
 
+export const InstallmentStatusSchema = z.enum(['active', 'completed', 'defaulted']);
+export type InstallmentStatus = z.infer<typeof InstallmentStatusSchema>;
+
+export const InstallmentPlanSchema = z.object({
+  id: UuidSchema,
+  gymId: UuidSchema,
+  branchId: UuidSchema.nullable(),
+  memberId: UuidSchema,
+  invoiceId: UuidSchema.nullable(),
+  totalAmount: z.number().positive(),
+  installmentCount: z.number().int().positive(),
+  remainingInstallments: z.number().int().nonnegative(),
+  nextDueAt: IsoDatetimeSchema.nullable(),
+  status: InstallmentStatusSchema,
+  createdAt: IsoDatetimeSchema,
+  updatedAt: IsoDatetimeSchema,
+});
+export type InstallmentPlan = z.infer<typeof InstallmentPlanSchema>;
+
 export const ListInvoicesRequestSchema = z.object({
   gymId: UuidSchema.optional(),
   branchId: UuidSchema.optional(),
@@ -126,3 +145,117 @@ export const ListPaymentsResponseSchema = z.object({
   nextCursor: z.string().nullable(),
 });
 export type ListPaymentsResponse = z.infer<typeof ListPaymentsResponseSchema>;
+
+export const LogPaymentRequestSchema = z.object({
+  gymId: UuidSchema,
+  branchId: UuidSchema.nullable().optional(),
+  memberId: UuidSchema,
+  invoiceId: UuidSchema.nullable().optional(),
+  currency: z.string().regex(/^[A-Z]{3}$/),
+  amount: z.number().positive(),
+  method: PaymentMethodSchema,
+  status: PaymentStatusSchema.optional(),
+  paidAt: IsoDatetimeSchema.nullable().optional(),
+  overrideReason: z.string().max(500).optional(),
+});
+export type LogPaymentRequest = z.infer<typeof LogPaymentRequestSchema>;
+
+export const LogPaymentResponseSchema = PaymentSchema;
+export type LogPaymentResponse = z.infer<typeof LogPaymentResponseSchema>;
+
+export const CreateInvoiceRequestSchema = z.object({
+  gymId: UuidSchema,
+  branchId: UuidSchema.nullable().optional(),
+  memberId: UuidSchema,
+  membershipInstanceId: UuidSchema.nullable().optional(),
+  currency: z.string().regex(/^[A-Z]{3}$/),
+  dueAt: IsoDatetimeSchema,
+  locale: z.enum(['tr', 'en']).optional(),
+  lineItems: z.array(InvoiceLineItemSchema.omit({ id: true })).min(1),
+  discountAmount: z.number().nonnegative().optional(),
+});
+export type CreateInvoiceRequest = z.infer<typeof CreateInvoiceRequestSchema>;
+
+export const CreateInvoiceResponseSchema = InvoiceSchema;
+export type CreateInvoiceResponse = z.infer<typeof CreateInvoiceResponseSchema>;
+
+export const GetInvoiceDetailRequestSchema = z.object({});
+export type GetInvoiceDetailRequest = z.infer<typeof GetInvoiceDetailRequestSchema>;
+
+export const GetInvoiceDetailResponseSchema = InvoiceSchema;
+export type GetInvoiceDetailResponse = z.infer<typeof GetInvoiceDetailResponseSchema>;
+
+export const ListReceivablesRequestSchema = z.object({
+  gymId: UuidSchema.optional(),
+  branchId: UuidSchema.optional(),
+  memberId: UuidSchema.optional(),
+  status: ReceivableStatusSchema.optional(),
+  cursor: z.string().optional(),
+  limit: z.number().int().min(1).max(100).default(20),
+});
+export type ListReceivablesRequest = z.infer<typeof ListReceivablesRequestSchema>;
+
+export const ListReceivablesResponseSchema = z.object({
+  items: z.array(ReceivableSchema),
+  nextCursor: z.string().nullable(),
+});
+export type ListReceivablesResponse = z.infer<typeof ListReceivablesResponseSchema>;
+
+export const SettleReceivableRequestSchema = z.object({
+  paymentId: UuidSchema.optional(),
+  amountPaid: z.number().positive(),
+  settledAt: IsoDatetimeSchema.optional(),
+  note: z.string().max(500).optional(),
+});
+export type SettleReceivableRequest = z.infer<typeof SettleReceivableRequestSchema>;
+
+export const SettleReceivableResponseSchema = ReceivableSchema;
+export type SettleReceivableResponse = z.infer<typeof SettleReceivableResponseSchema>;
+
+export const ListInstallmentsRequestSchema = z.object({
+  gymId: UuidSchema.optional(),
+  branchId: UuidSchema.optional(),
+  memberId: UuidSchema.optional(),
+  status: InstallmentStatusSchema.optional(),
+  cursor: z.string().optional(),
+  limit: z.number().int().min(1).max(100).default(20),
+});
+export type ListInstallmentsRequest = z.infer<typeof ListInstallmentsRequestSchema>;
+
+export const ListInstallmentsResponseSchema = z.object({
+  items: z.array(InstallmentPlanSchema),
+  nextCursor: z.string().nullable(),
+});
+export type ListInstallmentsResponse = z.infer<typeof ListInstallmentsResponseSchema>;
+
+export const ApplyDiscountRequestSchema = z.object({
+  gymId: UuidSchema,
+  branchId: UuidSchema.nullable().optional(),
+  memberId: UuidSchema,
+  invoiceId: UuidSchema.optional(),
+  code: z.string().min(1),
+  originalAmount: z.number().positive(),
+});
+export type ApplyDiscountRequest = z.infer<typeof ApplyDiscountRequestSchema>;
+
+export const ApplyDiscountResponseSchema = z.object({
+  code: z.string(),
+  applied: z.boolean(),
+  discountAmount: z.number().nonnegative(),
+  finalAmount: z.number().nonnegative(),
+});
+export type ApplyDiscountResponse = z.infer<typeof ApplyDiscountResponseSchema>;
+
+export const TriggerPaymentReminderRequestSchema = z.object({
+  gymId: UuidSchema,
+  branchId: UuidSchema.nullable().optional(),
+  memberId: UuidSchema,
+  receivableId: UuidSchema.nullable().optional(),
+  channel: ReminderChannelSchema,
+  locale: z.enum(['tr', 'en']),
+  scheduledAt: IsoDatetimeSchema.optional(),
+});
+export type TriggerPaymentReminderRequest = z.infer<typeof TriggerPaymentReminderRequestSchema>;
+
+export const TriggerPaymentReminderResponseSchema = PaymentReminderSchema;
+export type TriggerPaymentReminderResponse = z.infer<typeof TriggerPaymentReminderResponseSchema>;

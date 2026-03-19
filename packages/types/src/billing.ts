@@ -109,3 +109,122 @@ export interface ListPaymentsResponse {
   items: Payment[];
   nextCursor: string | null;
 }
+
+export interface LogPaymentRequest {
+  gymId: string;
+  branchId?: string | null;
+  memberId: string;
+  invoiceId?: string | null;
+  currency: string;
+  amount: number;
+  method: PaymentMethod;
+  status?: PaymentStatus;
+  paidAt?: string | null;
+  overrideReason?: string;
+}
+
+export type LogPaymentResponse = Payment;
+
+export interface CreateInvoiceLineItemInput {
+  label: string;
+  quantity: number;
+  unitAmount: number;
+  totalAmount: number;
+}
+
+export interface CreateInvoiceRequest {
+  gymId: string;
+  branchId?: string | null;
+  memberId: string;
+  membershipInstanceId?: string | null;
+  currency: string;
+  dueAt: string;
+  locale?: SupportedLocale;
+  lineItems: CreateInvoiceLineItemInput[];
+  discountAmount?: number;
+}
+
+export type CreateInvoiceResponse = Invoice;
+export type GetInvoiceDetailResponse = Invoice;
+
+export interface ListReceivablesRequest {
+  gymId?: string;
+  branchId?: string;
+  memberId?: string;
+  status?: ReceivableStatus;
+  cursor?: string;
+  limit?: number;
+}
+
+export interface ListReceivablesResponse {
+  items: Receivable[];
+  nextCursor: string | null;
+}
+
+export interface SettleReceivableRequest {
+  paymentId?: string;
+  amountPaid: number;
+  settledAt?: string;
+  note?: string;
+}
+
+export type SettleReceivableResponse = Receivable;
+
+export type InstallmentStatus = 'active' | 'completed' | 'defaulted';
+
+export interface InstallmentPlan {
+  id: string;
+  gymId: string;
+  branchId: string | null;
+  memberId: string;
+  invoiceId: string | null;
+  totalAmount: number;
+  installmentCount: number;
+  remainingInstallments: number;
+  nextDueAt: string | null;
+  status: InstallmentStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ListInstallmentsRequest {
+  gymId?: string;
+  branchId?: string;
+  memberId?: string;
+  status?: InstallmentStatus;
+  cursor?: string;
+  limit?: number;
+}
+
+export interface ListInstallmentsResponse {
+  items: InstallmentPlan[];
+  nextCursor: string | null;
+}
+
+export interface ApplyDiscountRequest {
+  gymId: string;
+  branchId?: string | null;
+  memberId: string;
+  invoiceId?: string;
+  code: string;
+  originalAmount: number;
+}
+
+export interface ApplyDiscountResponse {
+  code: string;
+  applied: boolean;
+  discountAmount: number;
+  finalAmount: number;
+}
+
+export interface TriggerPaymentReminderRequest {
+  gymId: string;
+  branchId?: string | null;
+  memberId: string;
+  receivableId?: string | null;
+  channel: ReminderChannel;
+  locale: SupportedLocale;
+  scheduledAt?: string;
+}
+
+export type TriggerPaymentReminderResponse = PaymentReminder;

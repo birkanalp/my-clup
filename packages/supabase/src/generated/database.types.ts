@@ -39,6 +39,11 @@ export type ConversationType =
 export type MembershipPlanType = 'time_based' | 'session_based' | 'personal_training';
 export type MembershipPlanStatus = 'active' | 'inactive';
 export type MembershipStatus = 'active' | 'frozen' | 'cancelled' | 'expired';
+export type InvoiceStatus = 'draft' | 'open' | 'paid' | 'void' | 'overdue';
+export type PaymentStatus = 'pending' | 'succeeded' | 'failed' | 'refunded';
+export type PaymentMethod = 'cash' | 'card' | 'bank_transfer' | 'online';
+export type ReceivableStatus = 'open' | 'partial' | 'settled' | 'overdue';
+export type InstallmentStatus = 'active' | 'completed' | 'defaulted';
 
 export interface Database {
   public: {
@@ -328,6 +333,285 @@ export interface Database {
         };
         Relationships: [];
       };
+      invoices: {
+        Row: {
+          id: string;
+          gym_id: string;
+          branch_id: string | null;
+          member_id: string;
+          membership_instance_id: string | null;
+          status: InvoiceStatus;
+          currency: string;
+          subtotal_amount: number;
+          discount_amount: number;
+          total_amount: number;
+          due_at: string;
+          issued_at: string;
+          paid_at: string | null;
+          line_items: Json;
+          locale: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          gym_id: string;
+          branch_id?: string | null;
+          member_id: string;
+          membership_instance_id?: string | null;
+          status?: InvoiceStatus;
+          currency: string;
+          subtotal_amount: number;
+          discount_amount?: number;
+          total_amount: number;
+          due_at: string;
+          issued_at?: string;
+          paid_at?: string | null;
+          line_items?: Json;
+          locale?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          member_id?: string;
+          membership_instance_id?: string | null;
+          status?: InvoiceStatus;
+          currency?: string;
+          subtotal_amount?: number;
+          discount_amount?: number;
+          total_amount?: number;
+          due_at?: string;
+          issued_at?: string;
+          paid_at?: string | null;
+          line_items?: Json;
+          locale?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      payments: {
+        Row: {
+          id: string;
+          gym_id: string;
+          branch_id: string | null;
+          member_id: string;
+          invoice_id: string | null;
+          currency: string;
+          amount: number;
+          method: PaymentMethod;
+          status: PaymentStatus;
+          paid_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          gym_id: string;
+          branch_id?: string | null;
+          member_id: string;
+          invoice_id?: string | null;
+          currency: string;
+          amount: number;
+          method: PaymentMethod;
+          status?: PaymentStatus;
+          paid_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          member_id?: string;
+          invoice_id?: string | null;
+          currency?: string;
+          amount?: number;
+          method?: PaymentMethod;
+          status?: PaymentStatus;
+          paid_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      receivables: {
+        Row: {
+          id: string;
+          gym_id: string;
+          branch_id: string | null;
+          member_id: string;
+          invoice_id: string | null;
+          currency: string;
+          amount_due: number;
+          amount_paid: number;
+          due_at: string;
+          status: ReceivableStatus;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          gym_id: string;
+          branch_id?: string | null;
+          member_id: string;
+          invoice_id?: string | null;
+          currency: string;
+          amount_due: number;
+          amount_paid?: number;
+          due_at: string;
+          status?: ReceivableStatus;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          member_id?: string;
+          invoice_id?: string | null;
+          currency?: string;
+          amount_due?: number;
+          amount_paid?: number;
+          due_at?: string;
+          status?: ReceivableStatus;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      installment_plans: {
+        Row: {
+          id: string;
+          gym_id: string;
+          branch_id: string | null;
+          member_id: string;
+          invoice_id: string | null;
+          total_amount: number;
+          installment_count: number;
+          remaining_installments: number;
+          next_due_at: string | null;
+          status: InstallmentStatus;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          gym_id: string;
+          branch_id?: string | null;
+          member_id: string;
+          invoice_id?: string | null;
+          total_amount: number;
+          installment_count: number;
+          remaining_installments: number;
+          next_due_at?: string | null;
+          status?: InstallmentStatus;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          member_id?: string;
+          invoice_id?: string | null;
+          total_amount?: number;
+          installment_count?: number;
+          remaining_installments?: number;
+          next_due_at?: string | null;
+          status?: InstallmentStatus;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      discount_codes: {
+        Row: {
+          id: string;
+          gym_id: string;
+          branch_id: string | null;
+          code: string;
+          type: 'percentage' | 'fixed';
+          value: number;
+          is_active: boolean;
+          expires_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          gym_id: string;
+          branch_id?: string | null;
+          code: string;
+          type: 'percentage' | 'fixed';
+          value: number;
+          is_active?: boolean;
+          expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          code?: string;
+          type?: 'percentage' | 'fixed';
+          value?: number;
+          is_active?: boolean;
+          expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      payment_reminders: {
+        Row: {
+          id: string;
+          gym_id: string;
+          branch_id: string | null;
+          member_id: string;
+          receivable_id: string | null;
+          channel: 'sms' | 'email' | 'push' | 'whatsapp';
+          locale: 'tr' | 'en';
+          status: 'queued' | 'sent' | 'failed';
+          scheduled_at: string;
+          sent_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          gym_id: string;
+          branch_id?: string | null;
+          member_id: string;
+          receivable_id?: string | null;
+          channel: 'sms' | 'email' | 'push' | 'whatsapp';
+          locale: 'tr' | 'en';
+          status?: 'queued' | 'sent' | 'failed';
+          scheduled_at: string;
+          sent_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          gym_id?: string;
+          branch_id?: string | null;
+          member_id?: string;
+          receivable_id?: string | null;
+          channel?: 'sms' | 'email' | 'push' | 'whatsapp';
+          locale?: 'tr' | 'en';
+          status?: 'queued' | 'sent' | 'failed';
+          scheduled_at?: string;
+          sent_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       conversations: {
         Row: {
           id: string;
@@ -484,6 +768,11 @@ export interface Database {
     Enums: {
       app_role: AppRole;
       conversation_type: ConversationType;
+      invoice_status: InvoiceStatus;
+      payment_status: PaymentStatus;
+      payment_method: PaymentMethod;
+      receivable_status: ReceivableStatus;
+      installment_status: InstallmentStatus;
     };
   };
 }
