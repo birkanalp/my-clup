@@ -15,6 +15,7 @@ vi.mock('@myclup/supabase', async (importOriginal) => {
     getMembershipPlan: vi.fn(),
     updateMembershipPlan: vi.fn(),
     deactivateMembershipPlan: vi.fn(),
+    writeAuditEvent: vi.fn(),
   };
 });
 
@@ -53,7 +54,14 @@ describe('membership plans server', () => {
     vi.clearAllMocks();
     vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://test.supabase.co');
     vi.stubEnv('SUPABASE_SERVICE_ROLE_KEY', 'service-role-key');
-    mockCreateServerClient.mockReturnValue({} as never);
+    const mockClient = {
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockResolvedValue({ data: [{ role: 'gym_manager', gym_id: validUuid }] }),
+        }),
+      }),
+    };
+    mockCreateServerClient.mockReturnValue(mockClient as never);
     mockGetCurrentUser.mockResolvedValue(mockUser);
     mockResolveTenantScope.mockResolvedValue([{ gymId: validUuid, branchId: null }]);
     mockRequirePermission.mockResolvedValue(undefined);

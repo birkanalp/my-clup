@@ -9,6 +9,7 @@ import type {
   UpdateMembershipPlanResponse,
 } from '@myclup/contracts/membership';
 import {
+  AUDIT_EVENT_TYPES,
   createMembershipPlan,
   createServerClient,
   deactivateMembershipPlan,
@@ -19,6 +20,7 @@ import {
   requirePermission,
   resolveTenantScope,
   updateMembershipPlan,
+  writeAuditEvent,
 } from '@myclup/supabase';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
@@ -29,6 +31,17 @@ function getClient() {
     supabaseUrl: SUPABASE_URL,
     serviceRoleKey: SERVICE_ROLE_KEY,
   });
+}
+
+async function writeMembershipAudit(
+  client: ReturnType<typeof getClient>,
+  params: Parameters<typeof writeAuditEvent>[1]
+) {
+  try {
+    await writeAuditEvent(client, params);
+  } catch (error) {
+    console.error('[membership-plans] audit write failed', error);
+  }
 }
 
 function parseListParams(req: NextRequest): ListMembershipPlansRequest {
@@ -59,6 +72,32 @@ export async function listPlans(req: NextRequest): Promise<ListMembershipPlansRe
 
   const scope = scopes[0];
   await requirePermission(client, currentUser.user.id, scope, 'members:read');
+  const { data } = await client
+    .from('user_role_assignments')
+    .select('role, gym_id')
+    .eq('user_id', currentUser.user.id);
+  const isPlatformAdmin = (data ?? []).some(
+    (row) => row.role === 'platform_admin' && row.gym_id === null
+  );
+  if (isPlatformAdmin && params.gymId) {
+    await writeMembershipAudit(client, {
+      event_type: AUDIT_EVENT_TYPES.cross_tenant_support,
+      actor_id: currentUser.user.id,
+      target_type: 'membership_plans',
+      target_id: null,
+      payload: {
+        target_gym_id: scope.gymId,
+        target_branch_id: scope.branchId ?? undefined,
+        action: 'membership_plan_list_access',
+        actor_role: 'platform_admin',
+        tenant_id: scope.gymId,
+        before_state: 'request_received',
+        after_state: 'scope_granted',
+        timestamp: new Date().toISOString(),
+      },
+      tenant_context: { gym_id: scope.gymId, branch_id: scope.branchId ?? undefined },
+    });
+  }
   return listMembershipPlans(client, {
     ...params,
     gymId: scope.gymId,

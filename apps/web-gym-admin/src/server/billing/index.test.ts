@@ -66,7 +66,14 @@ describe('billing server module', () => {
     vi.clearAllMocks();
     vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://test.supabase.co');
     vi.stubEnv('SUPABASE_SERVICE_ROLE_KEY', 'service-role-key');
-    mockCreateServerClient.mockReturnValue({} as never);
+    const mockClient = {
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockResolvedValue({ data: [{ role: 'gym_manager', gym_id: validUuid }] }),
+        }),
+      }),
+    };
+    mockCreateServerClient.mockReturnValue(mockClient as never);
     mockGetCurrentUser.mockResolvedValue(mockUser);
     mockResolveTenantScope.mockResolvedValue([{ gymId: validUuid, branchId: null }]);
     mockRequirePermission.mockResolvedValue(undefined);
@@ -109,7 +116,42 @@ describe('billing server module', () => {
 
     expect(result?.id).toBe(validUuid);
     expect(mockRequirePermission).toHaveBeenCalled();
-    expect(mockWriteAuditEvent).toHaveBeenCalled();
+    expect(mockWriteAuditEvent.mock.calls.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('writes before/after refund audits for refunded payment logging', async () => {
+    mockLogPayment.mockResolvedValue({
+      id: validUuid,
+      gymId: validUuid,
+      branchId: null,
+      memberId: validUuid,
+      invoiceId: validUuid,
+      currency: 'TRY',
+      amount: 1000,
+      method: 'card',
+      status: 'refunded',
+      paidAt: '2025-03-19T12:00:00.000Z',
+      createdAt: '2025-03-19T12:00:00.000Z',
+      updatedAt: '2025-03-19T12:00:00.000Z',
+    });
+
+    const req = new NextRequest('http://localhost:3001/api/v1/billing/payments');
+    const result = await logPaymentServer(req, {
+      gymId: validUuid,
+      memberId: validUuid,
+      invoiceId: validUuid,
+      currency: 'TRY',
+      amount: 1000,
+      method: 'card',
+      status: 'refunded',
+      overrideReason: 'refund request',
+    });
+
+    expect(result?.status).toBe('refunded');
+    const refundCalls = mockWriteAuditEvent.mock.calls.filter(
+      ([, payload]) => payload.event_type === supabase.AUDIT_EVENT_TYPES.refund
+    );
+    expect(refundCalls.length).toBeGreaterThanOrEqual(2);
   });
 
   it('throws forbidden when settling receivable without tenant scope', async () => {
