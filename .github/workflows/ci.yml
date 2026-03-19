@@ -24,7 +24,11 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+        run: |
+          pnpm config set network-concurrency 2
+          pnpm install --frozen-lockfile
 
       - name: Lint
         run: pnpm run lint
