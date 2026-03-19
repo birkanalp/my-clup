@@ -36,6 +36,9 @@ importers:
       '@myclup/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@myclup/supabase':
+        specifier: workspace:^
+        version: link:../../packages/supabase
       next:
         specifier: ^15.1.0
         version: 15.5.13(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
