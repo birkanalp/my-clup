@@ -6,17 +6,17 @@
 
 ## Boundary Implications
 
-| Package / App | Affected | Extends to use |
-|---------------|----------|----------------|
-| `packages/config-typescript` | **Owns** shared tsconfig shape | — |
-| `packages/contracts` | Consumer | base or node |
-| `packages/types` | Consumer | base |
-| `packages/utils` | Consumer | base |
-| `packages/api-client` | Consumer | base or node |
-| `packages/supabase` | Consumer | base or node |
-| `packages/ui-web` | Consumer | base (+ next if library build) |
-| `packages/ui-native` | Consumer | base (+ expo if library build) |
-| `apps/*` (Next.js x3, Expo x2) | Future consumer | next or expo presets |
+| Package / App                  | Affected                       | Extends to use                 |
+| ------------------------------ | ------------------------------ | ------------------------------ |
+| `packages/config-typescript`   | **Owns** shared tsconfig shape | —                              |
+| `packages/contracts`           | Consumer                       | base or node                   |
+| `packages/types`               | Consumer                       | base                           |
+| `packages/utils`               | Consumer                       | base                           |
+| `packages/api-client`          | Consumer                       | base or node                   |
+| `packages/supabase`            | Consumer                       | base or node                   |
+| `packages/ui-web`              | Consumer                       | base (+ next if library build) |
+| `packages/ui-native`           | Consumer                       | base (+ expo if library build) |
+| `apps/*` (Next.js x3, Expo x2) | Future consumer                | next or expo presets           |
 
 `config-typescript` is a shared config package consumed by all packages and apps. It must not contain app-specific overrides; those stay in each consuming package's `tsconfig.json`. The task correctly scopes out app-specific overrides and ESLint/Prettier.
 
@@ -57,10 +57,10 @@ Verification chain (per task): `packages/contracts` extends config → `pnpm exe
 
 ## Constraints (from docs and rules)
 
-| Source | Constraint |
-|--------|------------|
-| `docs/07-technical-plan.md` §2.4 | `config-typescript` owns shared TypeScript base configs |
-| `AGENT.md` §8 | Use strict TypeScript |
+| Source                                            | Constraint                                                    |
+| ------------------------------------------------- | ------------------------------------------------------------- |
+| `docs/07-technical-plan.md` §2.4                  | `config-typescript` owns shared TypeScript base configs       |
+| `AGENT.md` §8                                     | Use strict TypeScript                                         |
 | `.cursor/rules/monorepo-boundaries-and-stack.mdc` | TypeScript is mandatory; config-typescript is allowed package |
 
 - **Strict mode** is mandatory. Base config must enable `strict: true` (and recommended strict flags).
@@ -77,15 +77,15 @@ None. Architecture prerequisites are satisfied. Task scope aligns with technical
 
 ## Preset Usage Guidance (for implementer)
 
-| Consumer type | Recommended preset |
-|---------------|--------------------|
-| Framework-agnostic libs (contracts, types, utils) | base or node |
-| api-client, supabase | node |
-| ui-web (library build) | base (or next if building for Next.js) |
-| ui-native | base (or expo if building for Expo) |
-| Next.js apps | next |
-| Expo apps | expo |
+| Consumer type                                     | Recommended preset                     |
+| ------------------------------------------------- | -------------------------------------- |
+| Framework-agnostic libs (contracts, types, utils) | base or node                           |
+| api-client, supabase                              | node                                   |
+| ui-web (library build)                            | base (or next if building for Next.js) |
+| ui-native                                         | base (or expo if building for Expo)    |
+| Next.js apps                                      | next                                   |
+| Expo apps                                         | expo                                   |
 
 ---
 
-*Product Architecture Agent — enforces docs/07-technical-plan.md as source of truth*
+_Product Architecture Agent — enforces docs/07-technical-plan.md as source of truth_

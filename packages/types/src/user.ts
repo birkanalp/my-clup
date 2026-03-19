@@ -1,4 +1,4 @@
-import type { SupportedLocale } from "./locale";
+import type { SupportedLocale } from './locale';
 
 export interface UserLocalePreference {
   locale: SupportedLocale;

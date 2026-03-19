@@ -3,4 +3,4 @@ export {
   type LanguageSwitcherProps,
   type LocaleLinkProps,
   type LocaleOption,
-} from "./LanguageSwitcher";
+} from './LanguageSwitcher';

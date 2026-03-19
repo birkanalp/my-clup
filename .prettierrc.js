@@ -1,1 +1,1 @@
-module.exports = require("@myclup/config-prettier");
+module.exports = require('@myclup/config-prettier');

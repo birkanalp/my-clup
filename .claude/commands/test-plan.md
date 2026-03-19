@@ -19,33 +19,33 @@ Feature or change to plan tests for: $ARGUMENTS
 ### Unit Tests
 
 | Test case | What it tests | Expected outcome |
-|-----------|---------------|------------------|
-| [name] | [description] | [pass condition] |
+| --------- | ------------- | ---------------- |
+| [name]    | [description] | [pass condition] |
 
 ---
 
 ### Integration Tests
 
 | Test case | What it tests | Expected outcome |
-|-----------|---------------|------------------|
-| [name] | [description] | [pass condition] |
+| --------- | ------------- | ---------------- |
+| [name]    | [description] | [pass condition] |
 
 ---
 
 ### E2E Tests (Playwright)
 
 | Test case | Critical journey | Expected outcome |
-|-----------|------------------|------------------|
-| [name] | [user flow] | [pass condition] |
+| --------- | ---------------- | ---------------- |
+| [name]    | [user flow]      | [pass condition] |
 
 ---
 
 ### RLS Security Tests
 
-| Test case | Scenario | Expected outcome |
-|-----------|----------|------------------|
-| [name] | Cross-tenant access attempt | Access denied |
-| [name] | Wrong gym user accessing data | 403 / empty |
+| Test case | Scenario                      | Expected outcome |
+| --------- | ----------------------------- | ---------------- |
+| [name]    | Cross-tenant access attempt   | Access denied    |
+| [name]    | Wrong gym user accessing data | 403 / empty      |
 
 ---
 

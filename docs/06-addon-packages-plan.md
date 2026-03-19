@@ -17,6 +17,7 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Büyük üye tabanına sahip, mesai saati dışında üye sorularıyla boğuşan salonlar.
 
 **Ne yapar:**
+
 - Üyelerin sıkça sorduğu soruları (çalışma saatleri, ders programı, paket fiyatları, dondurma koşulları) otomatik yanıtlar
 - Mesai saati dışında 24/7 destek sağlar
 - Yanıt veremediği durumlarda konuşmayı insan personele devreder (handoff)
@@ -24,6 +25,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Chatbot mesajları normal chat inbox'ında görünür, transfer edildiğinde personel devralır
 
 **Özellikler:**
+
 - Salon-bazlı bilgi tabanı editörü
 - Otomatik yanıt kurallari ve tetikleyiciler
 - Handoff eşiği ayarı (örn: 2 mesajda cevap veremezse devret)
@@ -31,6 +33,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Dil desteği (TR + EN başlangıç)
 
 **Platform gereksinimleri:**
+
 - Chat altyapısına bot kullanıcı tipi eklenmesi
 - Bilgi tabanı CRUD API'si
 - Handoff mekanizması
@@ -44,12 +47,14 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Marka bilinirliğini artırmak, yeni üye kazanmak ve mevcut üyelerine kampanya duyurmak isteyen salonlar.
 
 **Ne yapar:**
+
 - Salon, platformdaki diğer kullanıcılara (henüz üyesi olmayan, yakın çevredeki) hedefli reklam yayınlar
 - Discovery / Keşfet bölümünde öne çıkarılmış listeleme
 - Push bildirim kampanyası gönderimi (platform üyelerine, üye olmayan yakın çevredeki kullanıcılara)
 - In-app banner veya öne çıkarılmış kart reklamları
 
 **Özellikler:**
+
 - Kampanya oluşturma (başlık, görsel, CTA, bütçe, süre)
 - Hedef kitle seçimi (konum, yaş, ilgi, daha önce trial kullanan)
 - Harcama limiti ve günlük bütçe kontrolü
@@ -57,6 +62,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Reklam içeriği platform tarafından onaylanır
 
 **Platform gereksinimleri:**
+
 - Reklam envanteri ve placement sistemi
 - Kitle hedefleme motoru
 - Admin panel: kampanya onay kuyruğu, billing entegrasyonu
@@ -70,16 +76,19 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Rakip salonların kendi üyelerine ulaşmasını engellemek isteyen, üye bağlılığına önem veren salonlar.
 
 **Ne yapar:**
+
 - Bu paketi alan salonun aktif üyeleri, başka salonların platform reklamları ve push kampanyalarından muaf tutulur
 - Discovery bölümünde, aktif üye olan kullanıcılara rakip salonlar öne çıkarılmaz
 - Platform, bu üyelerin verilerini reklam hedefleme havuzunun dışında tutar
 
 **Özellikler:**
+
 - Üye koruma aktif/pasif durumu salon panelinden görülebilir
 - Korunan üye sayısı istatistiği
 - Koruma kapsamı açıklaması (hangi reklam tipleri engelleniyor)
 
 **Platform gereksinimleri:**
+
 - Reklam hedefleme motoru üye koruma filter desteği
 - Discovery sıralamasında üye koruma flag'i
 - Admin panel: koruma durumu görüntüleme ve override (abuse durumları için)
@@ -93,12 +102,14 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Veriye dayalı karar vermek isteyen, büyük üye tabanına sahip veya çok şubeli salonlar.
 
 **Ne yapar:**
+
 - Temel raporların ötesinde derinlemesine üye ve gelir analizi sunar
 - Churn riski yüksek üyeleri önceden tespit eder
 - Cohort analizi ile üye yaşam boyu değerini gösterir
 - Gelir projeksiyonu ve sezonsal trend analizleri sağlar
 
 **Özellikler:**
+
 - Churn risk skoru: her üye için risk puanı ve tetikleyen sebepler
 - Cohort analizi: belirli dönemlerde kazanılan üyelerin tutma oranları
 - Gelir projeksiyonu: mevcut paket yapısına göre önümüzdeki 3–6 aylık gelir tahmini
@@ -108,6 +119,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Özelleştirilebilir dashboard widget'ları
 
 **Platform gereksinimleri:**
+
 - Analytics data pipeline (event aggregation)
 - ML model veya kural tabanlı churn skoring servisi
 - Raporlama API katmanı
@@ -120,11 +132,13 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Üyelerine platform dışı kanallardan ulaşmak isteyen, platform uygulamasını indirmemiş üyeleri olan salonlar.
 
 **Ne yapar:**
+
 - SMS ve/veya WhatsApp Business API üzerinden toplu veya tetikleyici bazlı mesaj gönderimi
 - Üyelik yenileme, ödeme hatırlatma, kampanya duyurusu gibi kritik iletişimleri platform dışına taşır
 - Platforma giriş yapmayan üyelere de ulaşmayı sağlar
 
 **Özellikler:**
+
 - Toplu SMS gönderimi (segmente edilmiş kitleye)
 - WhatsApp Business API entegrasyonu (onaylı mesaj şablonları)
 - Otomatik tetikleyiciler: üyelik bitişinden X gün önce, ödeme gecikmesinde
@@ -133,6 +147,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Aylık mesaj kredisi ve aşım uyarısı
 
 **Platform gereksinimleri:**
+
 - SMS gateway entegrasyonu (örn: Netgsm, iletimerkezi)
 - WhatsApp Business API entegrasyonu
 - Mesaj kredi yönetim sistemi
@@ -146,11 +161,13 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Kağıt sözleşme sürecini dijitalleştirmek isteyen, yasal uyumluluk gereksinimleri olan salonlar.
 
 **Ne yapar:**
+
 - Üyelik sözleşmeleri mobil cihaz veya tablet üzerinden dijital imzalanır
 - İmzalanan belgeler arşivlenir ve üyenin profilinden erişilebilir
 - Sözleşme şablonları salon tarafından özelleştirilebilir
 
 **Özellikler:**
+
 - Sözleşme şablonu editörü (değişken alanları: üye adı, paket, fiyat, tarih vb.)
 - Mobil e-imza arayüzü (parmak veya stylus)
 - Onay ve imza zaman damgası
@@ -160,6 +177,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Toplu sözleşme durumu görüntüleme (imzalandı / bekliyor)
 
 **Platform gereksinimleri:**
+
 - PDF oluşturma servisi
 - Güvenli belge saklama (encrypted, long-term storage)
 - E-imza yasal geçerlilik standartlarına uyumluluk
@@ -173,11 +191,13 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Üye tutma oranını artırmak, satış süreçlerini otomatikleştirmek isteyen büyüme odaklı salonlar.
 
 **Ne yapar:**
+
 - Lead ve üye yaşam döngüsü boyunca otomatik iletişim akışları tanımlanır
 - Manuel takip gerektiren süreçler (yenileme hatırlatma, kayıp geri kazanma, yeni üye karşılama) otomatize edilir
 - Drip kampanyalar ile doğru zamanda doğru mesaj gönderilir
 
 **Özellikler:**
+
 - Görsel workflow builder (tetikleyici → koşul → eylem)
 - Tetikleyiciler: üyelik bitiş tarihi, son check-in tarihi, ödeme durumu, lead formu doldurma
 - Eylemler: chat mesajı gönder, SMS gönder, görev oluştur, etiketi değiştir, personele bildir
@@ -186,6 +206,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Otomasyon performans raporu (tetiklenme sayısı, dönüşüm oranı)
 
 **Platform gereksinimleri:**
+
 - Workflow engine (event-driven)
 - Koşul ve eylem kütüphanesi
 - Mesaj gönderim entegrasyonları (chat, SMS, push)
@@ -199,11 +220,13 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Güçlü bir marka kimliğine sahip, kendi adıyla App Store / Play Store'da yer almak isteyen büyük salonlar veya zincirler.
 
 **Ne yapar:**
+
 - Üye uygulaması, salonun adı, logosu ve renk paleti ile ayrı bir uygulama olarak yayınlanır
 - Üyeler, MyClup yerine doğrudan salonun uygulamasını indirir
 - Tüm MyClup özellikleri (üyelik, chat, sınıf rezervasyon, antrenman) korunur
 
 **Özellikler:**
+
 - Özelleştirilebilir uygulama adı, ikon, splash ekranı, renk teması
 - App Store ve Google Play listing desteği
 - Push bildirimlerinde salon adıyla gönderim
@@ -212,6 +235,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Çok dilli white-label içerik ve store listing yönetimi
 
 **Platform gereksinimleri:**
+
 - Temaya dayalı build pipeline (Expo EAS ile per-gym build)
 - Asset yönetim sistemi (logo, renk, ikon uploads)
 - App Store / Play Store hesap yönetimi süreci
@@ -226,22 +250,26 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Mevcut muhasebe, reklam veya CRM araçlarıyla senkronizasyon isteyen salonlar.
 
 **Ne yapar:**
+
 - MyClup verisini dış sistemlerle senkronize eder
 - Manuel veri girişini ortadan kaldırır, operasyonel verimliliği artırır
 
 **Entegrasyonlar:**
+
 - **Muhasebe:** Logo, Mikro, Luca — fatura ve ödeme verilerini otomatik aktarım
 - **Google Ads:** Üye dönüşümlerini Google Ads conversion olarak raporlama
 - **Instagram / Meta Leads:** Lead form doldurmalarını otomatik MyClup lead pipeline'ına aktarma
 - **Zapier / Make (ileride):** Özel otomasyon bağlantıları için webhook desteği
 
 **Özellikler:**
+
 - Entegrasyon bağlantı yöneticisi (connect / disconnect / test)
 - Senkronizasyon durumu ve hata logları
 - Alan eşleştirme (field mapping) editörü
 - Webhook endpoint yönetimi
 
 **Platform gereksinimleri:**
+
 - Dış entegrasyon servisi / connector katmanı
 - Webhook altyapısı
 - Admin panel: entegrasyon sağlık durumu izleme, salon bazlı log görüntüleme
@@ -253,10 +281,12 @@ All add-on packages must operate correctly in a multilingual product environment
 **Hedef salon:** Hızlı teknik çözüm bekleyen, kesintiye toleransı düşük profesyonel salonlar.
 
 **Ne yapar:**
+
 - Standart destek kanallarının ötesinde garantili yanıt süreleri ve ayrılmış destek kanalı sağlar
 - Yeni özellik kullanımında proaktif onboarding desteği verilir
 
 **Özellikler:**
+
 - Dedicated destek hattı (chat veya telefon)
 - SLA garantisi: kritik sorunlar için maksimum 2 saat, normal sorunlar için 8 saat yanıt süresi
 - Teknik onboarding: kurulum, veri migrasyonu, ekip eğitimi
@@ -264,6 +294,7 @@ All add-on packages must operate correctly in a multilingual product environment
 - Erken erişim: yeni özellikler önce öncelikli destek müşterilerine açılır
 
 **Platform gereksinimleri:**
+
 - Destek önceliklendirme flag'i (ticket sistemine paket durumu yansıtılır)
 - SLA timer ve uyarı sistemi
 - Admin panel: öncelikli destek müşteri listesi, SLA ihlal raporu
@@ -272,13 +303,13 @@ All add-on packages must operate correctly in a multilingual product environment
 
 ## 3. Paket Bağımlılıkları ve Kombinasyonlar
 
-| Kombinasyon | Sinerji |
-|-------------|---------|
-| Reklam + Üye Koruma | Başkalarına reklam verirken kendi üyelerini koruma |
-| AI Chatbot + CRM & Otomasyon | Gelen soruyu botla karşıla, sonrasını workflow ile yönet |
+| Kombinasyon                         | Sinerji                                                            |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| Reklam + Üye Koruma                 | Başkalarına reklam verirken kendi üyelerini koruma                 |
+| AI Chatbot + CRM & Otomasyon        | Gelen soruyu botla karşıla, sonrasını workflow ile yönet           |
 | Gelişmiş Analitik + CRM & Otomasyon | Churn riskli üyeyi tespit et, otomatik retention kampanyası başlat |
-| Toplu SMS + CRM & Otomasyon | Workflow tetikleyicilerini SMS kanalına da yay |
-| White-label + AI Chatbot | Markalı uygulamada salon botunu çalıştır |
+| Toplu SMS + CRM & Otomasyon         | Workflow tetikleyicilerini SMS kanalına da yay                     |
+| White-label + AI Chatbot            | Markalı uygulamada salon botunu çalıştır                           |
 
 ## 4. Fiyatlandırma Yaklaşımı
 

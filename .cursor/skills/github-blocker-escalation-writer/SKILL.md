@@ -25,46 +25,53 @@ When work cannot safely continue, produce a clear blocker comment for the GitHub
 ## Blocker
 
 ### Summary
+
 [1–2 sentences: what is blocking and at what stage.]
 
 ### Root Cause
+
 [Why this blocker exists. Underlying reason, not symptom.]
 
 ### Why Work Cannot Safely Continue
+
 [Specific risk if work proceeds: rework, scope violation, architecture drift, test gap, etc.]
 
 ### Decision or Dependency Needed
+
 - **Decision**: [What must be decided, by whom, with what options]
 - **Dependency**: [What must exist first — task, approval, artifact]
 - **Unblock condition**: [Concrete condition that resolves the blocker]
 
 ### Who Should Resolve
+
 **Unblock owner**: `owner:[role]` — [orchestrator | pm | architect | backend | …]
 
 [Role that can make the decision or provide the dependency.]
 
 ### Recommended Temporary Label Changes
-| Action | Label | Reason |
-|--------|-------|--------|
-| Add | `state:blocked` | Work halted until unblocked |
-| Set | `owner:[unblock-owner]` | Ownership for unblock decision |
-| Remove | `state:in-progress` (if present) | No active implementation |
+
+| Action | Label                            | Reason                         |
+| ------ | -------------------------------- | ------------------------------ |
+| Add    | `state:blocked`                  | Work halted until unblocked    |
+| Set    | `owner:[unblock-owner]`          | Ownership for unblock decision |
+| Remove | `state:in-progress` (if present) | No active implementation       |
 
 ---
-*Escalated per github-label-handoff-governance. Do not proceed until unblocked.*
+
+_Escalated per github-label-handoff-governance. Do not proceed until unblocked._
 ```
 
 ## Unblock Owner Mapping
 
-| Blocker type | Typical unblock owner |
-|--------------|------------------------|
-| Scope / requirements | pm, orchestrator |
-| Architecture / design | architect |
-| Contract / API dependency | architect, backend |
-| Review / approval | review, human |
-| Environment / access | orchestrator, release |
-| Test / tooling | qa, backend |
-| Cross-team / sequencing | orchestrator |
+| Blocker type              | Typical unblock owner |
+| ------------------------- | --------------------- |
+| Scope / requirements      | pm, orchestrator      |
+| Architecture / design     | architect             |
+| Contract / API dependency | architect, backend    |
+| Review / approval         | review, human         |
+| Environment / access      | orchestrator, release |
+| Test / tooling            | qa, backend           |
+| Cross-team / sequencing   | orchestrator          |
 
 ## Escalation Principle
 

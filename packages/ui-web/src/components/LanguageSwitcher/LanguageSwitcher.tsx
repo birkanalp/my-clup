@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
 export interface LocaleOption {
   code: string;
@@ -34,16 +34,12 @@ export function LanguageSwitcher({
   className,
 }: LanguageSwitcherProps) {
   return (
-    <nav
-      className={className}
-      role="navigation"
-      aria-label="Language selection"
-    >
+    <nav className={className} role="navigation" aria-label="Language selection">
       <ul
         style={{
-          display: "flex",
-          gap: "0.5rem",
-          listStyle: "none",
+          display: 'flex',
+          gap: '0.5rem',
+          listStyle: 'none',
           margin: 0,
           padding: 0,
         }}
@@ -54,8 +50,8 @@ export function LanguageSwitcher({
               <span
                 style={{
                   fontWeight: 600,
-                  textDecoration: "none",
-                  cursor: "default",
+                  textDecoration: 'none',
+                  cursor: 'default',
                 }}
                 aria-current="true"
               >

@@ -9,7 +9,7 @@ Feature to design: $ARGUMENTS
 ### Entity Overview
 
 | Entity | Table | Tenant-scoped (gym_id) | Branch-scoped (branch_id) | Notes |
-|--------|-------|------------------------|---------------------------|-------|
+| ------ | ----- | ---------------------- | ------------------------- | ----- |
 
 ### Table Schemas
 
@@ -40,12 +40,14 @@ CREATE INDEX idx_[table]_branch_id ON public.[table_name](branch_id) WHERE branc
 ### RLS Requirements
 
 For each table, specify:
+
 - Policy: which operations (SELECT, INSERT, UPDATE, DELETE)
 - Condition: using `gym_id`/`branch_id` and `auth.uid()`
 - Service role bypass: note if platform admin needs bypass — must be audited
 - Cross-tenant: denied by default
 
 Example:
+
 ```sql
 ALTER TABLE public.[table_name] ENABLE ROW LEVEL SECURITY;
 
@@ -60,6 +62,7 @@ CREATE POLICY "[table]_gym_isolation" ON public.[table_name]
 ### Sensitive Operations Requiring Audit
 
 If this schema touches any of these flows, include an audit write path:
+
 - Role changes
 - Billing overrides
 - Membership manual extension

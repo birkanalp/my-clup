@@ -1,7 +1,7 @@
 name: Tech Debt
 description: Structured issue for debt reduction, cleanup, and workflow hardening
-title: "Tech Debt: "
-labels: ["state:proposed", "type:tech-debt"]
+title: 'Tech Debt: '
+labels: ['state:proposed', 'type:tech-debt']
 body:
   - type: input
     id: summary

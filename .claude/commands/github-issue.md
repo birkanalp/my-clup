@@ -22,6 +22,7 @@ Feature or task: $ARGUMENTS
 **Collaborating Agents**: `owner:[agent]` (if any — otherwise "None")
 
 **Affected Apps**:
+
 - [ ] apps/mobile-user
 - [ ] apps/mobile-admin
 - [ ] apps/web-gym-admin
@@ -29,6 +30,7 @@ Feature or task: $ARGUMENTS
 - [ ] apps/web-site
 
 **Files or Packages in Scope**:
+
 - `packages/[package]/src/...`
 - `apps/[app]/src/...`
 
