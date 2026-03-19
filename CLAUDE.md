@@ -232,6 +232,8 @@ Critical backend failures must be traceable. Prepare error monitoring abstractio
 
 Every implementation task must be a GitHub Issue before work begins. No feature implementation starts without a scoped and assigned issue.
 
+**When creating Epic child tasks**: After creating each task issue, add it to the GitHub Project `MyClup Development` and link it as a sub-issue to the parent Epic. See `docs/workflow-templates/task-creation-protocol.md`.
+
 **Mandatory issue fields:**
 Summary, Source doc reference, Acceptance criteria, Owning agent, Collaborating agents, Files/packages in scope, Dependencies, Required tests, Localization impact, Risk level
 

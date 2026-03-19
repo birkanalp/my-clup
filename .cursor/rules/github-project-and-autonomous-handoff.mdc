@@ -35,6 +35,23 @@ Agents must update Project fields whenever issue labels or state change. Do not 
 - **Task body reference**: Every task issue body must explicitly reference its parent Epic (e.g., `**Part of Epic #13**` or equivalent).
 - **Do not rely on comments alone** for Epic-task relationships; use GitHub's native sub-issue or `Closes`, `Relates to` linkage where available.
 
+## Task Creation Protocol
+
+**Every task created under an Epic** must complete these steps immediately after the issue is created. A task is not fully created until all are done.
+
+1. **Add to Project** — Add the new issue to the GitHub Project `MyClup Development`:
+   ```bash
+   gh project item-add 3 --owner @me --url https://github.com/birkanalp/my-clup/issues/<NUMBER>
+   ```
+
+2. **Link to parent Epic** — Use GraphQL `addSubIssue` to link the task as a sub-issue of the Epic:
+   - Get Epic and task node IDs via `repository { issue(number: N) { id } }`
+   - Call `addSubIssue(input: { issueId: "<EPIC_ID>", subIssueId: "<TASK_ID>" })`
+
+Full step-by-step instructions: `docs/workflow-templates/task-creation-protocol.md`
+
+Agents creating Epic child tasks (orchestrator, business-analyst-agent, or any task-creating agent) must execute this protocol for **every** task. Do not skip steps even when creating multiple tasks in bulk.
+
 ## Autonomous Handoff Rules
 
 When an agent finishes a task stage, it must hand off directly to the next responsible agent without requiring manual human dispatch—unless blocked.

@@ -53,3 +53,12 @@ Always emit overlap warnings for tasks marked safe to parallelize.
 - no overlapping ownership without sequencing or integration planning
 - testing tasks must never be omitted
 - owner and next handoff labels must align with the canonical workflow
+
+## Post-Creation Protocol (mandatory)
+
+After creating each task issue from this output, the creating agent **must**:
+
+1. Add the issue to the GitHub Project `MyClup Development` (`gh project item-add 3 --owner @me --url <issue-url>`)
+2. Link the task to its parent Epic via GraphQL `addSubIssue` mutation
+
+See `docs/workflow-templates/task-creation-protocol.md` for full steps.

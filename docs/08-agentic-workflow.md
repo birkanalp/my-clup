@@ -36,6 +36,7 @@ If a conflict cannot be resolved safely, stop and escalate to a human.
 - GitHub Issues are the operational source of truth.
 - GitHub Project is a visibility and reporting layer only.
 - Every implementation task must map to a GitHub Issue before execution begins.
+- When creating tasks under an Epic, follow `docs/workflow-templates/task-creation-protocol.md` (add to Project, link via `addSubIssue`). A task is not fully created until both steps are done.
 - Every active issue must have exactly one `owner:*` label.
 - Every active issue must have exactly one `state:*` lifecycle label.
 - Work must not begin until the issue is at least `state:scoped` and has an active owner.

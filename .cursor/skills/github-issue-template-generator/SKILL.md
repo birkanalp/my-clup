@@ -43,3 +43,12 @@ Epic issues are planning containers and may omit a type label if none of the exi
 - Keep scope conservative
 - Cite source documentation
 - Output must be paste-ready for GitHub
+
+## Post-Creation Protocol (for Epic child tasks)
+
+When creating task issues under an Epic, after each issue is created:
+
+1. Add the issue to the GitHub Project `MyClup Development` (`gh project item-add 3 --owner @me --url <issue-url>`)
+2. Link the task to its parent Epic via GraphQL `addSubIssue` (see `docs/workflow-templates/task-creation-protocol.md`)
+
+A task is not fully created until both steps are done.
