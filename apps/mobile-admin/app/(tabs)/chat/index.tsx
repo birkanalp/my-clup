@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ConversationList } from '../../src/features/chat/ConversationList';
-import { useConversations } from '../../src/features/chat/useConversations';
+import { ConversationList } from '../../../src/features/chat/ConversationList';
+import { useConversations } from '../../../src/features/chat/useConversations';
 
 export default function ChatIndexScreen() {
   const router = useRouter();

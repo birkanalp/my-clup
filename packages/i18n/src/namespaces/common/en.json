@@ -38,6 +38,77 @@
     "chat": "Chat",
     "chatSubtitle": "Handle active member conversations without leaving the admin shell."
   },
+  "staffAuth": {
+    "eyebrow": "Staff access",
+    "title": "Sign in to staff tools",
+    "subtitle": "Use your gym credentials. Session is required for schedule, members, and chat.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "signIn": "Sign in",
+    "supabaseMissing": "Auth is not configured in this build."
+  },
+  "staffTabs": {
+    "home": "Home",
+    "members": "Members",
+    "schedule": "Schedule",
+    "chat": "Chat",
+    "workouts": "Workouts",
+    "sales": "Sales"
+  },
+  "staffHome": {
+    "title": "Today’s operations",
+    "subtitle": "Switch tabs for members, schedule, chat, workouts, or sales. Tabs match your role.",
+    "signedInAs": "Signed in as {{name}}",
+    "whoamiWarning": "Could not load your role assignments. Some tabs stay hidden until the account API responds.",
+    "quickSectionTitle": "Workspace",
+    "quickSectionSubtitle": "Navigation is in the tab bar.",
+    "tabHint": "Member search uses the shared BFF when directory APIs land; attendance can validate a membership instance today."
+  },
+  "staffMembers": {
+    "stackTitle": "Members",
+    "title": "Member operations",
+    "subtitle": "Search and open member profiles within your tenant. Server-side search ships with the member directory API.",
+    "searchLabel": "Search",
+    "searchPlaceholder": "Name, phone, or member id",
+    "searchNote": "Results appear when the directory endpoint is wired. Until then, use attendance check-in with a membership instance id.",
+    "emptySearch": "No matches yet — try a different query once search is enabled.",
+    "statusUnknown": "Tenant scope will show after profile loads.",
+    "tenantScope": "Gym {{gym}} · Branch {{branch}}",
+    "branchAll": "All branches",
+    "attendanceSection": "Attendance",
+    "attendanceSubtitle": "Validate membership at the door using a membership instance id.",
+    "openAttendance": "Open check-in"
+  },
+  "staffAttendance": {
+    "title": "Check-in",
+    "subtitle": "Validates access against the current branch from your session.",
+    "instanceLabel": "Membership instance id",
+    "instancePlaceholder": "UUID from membership card or roster",
+    "validate": "Validate access",
+    "noBranch": "Your account has no active branch in session. Open the web admin or switch branch, then retry.",
+    "invalidInstanceId": "Enter a valid membership instance UUID.",
+    "result": "Status: {{status}} · Result: {{outcome}} · Reason: {{reason}}"
+  },
+  "staffWorkouts": {
+    "title": "Workouts",
+    "subtitle": "Programming and templates for instructors.",
+    "placeholder": "Workout builder and AI cleanup will connect to the shared AI service boundary. Use the web admin for full editing until mobile flows ship."
+  },
+  "staffSales": {
+    "title": "Leads",
+    "subtitle": "Capture prospects on the floor; sync to CRM when Epic #35 marketplace hooks land.",
+    "leadName": "Lead name",
+    "leadNamePlaceholder": "Prospect full name",
+    "leadSource": "Source",
+    "leadSourcePlaceholder": "Walk-in, referral, campaign…",
+    "capture": "Save lead",
+    "pipelineTitle": "Today’s pipeline",
+    "pipelineSubtitle": "Stored on device for this session only.",
+    "empty": "No leads captured yet.",
+    "sourceUnknown": "Unknown source"
+  },
   "scheduleWorkspace": {
     "heroTitle": "Calendar, capacity, and attendance",
     "heroSubtitle": "Track the next sessions, keep participant rosters current, and update attendance without leaving the shared booking flow.",

@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import type { Message } from '@myclup/contracts/chat';
-import { MessageThread } from '../../src/features/chat/MessageThread';
-import { useMessages } from '../../src/features/chat/useMessages';
-import { useChatRealtime } from '../../src/features/chat/useChatRealtime';
-import { useCurrentUser } from '../../src/features/chat/useCurrentUser';
+import { MessageThread } from '../../../src/features/chat/MessageThread';
+import { useMessages } from '../../../src/features/chat/useMessages';
+import { useChatRealtime } from '../../../src/features/chat/useChatRealtime';
+import { useCurrentUser } from '../../../src/features/chat/useCurrentUser';
 
 export default function ChatDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
