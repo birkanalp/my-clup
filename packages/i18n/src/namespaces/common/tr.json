@@ -188,6 +188,87 @@
       "neutral": "Sıradaki"
     }
   },
+  "notificationsCenter": {
+    "loadingTitle": "Hatırlatma merkezi yükleniyor...",
+    "loadingBody": "Son üyelik ve sohbet sinyalleri toplanıyor.",
+    "errorTitle": "Hatırlatma merkezi açılamadı",
+    "errorBody": "Son üye hatırlatmalarını yeniden yüklemek için tekrar deneyin.",
+    "heroBadge": "{{count}} aktif hatırlatma",
+    "backHome": "Ana sayfaya dön",
+    "title": "Bildirimler ve hatırlatmalar",
+    "subtitle": "Canlı üye sinyallerini tek yerde takip edin; gelecekteki teslimat kanalları ise açık yer tutucular olarak kalsın.",
+    "liveTitle": "Şimdi canlı",
+    "liveSubtitle": "Bu kartlar uygulamada zaten mevcut olan üyelik ve sohbet verileriyle beslenir.",
+    "plannedTitle": "Sıradaki adım",
+    "plannedSubtitle": "Rezervasyon ve uygulama seviyesi hatırlatmalar sessiz boşluklara dönüşmesin diye bu alanlar görünür kalır.",
+    "cards": {
+      "membership": {
+        "title": "Üyelik durumu",
+        "status": {
+          "action": "Aksiyon gerekli",
+          "info": "Dengede",
+          "placeholder": "Aktif plan yok"
+        },
+        "body": {
+          "expired": "Üyeliğinizin süresi doldu. Erişimi geri almak için şimdi yenileyin.",
+          "expiringSoon": "Yenileme pencereniz açıldı. Erişim kesilmeden önce yenileyin.",
+          "stable": "Mevcut üyeliğiniz aktif ve üyelik merkezinden erişilebilir durumda.",
+          "placeholder": "Bir plan atandığında üyelik hatırlatma kartı burada görünecek."
+        },
+        "action": {
+          "renew": "Yenilemeyi incele",
+          "open": "Üyeliği aç"
+        },
+        "meta": {
+          "expired": "Süresi dolan üyelikler, yenileme gönderilene kadar aksiyon gerektirir.",
+          "expiring_soon": "Kesinti yaşamamak için bir sonraki sona erme eşiğinden önce yenileyin."
+        }
+      },
+      "chat": {
+        "title": "Sohbet takibi",
+        "status": {
+          "action": "Okunmamış mesaj",
+          "info": "Görüşme açık",
+          "placeholder": "Henüz görüşme yok"
+        },
+        "body": {
+          "unread": "Takip bekleyen {{count}} okunmamış mesajınız var.",
+          "stable": "Son görüşmeniz senkronize edildi ve sohbet içinde hazır.",
+          "placeholder": "Bir görüşme başladığında sohbet hatırlatma kartı burada görünecek."
+        },
+        "action": {
+          "open": "Sohbeti aç"
+        },
+        "meta": {
+          "updatedAt": "{{date}} tarihinde güncellendi"
+        }
+      },
+      "booking": {
+        "title": "Rezervasyon hatırlatmaları",
+        "status": {
+          "placeholder": "Yer tutucu"
+        },
+        "body": {
+          "placeholder": "Rezervasyon teslimatı hazır olduğunda ders hatırlatmaları ve bekleme listesi uyarıları burada görünecek."
+        },
+        "action": {
+          "disabled": "Rezervasyon yakında"
+        }
+      },
+      "app": {
+        "title": "Uygulama güncellemeleri",
+        "status": {
+          "placeholder": "Yer tutucu"
+        },
+        "body": {
+          "placeholder": "Teslimat kanalları etkinleştiğinde push uyarıları, kampanyalar ve sürüm notları burada görünecek."
+        },
+        "action": {
+          "disabled": "Uygulama güncellemeleri yakında"
+        }
+      }
+    }
+  },
   "profile": {
     "title": "Profil ve ayarlar",
     "subtitle": "Bugün desteklenen üye alanlarını yönet ve sıradaki ayar alanlarını tek ekranda gör.",

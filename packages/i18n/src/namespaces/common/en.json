@@ -188,6 +188,87 @@
       "neutral": "Coming next"
     }
   },
+  "notificationsCenter": {
+    "loadingTitle": "Loading reminder center...",
+    "loadingBody": "Gathering the latest membership and chat signals.",
+    "errorTitle": "Reminder center unavailable",
+    "errorBody": "Try again to reload the latest member reminders.",
+    "heroBadge": "{{count}} active reminders",
+    "backHome": "Back to home",
+    "title": "Notifications and reminders",
+    "subtitle": "Track live member signals in one place while future delivery channels stay clearly marked as placeholders.",
+    "liveTitle": "Live now",
+    "liveSubtitle": "These cards are powered by membership and chat data already available in the app.",
+    "plannedTitle": "Coming next",
+    "plannedSubtitle": "These slots stay visible so booking and app-level reminders never appear as silent gaps.",
+    "cards": {
+      "membership": {
+        "title": "Membership status",
+        "status": {
+          "action": "Needs action",
+          "info": "Stable",
+          "placeholder": "No active plan"
+        },
+        "body": {
+          "expired": "Your membership has expired. Renew now to restore access.",
+          "expiringSoon": "Your renewal window is open. Renew before access is interrupted.",
+          "stable": "Your current membership is active and available in the membership hub.",
+          "placeholder": "A membership reminder card will appear here once a plan is assigned."
+        },
+        "action": {
+          "renew": "Review renewal",
+          "open": "Open membership"
+        },
+        "meta": {
+          "expired": "Expired memberships stay actionable until renewal is submitted.",
+          "expiring_soon": "Renew before the next expiry checkpoint to avoid interruptions."
+        }
+      },
+      "chat": {
+        "title": "Chat follow-up",
+        "status": {
+          "action": "Unread messages",
+          "info": "Conversation open",
+          "placeholder": "No conversations yet"
+        },
+        "body": {
+          "unread": "You have {{count}} unread messages waiting for follow-up.",
+          "stable": "Your latest conversation is synced and available in chat.",
+          "placeholder": "A chat reminder card will appear here once a conversation starts."
+        },
+        "action": {
+          "open": "Open chat"
+        },
+        "meta": {
+          "updatedAt": "Updated {{date}}"
+        }
+      },
+      "booking": {
+        "title": "Booking reminders",
+        "status": {
+          "placeholder": "Placeholder"
+        },
+        "body": {
+          "placeholder": "Class reminders and waitlist nudges will land here when booking delivery is ready."
+        },
+        "action": {
+          "disabled": "Booking soon"
+        }
+      },
+      "app": {
+        "title": "App updates",
+        "status": {
+          "placeholder": "Placeholder"
+        },
+        "body": {
+          "placeholder": "Push alerts, campaigns, and release notes will appear here once delivery channels are enabled."
+        },
+        "action": {
+          "disabled": "App updates soon"
+        }
+      }
+    }
+  },
   "profile": {
     "title": "Profile and settings",
     "subtitle": "Manage the member details supported today and track which settings arrive next.",
