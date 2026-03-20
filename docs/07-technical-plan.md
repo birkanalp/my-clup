@@ -418,6 +418,10 @@ Mandatory audit events include:
 - Auth failures, permission denials, and AI fallback events should be observable
 - Chat delivery and realtime subscription failures should be traceable
 
+### 9.4 Detailed specification
+
+Authoritative taxonomy, audit logging obligations, structured logging, high-risk flow tracing, and admin reporting touchpoints are defined in **`docs/18-analytics-observability-spec.md`**. Shared analytics helpers live in **`packages/analytics`**.
+
 ## 10. Testing Strategy
 
 ### 10.1 Required Test Layers
