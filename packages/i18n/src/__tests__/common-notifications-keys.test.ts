@@ -15,8 +15,20 @@ function flattenKeys(value: Record<string, unknown>, prefix = ''): string[] {
 
 describe('common notifications keys', () => {
   it('keeps notifications/reminder copy in parity across locales', () => {
-    expect(flattenKeys({ notifications: commonTr.notifications } as Record<string, unknown>)).toEqual(
-      flattenKeys({ notifications: commonEn.notifications } as Record<string, unknown>)
+    const branches = ['notifications', 'notificationsCenter'];
+    const enKeys = branches.flatMap((branch) =>
+      flattenKeys({ [branch]: commonEn[branch as keyof typeof commonEn] } as Record<
+        string,
+        unknown
+      >)
     );
+    const trKeys = branches.flatMap((branch) =>
+      flattenKeys({ [branch]: commonTr[branch as keyof typeof commonTr] } as Record<
+        string,
+        unknown
+      >)
+    );
+
+    expect(trKeys).toEqual(enKeys);
   });
 });
