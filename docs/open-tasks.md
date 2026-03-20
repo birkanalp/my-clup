@@ -3,7 +3,7 @@
 > Oluşturulma: 2026-03-21 | Kaynak: GitHub Issues
 > Sıralama: Öncelik (P0 → P2) → Issue numarası
 
-> **Batch execution (2026-03-21):** P0/P1 maddeleri ve P2’nin büyük kısmı ardışık PR’larla `master`’a alındı (ör. `#203`–`#215` ve sonraki P2 PR). Bu dosyadaki **Durum** sütunu GitHub etiketleriyle otomatik senkron değildir — güncel durum için ilgili issue’ya bakın.
+> **Batch execution (2026-03-21):** P0/P1 ve P2 temel teslimatları ardışık PR’larla `master`’a alındı (ör. `#203`–`#216`). Bu dosyadaki **Durum** sütunu GitHub etiketleriyle otomatik senkron değildir — güncel durum için ilgili issue’ya bakın.
 
 ---
 
