@@ -23,7 +23,7 @@ The package is part of the monorepo. Add it as a dependency:
 import { createApi } from '@myclup/api-client';
 
 const api = createApi({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000',
+  baseUrl: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001',
   headers: {
     // Auth headers injected when session is available (Epic #15)
     // Authorization: `Bearer ${token}`,
@@ -36,7 +36,7 @@ const result = await api.health.ping();
 
 **Base URL for web:**
 
-- **Development**: `http://localhost:3000` (Next.js BFF)
+- **Development**: `http://localhost:3001` (gym-admin Next.js BFF)
 - **Production**: `https://your-domain.com` or your BFF origin
 - Use `NEXT_PUBLIC_*` env vars for client-side config
 
@@ -47,7 +47,7 @@ const result = await api.health.ping();
 import { createApi } from '@myclup/api-client';
 
 const api = createApi({
-  baseUrl: process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000',
+  baseUrl: process.env.EXPO_PUBLIC_API_BASE_URL ?? 'http://localhost:3001',
   headers: {
     // Auth headers when token is available (Epic #15)
     // Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ const result = await api.health.ping();
 
 **Base URL for mobile:**
 
-- **Development**: `http://localhost:3000` or your machine IP (e.g. `http://192.168.1.10:3000`) for device/simulator
+- **Development**: `http://localhost:3001` or your machine IP (e.g. `http://192.168.1.10:3001`) for device/simulator
 - **Production**: `https://api.your-domain.com`
 - Use `EXPO_PUBLIC_*` env vars for runtime config in Expo
 

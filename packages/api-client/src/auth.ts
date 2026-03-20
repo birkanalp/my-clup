@@ -6,7 +6,7 @@
  *
  * Web configuration:
  *   const api = createApi({
- *     baseUrl: process.env.NEXT_PUBLIC_API_URL,
+ *     baseUrl: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001',
  *     getAuthHeaders: async () => {
  *       const { data } = await supabase.auth.getSession();
  *       const token = data.session?.access_token;
@@ -16,7 +16,7 @@
  *
  * Mobile configuration:
  *   const api = createApi({
- *     baseUrl: process.env.EXPO_PUBLIC_API_URL,
+ *     baseUrl: process.env.EXPO_PUBLIC_API_BASE_URL ?? 'http://localhost:3001',
  *     getAuthHeaders: async () => {
  *       const session = await getLocalSession();
  *       return session?.access_token

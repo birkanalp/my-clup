@@ -7,7 +7,7 @@ import { supabase } from './supabase';
 
 const baseUrl =
   (typeof process !== 'undefined' && process.env?.EXPO_PUBLIC_API_BASE_URL) ||
-  'http://localhost:3000';
+  'http://localhost:3001';
 
 export const api = createApi({
   baseUrl: String(baseUrl).replace(/\/$/, ''),

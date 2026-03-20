@@ -6,12 +6,17 @@
  */
 
 import { chatApi } from './chat-api';
+import { withDevAccessToken } from './devAccessToken';
 
 const getBaseUrl = () =>
   typeof window !== 'undefined' ? window.location.origin : (process.env.NEXT_PUBLIC_APP_URL ?? '');
 
 async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, { credentials: 'include', ...init });
+  const res = await fetch(url, {
+    credentials: 'include',
+    ...init,
+    headers: withDevAccessToken(init?.headers),
+  });
   if (!res.ok) {
     const body = await res.text();
     throw new Error(`API failed: ${res.status} ${body}`);
