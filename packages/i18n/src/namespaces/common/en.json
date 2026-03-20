@@ -202,6 +202,38 @@
       "subtitle": "Read-only view over audit_events for elevated and cross-tenant actions."
     }
   },
+  "publicSite": {
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "homeCta": "Talk to us",
+    "about": {
+      "title": "About MyClup",
+      "subtitle": "We help gyms run memberships, classes, and conversations in one multilingual platform.",
+      "body": "MyClup connects members, staff, and discovery experiences with tenant-safe data, Supabase-backed chat, and locale-first delivery."
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Share your gym name and email — we respond with next steps for your locale."
+    },
+    "legal": {
+      "privacyTitle": "Privacy",
+      "privacyBody": "This placeholder outlines how we process data per locale. Replace with versioned legal content before production.",
+      "termsTitle": "Terms of use",
+      "termsBody": "This placeholder describes acceptable use of MyClup marketing and product surfaces. Version per locale before launch."
+    },
+    "lead": {
+      "name": "Name",
+      "email": "Email",
+      "message": "How can we help?",
+      "submit": "Send message",
+      "thanks": "Thanks — we will get back to you in your selected language where possible."
+    }
+  },
   "scheduleWorkspace": {
     "heroTitle": "Calendar, capacity, and attendance",
     "heroSubtitle": "Track the next sessions, keep participant rosters current, and update attendance without leaving the shared booking flow.",

@@ -14,6 +14,7 @@ export const McGa4Event = {
   discovery_search: 'mc_discovery_search',
   progress_workout_log: 'mc_progress_workout_log',
   screen_view: 'mc_screen_view',
+  marketing_lead_submit: 'mc_marketing_lead_submit',
 } as const;
 
 export type McGa4EventName = (typeof McGa4Event)[keyof typeof McGa4Event];

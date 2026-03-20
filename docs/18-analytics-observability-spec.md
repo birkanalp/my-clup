@@ -33,6 +33,8 @@ This document satisfies **Epic #29** tasks **#163–#167**. It extends and opera
 | `admin`       | Staff actions in admin surfaces (non-audit)  |
 | `website`     | Marketing site engagement                    |
 
+Wire name **`mc_marketing_lead_submit`** is registered in `@myclup/analytics` for public lead forms.
+
 ### 1.3 Required metadata (all product analytics events)
 
 Every emitted event MUST include a consistent **context** object (see `AnalyticsContext` in `packages/analytics`):

@@ -143,3 +143,8 @@ The website must be multilingual from the start, not treated as a later enhancem
 - Support translated gym listing content where available
 - Fallback safely to a default locale when translation is missing
 - Translate navigation, metadata, forms, and shared website UI consistently
+
+## 11. Implementation references
+
+- Content governance and legal versioning: **`docs/24-website-content-governance.md`**
+- QA, performance, and analytics wiring: **`docs/25-website-qa-performance.md`**
