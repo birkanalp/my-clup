@@ -56,6 +56,18 @@ export {
 } from './realtime/index';
 
 export {
+  createBooking,
+  cancelBooking,
+  getBooking,
+  getBookingSession,
+  joinWaitlist,
+  listBookings,
+  listBookingSessions,
+  listInstructorAvailability,
+  updateAttendance,
+} from './bookings/index';
+
+export {
   assignMembershipInstance,
   cancelMembership,
   createMembershipPlan,
