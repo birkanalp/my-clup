@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import { parseApiError, ApiError } from './errors';
 
 /** Contract shape: path, method, optional request schema, response schema. */
 export type ApiContract<TRequest = unknown, TResponse = unknown> = {
@@ -15,23 +16,13 @@ export type ApiClientConfig = {
   /** Optional static headers to inject. Applied to every request. */
   headers?: Record<string, string>;
   /**
+   * Default `Accept-Language` when a request does not pass an explicit `locale`
+   * in {@link RequestOptions}.
+   */
+  defaultLocale?: string;
+  /**
    * Optional async function that returns auth headers for each request.
    * Use this for dynamic token injection (Supabase session on web, access_token on mobile).
-   *
-   * Web example:
-   *   getAuthHeaders: async () => {
-   *     const { data } = await supabase.auth.getSession();
-   *     const token = data.session?.access_token;
-   *     return token ? { Authorization: `Bearer ${token}` } : {};
-   *   }
-   *
-   * Mobile example:
-   *   getAuthHeaders: async () => {
-   *     const session = await getLocalSession();
-   *     return session?.access_token
-   *       ? { Authorization: `Bearer ${session.access_token}` }
-   *       : {};
-   *   }
    */
   getAuthHeaders?: () => Promise<Record<string, string>> | Record<string, string>;
   /** Custom fetch implementation (for testing or custom behavior). */
@@ -44,19 +35,11 @@ export type RequestOptions = {
   pathParams?: Record<string, string>;
   /** Append as query string for GET (e.g. { gymId: "xxx", locale: "tr" }). */
   queryParams?: Record<string, string | number | boolean | undefined>;
+  /** Overrides {@link ApiClientConfig.defaultLocale} for this request's `Accept-Language`. */
+  locale?: string;
 };
 
-/** Thrown when the API returns a non-2xx status or response fails validation. */
-export class ApiError extends Error {
-  constructor(
-    message: string,
-    public readonly status?: number,
-    public readonly body?: string
-  ) {
-    super(message);
-    this.name = 'ApiError';
-  }
-}
+export { ApiError };
 
 /**
  * Creates an API client with configurable base URL and optional auth headers.
@@ -67,20 +50,29 @@ export function createApiClient(config: ApiClientConfig) {
   const staticHeaders = config.headers ?? {};
   const doFetch = config.fetch ?? fetch;
 
+  async function buildHeaders(localeOverride?: string): Promise<Record<string, string>> {
+    const authHeaders = config.getAuthHeaders ? await config.getAuthHeaders() : {};
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...staticHeaders,
+      ...authHeaders,
+    };
+    const locale = localeOverride ?? config.defaultLocale;
+    if (locale) {
+      headers['Accept-Language'] = locale;
+    }
+    return headers;
+  }
+
   /**
    * Performs a contract-based request. Fetches the endpoint, parses the response
    * with contract.response.parse(), and returns the typed result.
-   *
-   * Path params: Pass options.pathParams to substitute :paramName in the path.
-   * Query params: Pass options.queryParams for GET requests (e.g. templates, quick-replies).
-   * GET with requestData: When requestData is a plain object, it is serialized as query string.
    */
   async function request<T>(
     contract: ApiContract<unknown, T>,
     requestData?: unknown,
     options?: RequestOptions
   ): Promise<T> {
-    const authHeaders = config.getAuthHeaders ? await config.getAuthHeaders() : {};
     let path = contract.path;
     if (options?.pathParams) {
       for (const [key, value] of Object.entries(options.pathParams)) {
@@ -96,9 +88,11 @@ export function createApiClient(config: ApiClientConfig) {
       const qs = search.toString();
       if (qs) url += `?${qs}`;
     }
+
+    const headers = await buildHeaders(options?.locale);
     const init: RequestInit = {
       method: contract.method,
-      headers: { 'Content-Type': 'application/json', ...staticHeaders, ...authHeaders },
+      headers,
     };
 
     if (requestData !== undefined) {
@@ -113,7 +107,7 @@ export function createApiClient(config: ApiClientConfig) {
           }
         }
         const query = params.toString();
-        if (query) url += `?${query}`;
+        if (query) url += `${url.includes('?') ? '&' : '?'}${query}`;
       } else {
         init.body = JSON.stringify(requestData);
       }
@@ -122,13 +116,73 @@ export function createApiClient(config: ApiClientConfig) {
     const res = await doFetch(url, init);
 
     if (!res.ok) {
-      const body = await res.text();
-      throw new ApiError(`API request failed: ${res.status} ${res.statusText}`, res.status, body);
+      throw await parseApiError(res);
     }
 
     const json = await res.json();
     return contract.response.parse(json) as T;
   }
 
-  return { request };
+  type MethodInit = Omit<RequestInit, 'headers' | 'method'> & { locale?: string };
+
+  async function get<T>(path: string, init?: MethodInit): Promise<T> {
+    const { locale, ...rest } = init ?? {};
+    const headers = await buildHeaders(locale);
+    const res = await doFetch(`${baseUrl}${path}`, { ...rest, method: 'GET', headers });
+    if (!res.ok) throw await parseApiError(res);
+    return res.json() as Promise<T>;
+  }
+
+  async function post<T>(path: string, body?: unknown, init?: MethodInit): Promise<T> {
+    const { locale, ...rest } = init ?? {};
+    const headers = await buildHeaders(locale);
+    const res = await doFetch(`${baseUrl}${path}`, {
+      ...rest,
+      method: 'POST',
+      headers,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+    if (!res.ok) throw await parseApiError(res);
+    return res.json() as Promise<T>;
+  }
+
+  async function put<T>(path: string, body?: unknown, init?: MethodInit): Promise<T> {
+    const { locale, ...rest } = init ?? {};
+    const headers = await buildHeaders(locale);
+    const res = await doFetch(`${baseUrl}${path}`, {
+      ...rest,
+      method: 'PUT',
+      headers,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+    if (!res.ok) throw await parseApiError(res);
+    return res.json() as Promise<T>;
+  }
+
+  async function patch<T>(path: string, body?: unknown, init?: MethodInit): Promise<T> {
+    const { locale, ...rest } = init ?? {};
+    const headers = await buildHeaders(locale);
+    const res = await doFetch(`${baseUrl}${path}`, {
+      ...rest,
+      method: 'PATCH',
+      headers,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+    if (!res.ok) throw await parseApiError(res);
+    return res.json() as Promise<T>;
+  }
+
+  async function del<T>(path: string, init?: MethodInit): Promise<T> {
+    const { locale, ...rest } = init ?? {};
+    const headers = await buildHeaders(locale);
+    const res = await doFetch(`${baseUrl}${path}`, {
+      ...rest,
+      method: 'DELETE',
+      headers,
+    });
+    if (!res.ok) throw await parseApiError(res);
+    return res.json() as Promise<T>;
+  }
+
+  return { request, get, post, put, patch, delete: del };
 }
