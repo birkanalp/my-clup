@@ -8,6 +8,7 @@ export * from './auth';
 export * from './billing';
 export * from './bookings';
 export * from './chat';
+export * from './common';
 export * from './health';
 export * from './locale';
 export * from './membership';
