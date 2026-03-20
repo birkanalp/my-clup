@@ -96,16 +96,22 @@ importers:
         version: link:../../packages/config-typescript
       '@testing-library/react-native':
         specifier: ^12.8.0
-        version: 12.9.0(react-native@0.76.5(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react-test-renderer@19.2.4(react@18.3.1))(react@18.3.1)
+        version: 12.9.0(react-native@0.76.5(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(@types/react@19.2.14)(react@18.3.1))(react-test-renderer@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.14
+      '@types/react-test-renderer':
+        specifier: ^18.3.0
+        version: 18.3.1
       eslint:
         specifier: ^9.15.0
         version: 9.39.4(jiti@1.21.7)
       prettier:
         specifier: ^3.4.0
         version: 3.8.1
+      react-test-renderer:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       typescript:
         specifier: ^5.7.0
         version: 5.9.3
@@ -218,6 +224,9 @@ importers:
 
   apps/web-gym-admin:
     dependencies:
+      '@myclup/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@myclup/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
@@ -2464,6 +2473,9 @@ packages:
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
     peerDependencies:
       '@types/react': ^19.0.0
+
+  '@types/react-test-renderer@18.3.1':
+    resolution: {integrity: sha512-vAhnk0tG2eGa37lkU9+s5SoroCsRI08xnsWFiAXOuPH2jqzMbcXvKExXViPi1P5fIklDeCvXqyrdmipFaSkZrA==}
 
   '@types/react@19.2.14':
     resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
@@ -8374,6 +8386,10 @@ snapshots:
   '@types/phoenix@1.6.7': {}
 
   '@types/react-dom@19.2.3(@types/react@19.2.14)':
+    dependencies:
+      '@types/react': 19.2.14
+
+  '@types/react-test-renderer@18.3.1':
     dependencies:
       '@types/react': 19.2.14
 

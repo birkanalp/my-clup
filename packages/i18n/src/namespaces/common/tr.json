@@ -29,6 +29,69 @@
     "chat": "Sohbet",
     "profile": "Profil"
   },
+  "adminShell": {
+    "eyebrow": "Salon yönetimi",
+    "title": "Operasyon çalışma alanı",
+    "subtitle": "Takvim, yoklama ve üye takibini tek ve tutarlı bir operasyon panelinde yönetin.",
+    "home": "Genel bakış",
+    "schedule": "Takvim",
+    "chat": "Sohbet",
+    "chatSubtitle": "Admin kabuğundan çıkmadan aktif üye görüşmelerini yönetin."
+  },
+  "scheduleWorkspace": {
+    "heroTitle": "Takvim, kapasite ve yoklama",
+    "heroSubtitle": "Yaklaşan seansları izleyin, katılımcı listelerini güncel tutun ve yoklama durumunu ortak rezervasyon akışından çıkmadan yönetin.",
+    "sessionsTitle": "Yaklaşan seanslar",
+    "sessionsSubtitle": "Paylaşılan scheduling API üzerinden şube ve eğitmen akışını görüntüleyin.",
+    "participantsTitle": "Katılımcı listesi",
+    "participantsSubtitle": "Rezervasyon durumlarını ve yoklama güncellemelerini backend kaynak gerçeğiyle hizalı tutun.",
+    "availabilityTitle": "Eğitmen uygunluğu",
+    "availabilitySubtitle": "Operasyon listesi yanında yaklaşan uygunluk bloklarını inceleyin.",
+    "loadingBody": "Takvim, kapasite ve yoklama verileri yükleniyor...",
+    "loadingBookings": "Katılımcı listesi yükleniyor...",
+    "emptyTitle": "Henüz planlanmış seans yok",
+    "emptyBody": "İlk ders veya randevu oluşturulduğunda takvim çalışma alanı burada görünecek.",
+    "errorTitle": "Takvim çalışma alanı yüklenemedi",
+    "errorBody": "Takvim çalışma alanını yenilemek için tekrar deneyin.",
+    "noParticipants": "Bu seansta henüz katılımcı yok.",
+    "noAvailability": "Yaklaşan eğitmen uygunluk kaydı bulunamadı.",
+    "unassigned": "Atanmadı",
+    "bookingStatusLabel": "Rezervasyon",
+    "capacityPill": "{booked} / {capacity} dolu",
+    "waitlistPill": "{count} bekleme listesi",
+    "stats": {
+      "booked": "Rezervasyon",
+      "available": "Boş yer",
+      "waitlist": "Bekleme listesi",
+      "instructor": "Eğitmen"
+    },
+    "actions": {
+      "checkIn": "Giriş yapıldı",
+      "markMissed": "Gelmedi işaretle",
+      "cancelBooking": "Rezervasyonu iptal et"
+    },
+    "sessionStatus": {
+      "scheduled": "Planlandı",
+      "cancelled": "İptal edildi",
+      "completed": "Tamamlandı"
+    },
+    "bookingStatus": {
+      "booked": "Rezerve",
+      "cancelled": "İptal edildi",
+      "waitlisted": "Bekleme listesinde",
+      "attended": "Katıldı",
+      "no_show": "Gelmedi",
+      "pending": "Beklemede",
+      "checked_in": "Giriş yapıldı",
+      "missed": "Gelmedi",
+      "completed": "Tamamlandı"
+    },
+    "availabilityStatus": {
+      "available": "Uygun",
+      "blocked": "Bloklu",
+      "tentative": "Geçici"
+    }
+  },
   "dashboard": {
     "heroTitle": "Gününüz tek dokunuş uzağınızda",
     "heroSubtitle": "Üyeliğinizi kontrol edin, en son sohbete geçin ya da bir sonraki üye işlemine hızla ulaşın.",

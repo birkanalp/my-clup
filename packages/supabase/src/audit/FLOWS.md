@@ -28,6 +28,15 @@ Per `.cursor/rules/chat-first-realtime-safety.mdc`, staff-assigned chat reassign
 
 Full moderation UI and platform admin oversight views are out of scope for Epic 17; these hooks define integration points when those features are built.
 
+## Booking Reporting and Follow-Up Foundations
+
+Derived booking reporting and follow-up outputs are allowed to stay read-only and shared until a delivery transport or UI surface needs explicit persistence.
+
+- Capacity, fill-rate, and attendance summaries should be derived from the canonical booking/session records, not recomputed separately in each surface.
+- Reminder, missed-class follow-up, and rebook suggestion outputs should be generated from the canonical booking lifecycle and session inventory.
+- When platform admins or support staff access these derived booking outputs across tenants, callers should reuse the existing `cross_tenant_support` audit pattern.
+- If a future implementation persists or dispatches a reminder/follow-up action, that write path must add an explicit booking-related audit event at the point of dispatch.
+
 ## Call Pattern
 
 For flows that alter state:
