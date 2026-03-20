@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@myclup/analytics": "workspace:*",
     "@myclup/i18n": "workspace:*",
     "@myclup/types": "workspace:*",
     "next": "^15.1.0",

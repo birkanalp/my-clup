@@ -202,6 +202,38 @@
       "subtitle": "Yükseltilmiş ve kiracılar arası işlemler için audit_events salt okunur görünümü."
     }
   },
+  "publicSite": {
+    "nav": {
+      "home": "Ana sayfa",
+      "about": "Hakkında",
+      "contact": "İletişim",
+      "privacy": "Gizlilik",
+      "terms": "Koşullar"
+    },
+    "homeCta": "Bize yazın",
+    "about": {
+      "title": "MyClup hakkında",
+      "subtitle": "Salonların üyelik, ders ve iletişimi tek çok dilli platformda yönetmesine yardımcı oluyoruz.",
+      "body": "MyClup üyeleri, personeli ve keşif deneyimlerini kiracı güvenli veri, Supabase destekli sohbet ve dil öncelikli teslimat ile birleştirir."
+    },
+    "contact": {
+      "title": "İletişim",
+      "subtitle": "Salon adınızı ve e-postanızı paylaşın — seçtiğiniz dilde yanıt vermeye çalışırız."
+    },
+    "legal": {
+      "privacyTitle": "Gizlilik",
+      "privacyBody": "Bu metin dile göre veri işlemeyi özetleyen yer tutucudur. Canlıya almadan önce sürümlü hukuki içerikle değiştirin.",
+      "termsTitle": "Kullanım koşulları",
+      "termsBody": "Bu metin MyClup pazarlama ve ürün yüzeylerinin kabul edilebilir kullanımını anlatır. Yayına almadan önce dile göre sürümleyin."
+    },
+    "lead": {
+      "name": "Ad",
+      "email": "E-posta",
+      "message": "Nasıl yardımcı olabiliriz?",
+      "submit": "Gönder",
+      "thanks": "Teşekkürler — mümkünse seçtiğiniz dilde size dönüş yapacağız."
+    }
+  },
   "scheduleWorkspace": {
     "heroTitle": "Takvim, kapasite ve yoklama",
     "heroSubtitle": "Yaklaşan seansları izleyin, katılımcı listelerini güncel tutun ve yoklama durumunu ortak rezervasyon akışından çıkmadan yönetin.",

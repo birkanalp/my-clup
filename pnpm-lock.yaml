@@ -367,6 +367,9 @@ importers:
 
   apps/web-site:
     dependencies:
+      '@myclup/analytics':
+        specifier: workspace:*
+        version: link:../../packages/analytics
       '@myclup/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
