@@ -112,5 +112,25 @@
       "void": "Gecersiz",
       "overdue": "Gecikti"
     }
+  },
+  "gymAdmin": {
+    "plans": {
+      "title": "Uyelik planlari",
+      "subtitle": "Uyelerin satin alabilecegi paketleri olusturun ve yonetin.",
+      "placeholder": "Plan olusturucu ve BFF destekli listeler Epic #18 ilerledikce burada gorunecek.",
+      "cardTitle": "Planlar calisma alani"
+    },
+    "billing": {
+      "title": "Faturalama ve finans",
+      "subtitle": "Faturalar, odemeler, alacaklar ve indirimler tek yerde.",
+      "placeholder": "Finans panelleri ve akislari sonraki gorevlerde faturalama API'lerine baglanacak.",
+      "cardTitle": "Finans calisma alani"
+    },
+    "staff": {
+      "title": "Uye islemleri",
+      "subtitle": "Uyeleri arayin, erisimi dogrulayin ve resepsiyondan yasam dongusu aksiyonlarini calistirin.",
+      "placeholder": "Uye listesi, detay ve QR dogrulama uyelik BFF uclarina baglanacak.",
+      "openAction": "Uye calisma alanini ac"
+    }
   }
 }

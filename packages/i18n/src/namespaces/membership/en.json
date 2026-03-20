@@ -112,5 +112,25 @@
       "void": "Void",
       "overdue": "Overdue"
     }
+  },
+  "gymAdmin": {
+    "plans": {
+      "title": "Membership plans",
+      "subtitle": "Create and manage packages your members can purchase.",
+      "placeholder": "Plan builder and BFF-backed lists will appear here as the Epic #18 rollout continues.",
+      "cardTitle": "Plans workspace"
+    },
+    "billing": {
+      "title": "Billing & finance",
+      "subtitle": "Invoices, payments, receivables, and discounts in one place.",
+      "placeholder": "Finance dashboards and workflows will connect to the billing APIs in follow-up tasks.",
+      "cardTitle": "Finance workspace"
+    },
+    "staff": {
+      "title": "Member operations",
+      "subtitle": "Search members, validate access, and run lifecycle actions from the front desk.",
+      "placeholder": "Member list, detail, and QR validation will use the membership BFF endpoints.",
+      "openAction": "Open member workspace"
+    }
   }
 }
