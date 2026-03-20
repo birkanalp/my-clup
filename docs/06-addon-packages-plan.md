@@ -8,6 +8,8 @@ All packages are managed from the platform admin panel (activate, deactivate, bi
 
 All add-on packages must operate correctly in a multilingual product environment. Package settings, UI, generated content, and member-facing outputs should support locale awareness where applicable.
 
+Shared activation/entitlement API shapes: **`docs/28-add-on-platform-contracts.md`** (`@myclup/contracts/addons`).
+
 ---
 
 ## 2. Package Catalog

@@ -81,6 +81,7 @@ Create Supabase migrations for the chat subsystem. Define tables for conversatio
 ### Scope
 
 **In scope:**
+
 - Migrations for: `conversations`, `conversation_participants`, `messages`, `message_attachments`, `message_receipts`, `conversation_assignments`
 - `conversations`: id, gym_id, branch_id nullable, type (direct|support|instructor|group|broadcast|internal_staff), metadata jsonb, created_at, updated_at
 - `conversation_participants`: conversation_id, user_id, role, joined_at
@@ -92,6 +93,7 @@ Create Supabase migrations for the chat subsystem. Define tables for conversatio
 - Indexes for cursor pagination, tenant lookup, unread counts
 
 **Out of scope:**
+
 - Realtime channel setup (Task 17.5)
 - Broadcast/template tables (Task 17.6)
 - API implementation
@@ -152,12 +154,14 @@ Define shared API contracts (Zod schemas, types) for chat operations. Covers Con
 ### Scope
 
 **In scope:**
+
 - `packages/contracts/src/chat/` (or equivalent)
 - Zod schemas: CreateConversationInput, CreateMessageInput (with dedupe_key), MessageReceiptUpdate, ConversationAssignment
 - Types: Conversation, ConversationParticipant, Message, MessageAttachment, MessageReceipt, ConversationAssignment, TypingState
 - Contract objects for: list conversations, get conversation, send message, list messages (cursor pagination), mark read, assign conversation
 
 **Out of scope:**
+
 - API route implementation
 - Realtime contracts (can be minimal or in same package)
 
@@ -216,6 +220,7 @@ Implement Next.js BFF API routes for chat CRUD operations. Enforce tenant isolat
 ### Scope
 
 **In scope:**
+
 - `/api/v1/chat/conversations` — list, create
 - `/api/v1/chat/conversations/[id]` — get, participants
 - `/api/v1/chat/conversations/[id]/messages` — list (cursor), send (idempotent)
@@ -224,6 +229,7 @@ Implement Next.js BFF API routes for chat CRUD operations. Enforce tenant isolat
 - Server-side: tenant scope verification, ConversationParticipant validation before message access
 
 **Out of scope:**
+
 - Realtime subscription (Task 17.5)
 - Broadcast/template endpoints (Task 17.6)
 
@@ -282,12 +288,14 @@ Add typed chat methods to `packages/api-client` for conversation list, get, send
 ### Scope
 
 **In scope:**
+
 - `conversations.list()`, `conversations.get(id)`, `conversations.create()`
 - `messages.list(conversationId, cursor)`, `messages.send(conversationId, payload)`
 - `messages.markRead(messageId)`
 - `conversations.assign(conversationId, userId)`
 
 **Out of scope:**
+
 - Realtime subscription (handled in apps)
 - Broadcast/template client methods (Task 17.6)
 
@@ -342,12 +350,14 @@ Wire Supabase Realtime for chat message delivery, presence, and typing indicator
 ### Scope
 
 **In scope:**
+
 - Supabase Realtime channel subscription for messages (filtered by gym_id, conversation_id)
 - Presence channel for online status (ephemeral)
 - Typing indicator (ephemeral, not persisted)
 - Server validation of channel filters
 
 **Out of scope:**
+
 - Persisting presence/typing
 - Second realtime mechanism
 - Client UI components (in surface tasks)
@@ -407,12 +417,14 @@ Define and implement broadcast, message template, and quick-reply workflows. Kee
 ### Scope
 
 **In scope:**
+
 - Tables: `message_templates`, `quick_replies` (with locale variants)
 - Contracts for broadcast, template send, quick-reply usage
 - API routes: list templates, send template, list quick replies
 - Broadcast as separate workflow from group messaging
 
 **Out of scope:**
+
 - Full campaign/automation (later epic)
 - AI-generated replies
 
@@ -470,11 +482,13 @@ Implement audit logging for staff-assigned chat reassignments and important chat
 ### Scope
 
 **In scope:**
+
 - Audit events for: conversation assignment, reassignment
 - Moderation hook points (flag, mute, etc.) — stubs if full moderation is later
 - `audit_events` table usage for chat-related actions
 
 **Out of scope:**
+
 - Full moderation UI
 - Platform admin oversight views (later)
 
@@ -530,6 +544,7 @@ Implement member-facing chat UI in `apps/mobile-user`. Conversation list, messag
 ### Scope
 
 **In scope:**
+
 - Conversation list with unread badges
 - 1:1 with gym, 1:1 with instructor
 - Message thread, send, optimistic UI
@@ -537,6 +552,7 @@ Implement member-facing chat UI in `apps/mobile-user`. Conversation list, messag
 - Translation keys for all UI text
 
 **Out of scope:**
+
 - Group class chats (can be follow-up)
 - Voice notes, advanced attachments (can be follow-up)
 
@@ -595,6 +611,7 @@ Implement staff-facing chat UI in `apps/mobile-admin`. Unified inbox, conversati
 ### Scope
 
 **In scope:**
+
 - Unified inbox
 - Filter by unread, assigned
 - 1:1 member conversations
@@ -603,6 +620,7 @@ Implement staff-facing chat UI in `apps/mobile-admin`. Unified inbox, conversati
 - Translation keys for all UI text
 
 **Out of scope:**
+
 - Staff internal chats (can be follow-up)
 - Broadcast send flow (Task 17.6)
 
@@ -661,6 +679,7 @@ Implement gym admin chat UI in `apps/web-gym-admin`. Chat center, conversation l
 ### Scope
 
 **In scope:**
+
 - Chat center section
 - Conversation list, filters (unread, assigned, branch)
 - Message thread, send
@@ -669,6 +688,7 @@ Implement gym admin chat UI in `apps/web-gym-admin`. Chat center, conversation l
 - Translation keys for all UI text
 
 **Out of scope:**
+
 - Search across all chats (can be follow-up)
 - Full broadcast UI (can be follow-up)
 
@@ -728,12 +748,14 @@ Implement integration tests for chat flows: send, read, reconnect. RLS verificat
 ### Scope
 
 **In scope:**
+
 - Integration tests: auth, tenant permissions, send message, list messages, mark read
 - RLS verification: cross-tenant denial scenarios
 - Realtime subscription and message delivery test
 - Read state verification
 
 **Out of scope:**
+
 - E2E for every surface (covered in surface tasks)
 
 ### Affected Packages

@@ -22,16 +22,16 @@ This document satisfies **Epic #29** tasks **#163–#167**. It extends and opera
 
 ### 1.2 Taxonomy domains
 
-| Domain        | Purpose                                      |
-|---------------|----------------------------------------------|
-| `auth`        | Login, logout, session refresh, MFA        |
-| `booking`     | Schedule, book, cancel, waitlist             |
-| `chat`        | Thread open, send, attach (no message body)  |
-| `membership`  | Plan view, purchase intent, renewal          |
-| `discovery`   | Search, filter, gym profile view             |
-| `progress`    | Workout log, goals                           |
-| `admin`       | Staff actions in admin surfaces (non-audit)  |
-| `website`     | Marketing site engagement                    |
+| Domain       | Purpose                                     |
+| ------------ | ------------------------------------------- |
+| `auth`       | Login, logout, session refresh, MFA         |
+| `booking`    | Schedule, book, cancel, waitlist            |
+| `chat`       | Thread open, send, attach (no message body) |
+| `membership` | Plan view, purchase intent, renewal         |
+| `discovery`  | Search, filter, gym profile view            |
+| `progress`   | Workout log, goals                          |
+| `admin`      | Staff actions in admin surfaces (non-audit) |
+| `website`    | Marketing site engagement                   |
 
 Wire name **`mc_marketing_lead_submit`** is registered in `@myclup/analytics` for public lead forms.
 
@@ -39,14 +39,14 @@ Wire name **`mc_marketing_lead_submit`** is registered in `@myclup/analytics` fo
 
 Every emitted event MUST include a consistent **context** object (see `AnalyticsContext` in `packages/analytics`):
 
-| Field           | Required | Notes |
-|-----------------|----------|--------|
-| `schema_version`| Yes      | Bump when breaking context shape changes |
-| `surface`       | Yes      | `web_gym_admin` \| `web_platform_admin` \| `web_site` \| `mobile_user` \| `mobile_admin` |
-| `locale`        | Yes      | BCP-47 tag (e.g. `en`, `tr`); use `und` if unknown |
-| `gym_id`        | If known | UUID; omit if not in tenant context |
-| `branch_id`     | If known | UUID; omit if not applicable |
-| `session_id`    | If known | Anonymous session id from app runtime |
+| Field            | Required | Notes                                                                                    |
+| ---------------- | -------- | ---------------------------------------------------------------------------------------- |
+| `schema_version` | Yes      | Bump when breaking context shape changes                                                 |
+| `surface`        | Yes      | `web_gym_admin` \| `web_platform_admin` \| `web_site` \| `mobile_user` \| `mobile_admin` |
+| `locale`         | Yes      | BCP-47 tag (e.g. `en`, `tr`); use `und` if unknown                                       |
+| `gym_id`         | If known | UUID; omit if not in tenant context                                                      |
+| `branch_id`      | If known | UUID; omit if not applicable                                                             |
+| `session_id`     | If known | Anonymous session id from app runtime                                                    |
 
 **Never** send raw PII (email, phone, full name) in analytics params. Prefer opaque ids or hashed identifiers where allowed by policy.
 
@@ -77,11 +77,11 @@ Every emitted event MUST include a consistent **context** object (see `Analytics
 
 Mandatory (non-exhaustive; align with `writeAuditEvent` and `AuditEventType`):
 
-- Role and staff assignment changes  
-- Membership create / renew / freeze / cancel / manual extension  
-- Payment and billing status changes and **billing overrides**  
-- Platform admin **impersonation** start/end  
-- **Cross-tenant** or tenant-scope overrides (support tools)  
+- Role and staff assignment changes
+- Membership create / renew / freeze / cancel / manual extension
+- Payment and billing status changes and **billing overrides**
+- Platform admin **impersonation** start/end
+- **Cross-tenant** or tenant-scope overrides (support tools)
 - Material **chat moderation** (delete message, ban user, etc.)
 
 ### 2.2 Schema expectations
@@ -91,7 +91,7 @@ Mandatory (non-exhaustive; align with `writeAuditEvent` and `AuditEventType`):
 
 ### 2.3 Before / after state
 
-- When the operation mutates user-visible or compliance-relevant state, the payload SHOULD include **`before_state`** and **`after_state`** as **opaque snapshots** (JSON string or structured fields per schema), sufficient to reconstruct *what changed* without storing secrets (tokens, full card numbers).
+- When the operation mutates user-visible or compliance-relevant state, the payload SHOULD include **`before_state`** and **`after_state`** as **opaque snapshots** (JSON string or structured fields per schema), sufficient to reconstruct _what changed_ without storing secrets (tokens, full card numbers).
 
 ### 2.4 Retention and access
 
@@ -106,32 +106,32 @@ Mandatory (non-exhaustive; align with `writeAuditEvent` and `AuditEventType`):
 
 Server logs SHOULD be **JSON lines** with required fields (see `StructuredLogEntry` in `packages/analytics`):
 
-| Field       | Description |
-|------------|-------------|
-| `ts`       | ISO-8601 timestamp |
+| Field      | Description                                       |
+| ---------- | ------------------------------------------------- |
+| `ts`       | ISO-8601 timestamp                                |
 | `level`    | `debug` \| `info` \| `warn` \| `error` \| `fatal` |
-| `service`  | e.g. `bff`, `ai`, `worker` |
-| `trace_id` | Request/correlation id when available |
-| `msg`      | Human-readable summary |
-| `attrs`    | Arbitrary structured attributes (no PII) |
+| `service`  | e.g. `bff`, `ai`, `worker`                        |
+| `trace_id` | Request/correlation id when available             |
+| `msg`      | Human-readable summary                            |
+| `attrs`    | Arbitrary structured attributes (no PII)          |
 
 ### 3.2 Severity
 
-- **error**: failed user request or invariant violation; needs triage.  
-- **fatal**: process unsafe; immediate page/alert.  
-- **warn**: degraded or retriable failure.  
-- **info**: successful boundary crossings (e.g. auth success).  
+- **error**: failed user request or invariant violation; needs triage.
+- **fatal**: process unsafe; immediate page/alert.
+- **warn**: degraded or retriable failure.
+- **info**: successful boundary crossings (e.g. auth success).
 - **debug**: development-only detail; disabled in production by default.
 
 ### 3.3 Subsystem obligations
 
-| Subsystem   | Log at minimum |
-|------------|----------------|
-| Auth       | Failed login, refresh failure, session invalidation (reason codes) |
-| Chat       | Message insert failure, Realtime subscribe failure, receipt update failure |
-| Scheduling / booking | Booking conflict, idempotent replay, cancellation edge cases |
-| Billing    | Webhook validation failure, state transition errors |
-| Tenant/RLS | Permission denial, suspected cross-tenant access attempt |
+| Subsystem            | Log at minimum                                                             |
+| -------------------- | -------------------------------------------------------------------------- |
+| Auth                 | Failed login, refresh failure, session invalidation (reason codes)         |
+| Chat                 | Message insert failure, Realtime subscribe failure, receipt update failure |
+| Scheduling / booking | Booking conflict, idempotent replay, cancellation edge cases               |
+| Billing              | Webhook validation failure, state transition errors                        |
+| Tenant/RLS           | Permission denial, suspected cross-tenant access attempt                   |
 
 ### 3.4 Error monitoring abstraction
 

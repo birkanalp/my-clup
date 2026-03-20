@@ -11,7 +11,8 @@ export type GymNavKey =
   | 'chat'
   | 'campaigns'
   | 'reports'
-  | 'listing';
+  | 'listing'
+  | 'addons';
 
 export function rolesFromWhoami(assignments: WhoamiResponse['roles']): StaffRole[] {
   return assignments.map((a) => a.role);
@@ -38,6 +39,7 @@ export function getGymAdminSidebarVisibility(roles: StaffRole[]): Record<GymNavK
       campaigns: false,
       reports: false,
       listing: false,
+      addons: false,
     };
   }
 
@@ -53,6 +55,7 @@ export function getGymAdminSidebarVisibility(roles: StaffRole[]): Record<GymNavK
       campaigns: true,
       reports: true,
       listing: true,
+      addons: true,
     };
     return all;
   }
@@ -83,6 +86,8 @@ export function getGymAdminSidebarVisibility(roles: StaffRole[]): Record<GymNavK
 
   const listingOps: StaffRole[] = ['gym_owner', 'gym_manager', 'branch_manager'];
 
+  const addonOps: StaffRole[] = ['gym_owner', 'gym_manager', 'branch_manager'];
+
   return {
     dashboard: hasAnyRole(set, ops),
     members: hasAnyRole(set, ops),
@@ -93,5 +98,6 @@ export function getGymAdminSidebarVisibility(roles: StaffRole[]): Record<GymNavK
     campaigns: hasAnyRole(set, campaignOps),
     reports: hasAnyRole(set, reportOps),
     listing: hasAnyRole(set, listingOps),
+    addons: hasAnyRole(set, addonOps),
   };
 }

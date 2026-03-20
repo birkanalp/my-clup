@@ -26,6 +26,7 @@ const NAV_ORDER: { key: GymNavKey; href: string }[] = [
   { key: 'campaigns', href: '/campaigns' },
   { key: 'reports', href: '/reports' },
   { key: 'listing', href: '/listing' },
+  { key: 'addons', href: '/addons' },
 ];
 
 export function GymAdminShell({ children }: Props) {

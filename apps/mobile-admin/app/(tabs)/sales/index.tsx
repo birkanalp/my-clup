@@ -1,27 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, TextInput, StyleSheet, FlatList } from 'react-native';
 import { Button, Card, ScreenContainer, SectionHeader } from '@myclup/ui-native';
-
-type LeadRow = { id: string; name: string; source: string };
+import { loadStoredLeads, persistLeads, type StoredLead } from '@/src/features/staff/leadStorage';
 
 export default function SalesLeadsScreen() {
   const { t } = useTranslation('common');
   const [name, setName] = useState('');
   const [source, setSource] = useState('');
-  const [leads, setLeads] = useState<LeadRow[]>([]);
+  const [leads, setLeads] = useState<StoredLead[]>([]);
+
+  useEffect(() => {
+    void loadStoredLeads().then(setLeads);
+  }, []);
 
   const addLead = () => {
     const trimmed = name.trim();
     if (!trimmed) return;
-    setLeads((prev) => [
-      {
-        id: `${Date.now()}`,
-        name: trimmed,
-        source: source.trim() || t('staffSales.sourceUnknown'),
-      },
-      ...prev,
-    ]);
+    setLeads((prev) => {
+      const next: StoredLead[] = [
+        {
+          id: `${Date.now()}`,
+          name: trimmed,
+          source: source.trim() || t('staffSales.sourceUnknown'),
+        },
+        ...prev,
+      ];
+      void persistLeads(next);
+      return next;
+    });
     setName('');
     setSource('');
   };

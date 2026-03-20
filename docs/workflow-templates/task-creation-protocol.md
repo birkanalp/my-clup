@@ -23,6 +23,7 @@ gh project item-add 3 --owner @me --url https://github.com/birkanalp/my-clup/iss
 ```
 
 Example for issue #97:
+
 ```bash
 gh project item-add 3 --owner @me --url https://github.com/birkanalp/my-clup/issues/97
 ```

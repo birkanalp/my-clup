@@ -28,8 +28,12 @@ function keysDeep(obj: Record<string, unknown>, prefix = ''): string[] {
 describe('common staff mobile keys (en/tr parity)', () => {
   it('has matching key paths for staff* groups', () => {
     for (const group of STAFF_PREFIXES) {
-      const enBranch = commonEn[group as keyof typeof commonEn] as Record<string, unknown> | undefined;
-      const trBranch = commonTr[group as keyof typeof commonTr] as Record<string, unknown> | undefined;
+      const enBranch = commonEn[group as keyof typeof commonEn] as
+        | Record<string, unknown>
+        | undefined;
+      const trBranch = commonTr[group as keyof typeof commonTr] as
+        | Record<string, unknown>
+        | undefined;
       expect(enBranch, `${group} missing in en`).toBeDefined();
       expect(trBranch, `${group} missing in tr`).toBeDefined();
       const enKeys = keysDeep(enBranch!);

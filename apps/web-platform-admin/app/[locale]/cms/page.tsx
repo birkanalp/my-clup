@@ -7,5 +7,6 @@ export default async function CmsPage({ params }: Props) {
     params,
     titleKey: 'platformAdminWeb.cmsPage.title',
     subtitleKey: 'platformAdminWeb.cmsPage.subtitle',
+    bodyKey: 'platformAdminWeb.cmsPage.body',
   });
 }

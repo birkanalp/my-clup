@@ -4,11 +4,11 @@ This document satisfies **#184** (Epic #33). Elevated-action rules are in **`doc
 
 ## 1. Test expectations
 
-| Layer | Requirement |
-|-------|----------------|
-| Unit | Locale message loading, any future pure permission helpers |
+| Layer       | Requirement                                                                                         |
+| ----------- | --------------------------------------------------------------------------------------------------- |
+| Unit        | Locale message loading, any future pure permission helpers                                          |
 | Integration | Once BFF routes are mounted (or proxied), every `/api/v1/*` handler must have contract + auth tests |
-| E2E | Playwright for impersonation start/end, audit viewer access denial for non-platform roles |
+| E2E         | Playwright for impersonation start/end, audit viewer access denial for non-platform roles           |
 
 ## 2. Localization
 

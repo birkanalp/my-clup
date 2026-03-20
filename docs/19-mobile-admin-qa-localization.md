@@ -4,11 +4,11 @@ This document satisfies **#172** (Epic #31). It complements `docs/07-technical-p
 
 ## 1. Automated test layers
 
-| Layer | Scope | Tool |
-|-------|--------|------|
-| Unit | Pure helpers (e.g. `navVisibility`, locale helpers) | Vitest |
-| Component / hook | Chat hooks, schedule workspace hook, staff session hooks | Vitest + React Test Renderer / RTL where wired |
-| Integration | API-backed flows against BFF contracts (run in CI with mocks) | Vitest |
+| Layer            | Scope                                                         | Tool                                           |
+| ---------------- | ------------------------------------------------------------- | ---------------------------------------------- |
+| Unit             | Pure helpers (e.g. `navVisibility`, locale helpers)           | Vitest                                         |
+| Component / hook | Chat hooks, schedule workspace hook, staff session hooks      | Vitest + React Test Renderer / RTL where wired |
+| Integration      | API-backed flows against BFF contracts (run in CI with mocks) | Vitest                                         |
 
 **Minimum for each new staff screen or tab:** unit or hook coverage when logic exists; no new business logic without a test target.
 
