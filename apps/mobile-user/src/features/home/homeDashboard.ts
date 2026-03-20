@@ -1,6 +1,12 @@
 export type MembershipTone = 'primary' | 'success' | 'warning' | 'danger' | 'neutral';
 
-export type QuickActionKey = 'bookClass' | 'openChat' | 'showQr' | 'renewMembership';
+export type QuickActionKey =
+  | 'bookClass'
+  | 'openChat'
+  | 'showQr'
+  | 'renewMembership'
+  | 'discoverGyms'
+  | 'trackProgress';
 
 export type QuickActionConfig = {
   key: QuickActionKey;
@@ -9,14 +15,25 @@ export type QuickActionConfig = {
     | 'quickActions.bookClass'
     | 'quickActions.openChat'
     | 'quickActions.showQr'
-    | 'quickActions.renewMembership';
+    | 'quickActions.renewMembership'
+    | 'quickActions.discoverGyms'
+    | 'quickActions.trackProgress';
   hintKey:
     | 'quickActions.bookClassHint'
     | 'quickActions.openChatHint'
     | 'quickActions.showQrHint'
-    | 'quickActions.renewMembershipHint';
+    | 'quickActions.renewMembershipHint'
+    | 'quickActions.discoverGymsHint'
+    | 'quickActions.trackProgressHint';
   disabled: boolean;
-  route?: '/' | '/chat' | '/membership' | '/membership/renew';
+  route?:
+    | '/'
+    | '/booking'
+    | '/chat'
+    | '/membership'
+    | '/membership/renew'
+    | '/discovery'
+    | '/progress';
 };
 
 export function getMembershipTone(status: string): MembershipTone {
@@ -52,7 +69,8 @@ export function buildQuickActions(): QuickActionConfig[] {
       icon: 'calendar-plus-outline',
       labelKey: 'quickActions.bookClass',
       hintKey: 'quickActions.bookClassHint',
-      disabled: true,
+      disabled: false,
+      route: '/booking',
     },
     {
       key: 'openChat',
@@ -77,6 +95,22 @@ export function buildQuickActions(): QuickActionConfig[] {
       hintKey: 'quickActions.renewMembershipHint',
       disabled: false,
       route: '/membership/renew',
+    },
+    {
+      key: 'discoverGyms',
+      icon: 'map-search-outline',
+      labelKey: 'quickActions.discoverGyms',
+      hintKey: 'quickActions.discoverGymsHint',
+      disabled: false,
+      route: '/discovery',
+    },
+    {
+      key: 'trackProgress',
+      icon: 'chart-timeline-variant',
+      labelKey: 'quickActions.trackProgress',
+      hintKey: 'quickActions.trackProgressHint',
+      disabled: false,
+      route: '/progress',
     },
   ];
 }

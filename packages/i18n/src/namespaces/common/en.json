@@ -131,11 +131,35 @@
     "openChat": "Open chat",
     "showQr": "Show QR",
     "renewMembership": "Renew membership",
-    "bookClassHint": "Booking lands in the next surface.",
+    "bookClassHint": "See upcoming classes from your gym schedule.",
     "openChatHint": "Continue the latest conversation.",
     "showQrHint": "Open the member pass in membership.",
     "renewMembershipHint": "Renew before your access expires.",
+    "discoverGyms": "Discover gyms",
+    "discoverGymsHint": "Browse nearby gyms and trial-ready listings.",
+    "trackProgress": "Progress",
+    "trackProgressHint": "Workouts and measurements will sync here.",
     "comingSoon": "Coming soon"
+  },
+  "memberBooking": {
+    "title": "Classes & schedule",
+    "subtitle": "Upcoming sessions you can book or join from your gym.",
+    "loadingTitle": "Loading schedule...",
+    "loadingBody": "Fetching the latest class sessions from your gym.",
+    "errorTitle": "Schedule could not be loaded",
+    "errorBody": "Pull to refresh or try again when you are back online.",
+    "emptyTitle": "No upcoming sessions",
+    "emptyBody": "When your gym publishes classes, they will appear here for booking."
+  },
+  "memberDiscovery": {
+    "title": "Discover gyms",
+    "subtitle": "Search and compare gyms that match your goals.",
+    "body": "Map-based discovery and trial booking will connect to the marketplace APIs as Epic #35 lands."
+  },
+  "memberProgress": {
+    "title": "Your progress",
+    "subtitle": "Workouts, check-ins, and measurements in one timeline.",
+    "body": "Progress sync and charts will appear after workout logging APIs are wired (Epic #30)."
   },
   "paymentsDashboard": {
     "body": "When payment or renewal reminders are ready, they will surface here."
