@@ -41,6 +41,18 @@ export default function HomeScreen() {
           </View>
         </Card>
 
+        <Card>
+          <SectionHeader
+            title={t('membership:gymAdmin.staff.title')}
+            subtitle={t('membership:gymAdmin.staff.subtitle')}
+          />
+          <View style={styles.buttonRow}>
+            <Button variant="secondary" onPress={() => router.push('/members')}>
+              {t('membership:gymAdmin.staff.openAction')}
+            </Button>
+          </View>
+        </Card>
+
         <LanguageSwitcher onLanguageChange={changeLanguageAndPersist} />
       </View>
     </ScreenContainer>

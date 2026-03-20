@@ -10,6 +10,7 @@ export default async function HomePage({ params }: Props) {
   setRequestLocale(locale);
 
   const t = await getTranslations('common');
+  const tm = await getTranslations('membership');
   const cardStyle = {
     padding: '1.25rem',
     borderRadius: 20,
@@ -73,6 +74,36 @@ export default async function HomePage({ params }: Props) {
           >
             <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>{t('adminShell.chat')}</div>
             <p style={{ margin: '0.4rem 0 0', color: '#475569' }}>{t('adminShell.chatSubtitle')}</p>
+          </Link>
+
+          <Link
+            href="/membership-plans"
+            style={{
+              ...cardStyle,
+              border: '1px solid #dbe4ee',
+              background: '#ffffff',
+            }}
+          >
+            <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>{tm('gymAdmin.plans.title')}</div>
+            <p style={{ margin: '0.4rem 0 0', color: '#475569' }}>
+              {tm('gymAdmin.plans.subtitle')}
+            </p>
+          </Link>
+
+          <Link
+            href="/billing"
+            style={{
+              ...cardStyle,
+              border: '1px solid #dbe4ee',
+              background: '#ffffff',
+            }}
+          >
+            <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>
+              {tm('gymAdmin.billing.title')}
+            </div>
+            <p style={{ margin: '0.4rem 0 0', color: '#475569' }}>
+              {tm('gymAdmin.billing.subtitle')}
+            </p>
           </Link>
 
           {process.env.NODE_ENV === 'development' ? (
