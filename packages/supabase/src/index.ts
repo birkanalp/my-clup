@@ -20,6 +20,16 @@ export {
 } from './client/index';
 
 export {
+  createAnonBrowserClient,
+  createAnonSsrServerClient,
+  type AnonSupabaseClient,
+  type CreateAnonBrowserClientOptions,
+  type CreateAnonSsrServerClientOptions,
+} from './ssr/anon-clients';
+
+export { getUserFromRequest, getTenantScope } from './server-helpers';
+
+export {
   getSession,
   getCurrentUser,
   createUserScopedClient,
