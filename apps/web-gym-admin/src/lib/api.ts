@@ -1,10 +1,4 @@
-/**
- * API client for web-gym-admin.
- *
- * Uses fetch to call BFF routes. Same-origin requests include cookies.
- * TODO: Migrate to @myclup/api-client when it supports path/query params and templates.
- */
-
+import { createApi } from '@myclup/api-client';
 import { chatApi } from './chat-api';
 
 const getBaseUrl = () =>
@@ -19,6 +13,9 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+const withCredentials: typeof fetch = (input, init) =>
+  fetch(input, { credentials: 'include', ...init });
+
 type WhoamiResponse = {
   user: { id: string };
   profile: unknown;
@@ -26,11 +23,34 @@ type WhoamiResponse = {
   roles: unknown[];
 };
 
+const sharedApi = () =>
+  createApi({
+    baseUrl: getBaseUrl(),
+    fetch: withCredentials,
+  });
+
 const api = {
   auth: {
     async whoami(): Promise<WhoamiResponse> {
       return fetchJson<WhoamiResponse>(`${getBaseUrl()}/api/v1/auth/whoami`);
     },
+  },
+  bookings: {
+    listSessions: (...args: Parameters<ReturnType<typeof sharedApi>['bookings']['listSessions']>) =>
+      sharedApi().bookings.listSessions(...args),
+    getSession: (...args: Parameters<ReturnType<typeof sharedApi>['bookings']['getSession']>) =>
+      sharedApi().bookings.getSession(...args),
+    listBookings: (...args: Parameters<ReturnType<typeof sharedApi>['bookings']['listBookings']>) =>
+      sharedApi().bookings.listBookings(...args),
+    cancelBooking: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['bookings']['cancelBooking']>
+    ) => sharedApi().bookings.cancelBooking(...args),
+    updateAttendance: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['bookings']['updateAttendance']>
+    ) => sharedApi().bookings.updateAttendance(...args),
+    listInstructorAvailability: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['bookings']['listInstructorAvailability']>
+    ) => sharedApi().bookings.listInstructorAvailability(...args),
   },
   chat: chatApi,
 };
