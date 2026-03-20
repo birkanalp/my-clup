@@ -224,6 +224,9 @@ importers:
 
   apps/web-gym-admin:
     dependencies:
+      '@myclup/analytics':
+        specifier: workspace:*
+        version: link:../../packages/analytics
       '@myclup/api-client':
         specifier: workspace:*
         version: link:../../packages/api-client
