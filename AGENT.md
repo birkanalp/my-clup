@@ -25,6 +25,7 @@ The following are non-optional defaults unless the architecture docs are updated
 
 - Shared contracts live in `packages/contracts`
 - Shared domain types live in `packages/types`
+- Shared product analytics taxonomy and emitters live in `packages/analytics` (see `docs/18-analytics-observability-spec.md`)
 - Shared clients live in `packages/api-client`
 - Shared web UI lives in `packages/ui-web`
 - Shared native UI lives in `packages/ui-native`
