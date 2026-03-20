@@ -2,7 +2,6 @@
  * @myclup/utils — Framework-agnostic helpers and pure functions.
  */
 
-export { identity } from './identity';
 export {
   formatDate,
   formatTime,
@@ -15,4 +14,4 @@ export {
   type FormatCurrencyOptions,
 } from './format';
 export { parseISODate } from './date';
-export { isValidLocale } from './locale';
+export { getDefaultLocale, getSupportedLocales, isValidLocale } from './locale';
