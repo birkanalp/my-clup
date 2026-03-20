@@ -38,6 +38,77 @@
     "chat": "Sohbet",
     "chatSubtitle": "Admin kabuğundan çıkmadan aktif üye görüşmelerini yönetin."
   },
+  "staffAuth": {
+    "eyebrow": "Personel erişimi",
+    "title": "Personel araçlarına giriş",
+    "subtitle": "Salon hesabınızı kullanın. Takvim, üyeler ve sohbet için oturum gereklidir.",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "siz@ornek.com",
+    "passwordLabel": "Şifre",
+    "passwordPlaceholder": "••••••••",
+    "signIn": "Giriş yap",
+    "supabaseMissing": "Bu sürümde kimlik doğrulama yapılandırılmamış."
+  },
+  "staffTabs": {
+    "home": "Ana sayfa",
+    "members": "Üyeler",
+    "schedule": "Takvim",
+    "chat": "Sohbet",
+    "workouts": "Antrenmanlar",
+    "sales": "Satış"
+  },
+  "staffHome": {
+    "title": "Bugünün operasyonu",
+    "subtitle": "Üyeler, takvim, sohbet, antrenman veya satış için sekmeleri kullanın. Sekmeler rolünüze göre filtrelenir.",
+    "signedInAs": "Giriş: {{name}}",
+    "whoamiWarning": "Rol atamaları yüklenemedi. Hesap API’si yanıt verene kadar bazı sekmeler gizli kalır.",
+    "quickSectionTitle": "Çalışma alanı",
+    "quickSectionSubtitle": "Gezinme alt sekme çubuğundadır.",
+    "tabHint": "Üye araması dizin API’si hazır olduğunda paylaşılan BFF üzerinden çalışır; yoklama bugün üyelik örneği kimliği ile doğrulama yapabilir."
+  },
+  "staffMembers": {
+    "stackTitle": "Üyeler",
+    "title": "Üye işlemleri",
+    "subtitle": "Kiracı kapsamında üye arayın ve profilleri açın. Sunucu taraflı arama üye dizini API’si ile gelir.",
+    "searchLabel": "Ara",
+    "searchPlaceholder": "Ad, telefon veya üye kimliği",
+    "searchNote": "Arama etkinleştirildiğinde sonuçlar görünür. Şimdilik yoklamada üyelik örneği kimliği kullanın.",
+    "emptySearch": "Eşleşme yok — arama açıldığında farklı bir sorgu deneyin.",
+    "statusUnknown": "Profil yüklenince kiracı kapsamı görünür.",
+    "tenantScope": "Salon {{gym}} · Şube {{branch}}",
+    "branchAll": "Tüm şubeler",
+    "attendanceSection": "Yoklama",
+    "attendanceSubtitle": "Üyelik örneği kimliği ile kapıda erişimi doğrulayın.",
+    "openAttendance": "Yoklamayı aç"
+  },
+  "staffAttendance": {
+    "title": "Yoklama",
+    "subtitle": "Oturumunuzdaki geçerli şubeye göre erişimi doğrular.",
+    "instanceLabel": "Üyelik örneği kimliği",
+    "instancePlaceholder": "Kart veya listeden UUID",
+    "validate": "Erişimi doğrula",
+    "noBranch": "Oturumunuzda etkin şube yok. Web yönetiminden şube seçin ve yeniden deneyin.",
+    "invalidInstanceId": "Geçerli bir üyelik örneği UUID’si girin.",
+    "result": "Durum: {{status}} · Sonuç: {{outcome}} · Neden: {{reason}}"
+  },
+  "staffWorkouts": {
+    "title": "Antrenmanlar",
+    "subtitle": "Eğitmenler için program ve şablonlar.",
+    "placeholder": "Antrenman oluşturucu ve AI düzenleme paylaşılan AI hizmet sınırına bağlanacak. Tam düzenleme için web yönetimini kullanın."
+  },
+  "staffSales": {
+    "title": "Potansiyel müşteriler",
+    "subtitle": "Sahada kayıt; Epic #35 pazar entegrasyonlarıyla CRM’e senkronlanacak.",
+    "leadName": "Ad",
+    "leadNamePlaceholder": "Adayın tam adı",
+    "leadSource": "Kaynak",
+    "leadSourcePlaceholder": "Kapıdan, referans, kampanya…",
+    "capture": "Kaydet",
+    "pipelineTitle": "Bugünün hunisi",
+    "pipelineSubtitle": "Bu oturum için yalnızca cihazda tutulur.",
+    "empty": "Henüz kayıt yok.",
+    "sourceUnknown": "Kaynak bilinmiyor"
+  },
   "scheduleWorkspace": {
     "heroTitle": "Takvim, kapasite ve yoklama",
     "heroSubtitle": "Yaklaşan seansları izleyin, katılımcı listelerini güncel tutun ve yoklama durumunu ortak rezervasyon akışından çıkmadan yönetin.",

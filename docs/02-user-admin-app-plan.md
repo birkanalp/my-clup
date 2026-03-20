@@ -174,3 +174,7 @@ Primary goals:
 - Camera-based document capture
 - Smart auto-tagging of members
 - Per-branch locale defaults and multilingual quick replies
+
+## 10. QA and localization acceptance
+
+See **`docs/19-mobile-admin-qa-localization.md`** for staff mobile test layers, `en`/`tr` parity rules, role-gated access test expectations, and release checklist.
