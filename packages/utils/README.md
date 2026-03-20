@@ -7,7 +7,7 @@ Framework-agnostic helpers and pure functions for the MyClup platform. No React,
 ### What Belongs in `utils`
 
 - **Locale-aware formatters**: `formatDate`, `formatTime`, `formatNumber`, `formatCurrency`, `formatUnit` — pure functions that accept `locale` (from `@myclup/types`) for consistent formatting across surfaces
-- **Domain-safe helpers**: `parseISODate`, `isValidLocale` — pure parsing/validation with no side effects
+- **Domain-safe helpers**: `parseISODate`, `getSupportedLocales`, `getDefaultLocale`, `isValidLocale` — pure parsing/validation with no side effects
 - **Pure functions**: Framework-agnostic helpers that have no framework dependencies
 
 ### What Belongs in `packages/contracts`
@@ -55,6 +55,8 @@ import {
   formatCurrency,
   formatUnit,
   parseISODate,
+  getDefaultLocale,
+  getSupportedLocales,
   isValidLocale,
 } from '@myclup/utils';
 ```

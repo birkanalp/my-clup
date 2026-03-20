@@ -704,12 +704,24 @@ importers:
         specifier: workspace:*
         version: link:../types
     devDependencies:
+      '@myclup/config-eslint':
+        specifier: workspace:*
+        version: link:../config-eslint
+      '@myclup/config-prettier':
+        specifier: workspace:*
+        version: link:../config-prettier
       '@myclup/config-typescript':
         specifier: workspace:*
         version: link:../config-typescript
       '@types/node':
         specifier: ^22.10.0
         version: 22.19.15
+      eslint:
+        specifier: ^9.15.0
+        version: 9.39.4(jiti@1.21.7)
+      prettier:
+        specifier: ^3.4.0
+        version: 3.8.1
       typescript:
         specifier: ^5.7.0
         version: 5.9.3

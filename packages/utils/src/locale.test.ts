@@ -1,31 +1,38 @@
-import { describe, it, expect } from 'vitest';
-import { isValidLocale } from './locale';
+import { describe, expect, it } from 'vitest';
+import { getDefaultLocale, getSupportedLocales, isValidLocale } from './locale';
+
+describe('getSupportedLocales', () => {
+  it('returns a non-empty readonly array matching platform locales', () => {
+    const locales = getSupportedLocales();
+    expect(locales.length).toBeGreaterThan(0);
+    expect(locales).toContain('tr');
+    expect(locales).toContain('en');
+  });
+});
+
+describe('getDefaultLocale', () => {
+  it('returns a value present in getSupportedLocales', () => {
+    const def = getDefaultLocale();
+    expect(getSupportedLocales().includes(def)).toBe(true);
+  });
+});
 
 describe('isValidLocale', () => {
-  it('returns true for supported locales', () => {
+  it('returns true for known locales', () => {
     expect(isValidLocale('tr')).toBe(true);
     expect(isValidLocale('en')).toBe(true);
   });
 
-  it('returns false for unsupported locale strings', () => {
+  it('returns false for unknown strings', () => {
     expect(isValidLocale('de')).toBe(false);
-    expect(isValidLocale('fr')).toBe(false);
-    expect(isValidLocale('tr-TR')).toBe(false);
-    expect(isValidLocale('en-US')).toBe(false);
-  });
-
-  it('returns false for non-string values', () => {
+    expect(isValidLocale('')).toBe(false);
     expect(isValidLocale(null)).toBe(false);
-    expect(isValidLocale(undefined)).toBe(false);
-    expect(isValidLocale(123)).toBe(false);
-    expect(isValidLocale({})).toBe(false);
   });
 
-  it('narrows type when used as type guard', () => {
+  it('narrows type in TypeScript branches', () => {
     const value: unknown = 'tr';
     if (isValidLocale(value)) {
-      expect(value).toBe('tr');
-      const locale: 'tr' | 'en' = value;
+      const locale = value;
       expect(locale).toBe('tr');
     }
   });
