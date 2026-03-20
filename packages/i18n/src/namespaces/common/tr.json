@@ -152,6 +152,56 @@
       "placeholder": "Liste formları Epic #35 altında keşif servisleriyle senkronlanacak."
     }
   },
+  "platformAdminWeb": {
+    "eyebrow": "Platform kontrolü",
+    "productName": "Platform yönetimi",
+    "dashboardTitle": "Platform paneli",
+    "dashboardSubtitle": "Kiracılar arası gözetim, destek araçları ve yönetişim. API rotaları buraya taşındığında paylaşılan BFF için NEXT_PUBLIC_BFF_BASE_URL kullanın.",
+    "metricsPlaceholder": "Raporlama uçları bağlandığında operasyonel KPI’lar kiracı güvenli şekilde toplanacak.",
+    "sidebar": {
+      "dashboard": "Panel",
+      "gyms": "Salonlar ve kiracılar",
+      "users": "Kullanıcılar ve roller",
+      "support": "Destek kuyruğu",
+      "moderation": "Moderasyon",
+      "billing": "Faturalama gözetimi",
+      "cms": "CMS",
+      "locales": "Yerelleştirme",
+      "audit": "Denetim günlüğü"
+    },
+    "gymsPage": {
+      "title": "Salonlar ve kiracılar",
+      "subtitle": "Salonları, şubeleri ve yetki bayraklarını tam denetim iziyle sağlayın."
+    },
+    "usersPage": {
+      "title": "Kullanıcılar ve roller",
+      "subtitle": "Platform ve destek rolleri; tüm yükseltilmiş yetkiler denetlenmelidir."
+    },
+    "supportPage": {
+      "title": "Destek",
+      "subtitle": "Kiracılar arası destek yalnızca onaylı kimliğe bürünme akışlarıyla."
+    },
+    "moderationPage": {
+      "title": "Moderasyon",
+      "subtitle": "Sohbet ve içerik moderasyonu kiracı izolasyonu korunarak."
+    },
+    "billingPage": {
+      "title": "Faturalama gözetimi",
+      "subtitle": "Üye KVK’siz platform faturalama sağlığı."
+    },
+    "cmsPage": {
+      "title": "CMS işlemleri",
+      "subtitle": "Platform yüzeyleri için genel içerik modelleri ve dil varyantları."
+    },
+    "localesPage": {
+      "title": "Yerelleştirme işlemleri",
+      "subtitle": "Varsayılan diller, geri dönüşler ve çeviri kapsamını koordine edin."
+    },
+    "auditPage": {
+      "title": "Denetim günlüğü",
+      "subtitle": "Yükseltilmiş ve kiracılar arası işlemler için audit_events salt okunur görünümü."
+    }
+  },
   "scheduleWorkspace": {
     "heroTitle": "Takvim, kapasite ve yoklama",
     "heroSubtitle": "Yaklaşan seansları izleyin, katılımcı listelerini güncel tutun ve yoklama durumunu ortak rezervasyon akışından çıkmadan yönetin.",

@@ -152,3 +152,8 @@ Primary goals:
 - Revenue forecasting
 - Cohort analytics
 - Internal incident management
+
+## 8. Implementation references
+
+- Platform admin UI shell and QA gates: **`docs/21-web-platform-admin-qa.md`**
+- Audited elevated actions and impersonation: **`docs/23-platform-audit-elevated-actions.md`**

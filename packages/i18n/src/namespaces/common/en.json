@@ -152,6 +152,56 @@
       "placeholder": "Listing forms will sync to discovery services under Epic #35."
     }
   },
+  "platformAdminWeb": {
+    "eyebrow": "Platform control",
+    "productName": "Platform admin",
+    "dashboardTitle": "Platform dashboard",
+    "dashboardSubtitle": "Cross-tenant oversight, support tooling, and governance. Wire this app to the shared BFF via NEXT_PUBLIC_BFF_BASE_URL when API routes are mounted here.",
+    "metricsPlaceholder": "Operational KPIs will aggregate tenant-safe metrics once reporting endpoints are connected.",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "gyms": "Gyms & tenants",
+      "users": "Users & roles",
+      "support": "Support queue",
+      "moderation": "Moderation",
+      "billing": "Billing oversight",
+      "cms": "CMS",
+      "locales": "Localization",
+      "audit": "Audit log"
+    },
+    "gymsPage": {
+      "title": "Gyms and tenants",
+      "subtitle": "Provision gyms, branches, and entitlement flags with full audit trails."
+    },
+    "usersPage": {
+      "title": "Users and roles",
+      "subtitle": "Platform and support roles; all elevated grants must be audited."
+    },
+    "supportPage": {
+      "title": "Support",
+      "subtitle": "Cross-tenant support access only through approved impersonation flows."
+    },
+    "moderationPage": {
+      "title": "Moderation",
+      "subtitle": "Chat and content moderation with tenant isolation preserved."
+    },
+    "billingPage": {
+      "title": "Billing oversight",
+      "subtitle": "Platform-level billing health without exposing member PII unnecessarily."
+    },
+    "cmsPage": {
+      "title": "CMS operations",
+      "subtitle": "Manage global content models and locale variants for platform surfaces."
+    },
+    "localesPage": {
+      "title": "Localization operations",
+      "subtitle": "Coordinate default locales, fallbacks, and translation coverage."
+    },
+    "auditPage": {
+      "title": "Audit log",
+      "subtitle": "Read-only view over audit_events for elevated and cross-tenant actions."
+    }
+  },
   "scheduleWorkspace": {
     "heroTitle": "Calendar, capacity, and attendance",
     "heroSubtitle": "Track the next sessions, keep participant rosters current, and update attendance without leaving the shared booking flow.",
