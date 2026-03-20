@@ -97,10 +97,37 @@ type InternalListBookingSessionsRequest = ListBookingSessionsRequest & ScopeFilt
 type InternalListBookingsRequest = ListBookingsRequest & ScopeFilter;
 type InternalListInstructorAvailabilityRequest = ListInstructorAvailabilityRequest & ScopeFilter;
 
+type QueryResult = Promise<{
+  data: unknown;
+  error: { message: string } | null;
+  count?: number | null;
+}>;
+
+type QueryBuilder = {
+  data?: unknown;
+  error?: { message: string } | null;
+  count?: number | null;
+  select: (columns: string, options?: Record<string, unknown>) => QueryBuilder;
+  eq: (column: string, value: unknown) => QueryBuilder;
+  in: (column: string, values: unknown[]) => QueryBuilder;
+  gt: (column: string, value: unknown) => QueryBuilder;
+  gte: (column: string, value: unknown) => QueryBuilder;
+  lt: (column: string, value: unknown) => QueryBuilder;
+  lte: (column: string, value: unknown) => QueryBuilder;
+  order: (column: string, options?: { ascending: boolean }) => QueryBuilder;
+  limit: (value: number) => QueryBuilder;
+  update: (values: Record<string, unknown>) => QueryBuilder;
+  insert: (
+    values: Record<string, unknown> | Array<Record<string, unknown>>,
+    options?: Record<string, unknown>
+  ) => QueryBuilder;
+  or: (clause: string) => QueryBuilder;
+  maybeSingle: () => QueryResult;
+  single: () => QueryResult;
+};
+
 function table(client: ServerSupabaseClient, name: string) {
-  return (client as unknown as { from: (tableName: string) => unknown }).from(name) as {
-    [key: string]: (...args: unknown[]) => unknown;
-  };
+  return (client as unknown as { from: (tableName: string) => QueryBuilder }).from(name);
 }
 
 function buildScopeClause(
@@ -116,14 +143,7 @@ function buildScopeClause(
     .join(',');
 }
 
-function applyScopeFilter(
-  query: {
-    or: (clause: string) => unknown;
-    eq: (column: string, value: unknown) => unknown;
-    in: (column: string, values: unknown[]) => unknown;
-  },
-  scopeFilter: ScopeFilter
-) {
+function applyScopeFilter(query: QueryBuilder, scopeFilter: ScopeFilter) {
   if (scopeFilter.branchScopes && scopeFilter.branchScopes.length > 0) {
     const clause = buildScopeClause(scopeFilter.branchScopes);
     if (clause) {
@@ -413,8 +433,9 @@ export async function listBookings(
       .select('updated_at')
       .eq('id', input.cursor)
       .maybeSingle();
-    if ((cursorRow as { updated_at?: string } | null)?.updated_at) {
-      query = query.lt('updated_at', cursorRow.updated_at);
+    const cursor = cursorRow as { updated_at?: string } | null;
+    if (cursor?.updated_at) {
+      query = query.lt('updated_at', cursor.updated_at);
     }
   }
 
