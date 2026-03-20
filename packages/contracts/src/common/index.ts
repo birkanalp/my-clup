@@ -1,5 +1,6 @@
 /**
- * @myclup/contracts/common — Shared common schemas and utilities.
- * Domain-specific common schemas will be added as needed.
+ * @myclup/contracts/common — Shared pagination, locale, and error schemas.
  */
-export {};
+export * from './pagination';
+export * from './locale';
+export * from './error';
