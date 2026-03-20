@@ -15,12 +15,13 @@ describe('home dashboard helpers', () => {
     expect(getConversationTitleKey('direct')).toBe('conversation.direct');
   });
 
-  it('builds the expected quick actions with booking disabled and renew wired', () => {
+  it('builds the expected quick actions with booking, chat, renew, discovery, and progress', () => {
     const quickActions = buildQuickActions();
-    expect(quickActions).toHaveLength(4);
+    expect(quickActions).toHaveLength(6);
     expect(quickActions[0]).toMatchObject({
       key: 'bookClass',
-      disabled: true,
+      disabled: false,
+      route: '/booking',
       labelKey: 'quickActions.bookClass',
       hintKey: 'quickActions.bookClassHint',
     });
@@ -32,15 +33,13 @@ describe('home dashboard helpers', () => {
       key: 'renewMembership',
       route: '/membership/renew',
     });
-  });
-
-  it('keeps booking out of route wiring until scheduling is implemented', () => {
-    const quickActions = buildQuickActions();
-
-    expect(quickActions[0]).toMatchObject({
-      key: 'bookClass',
-      disabled: true,
+    expect(quickActions[4]).toMatchObject({
+      key: 'discoverGyms',
+      route: '/discovery',
     });
-    expect(quickActions[0]?.route).toBeUndefined();
+    expect(quickActions[5]).toMatchObject({
+      key: 'trackProgress',
+      route: '/progress',
+    });
   });
 });

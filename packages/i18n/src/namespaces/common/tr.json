@@ -131,11 +131,35 @@
     "openChat": "Sohbeti aç",
     "showQr": "QR göster",
     "renewMembership": "Üyeliği yenile",
-    "bookClassHint": "Rezervasyon akışı bir sonraki alanda gelecek.",
+    "bookClassHint": "Salon takvimindeki yaklasan derslere goz atin.",
     "openChatHint": "Son görüşmeyi sürdürün.",
     "showQrHint": "Üye kartını üyelik ekranında açın.",
     "renewMembershipHint": "Erişim süresi dolmadan yenileyin.",
+    "discoverGyms": "Salon kesfet",
+    "discoverGymsHint": "Yakin salonlari ve deneme icin uygun listeleri inceleyin.",
+    "trackProgress": "Ilerleme",
+    "trackProgressHint": "Antrenman ve olcumler burada senkronize olacak.",
     "comingSoon": "Yakında"
+  },
+  "memberBooking": {
+    "title": "Dersler ve takvim",
+    "subtitle": "Rezerve edebileceginiz veya katilabileceginiz yaklasan seanslar.",
+    "loadingTitle": "Takvim yukleniyor...",
+    "loadingBody": "Salonunuzdan son ders seanslari aliniyor.",
+    "errorTitle": "Takvim yuklenemedi",
+    "errorBody": "Yenilemek icin asagi cekin veya baglanti kuruldugunda tekrar deneyin.",
+    "emptyTitle": "Yaklasan seans yok",
+    "emptyBody": "Salonunuz ders yayinladiginda burada listelenecek."
+  },
+  "memberDiscovery": {
+    "title": "Salon kesfi",
+    "subtitle": "Hedeflerinize uygun salonlari arayin ve karsilastirin.",
+    "body": "Harita tabanli kesif ve deneme rezervasyonu Epic #35 ile marketplace API'lerine baglanacak."
+  },
+  "memberProgress": {
+    "title": "Ilerlemeniz",
+    "subtitle": "Antrenmanlar, girisler ve olcumler tek zaman cizelgesinde.",
+    "body": "Ilerleme senkronu ve grafikler antrenman API'leri baglandiktan sonra gorunecek (Epic #30)."
   },
   "paymentsDashboard": {
     "body": "Ödeme veya yenileme hatırlatıcıları hazır olduğunda burada görünecek."
