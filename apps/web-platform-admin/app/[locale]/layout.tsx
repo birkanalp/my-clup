@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getMessages } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import { routing } from '@/src/i18n/routing';
-import { AppLanguageSwitcher } from '@/src/components/AppLanguageSwitcher';
+import { PlatformAdminShell } from '@/src/components/PlatformAdminShell';
 
 type Props = {
   children: React.ReactNode;
@@ -26,10 +26,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <header style={{ padding: '0.5rem 1rem', borderBottom: '1px solid #eee' }}>
-        <AppLanguageSwitcher />
-      </header>
-      {children}
+      <PlatformAdminShell>{children}</PlatformAdminShell>
     </NextIntlClientProvider>
   );
 }
