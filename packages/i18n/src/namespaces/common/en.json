@@ -29,6 +29,69 @@
     "chat": "Chat",
     "profile": "Profile"
   },
+  "adminShell": {
+    "eyebrow": "Gym admin",
+    "title": "Operations workspace",
+    "subtitle": "Coordinate schedules, attendance, and member follow-up from one consistent control room.",
+    "home": "Overview",
+    "schedule": "Schedule",
+    "chat": "Chat",
+    "chatSubtitle": "Handle active member conversations without leaving the admin shell."
+  },
+  "scheduleWorkspace": {
+    "heroTitle": "Calendar, capacity, and attendance",
+    "heroSubtitle": "Track the next sessions, keep participant rosters current, and update attendance without leaving the shared booking flow.",
+    "sessionsTitle": "Upcoming sessions",
+    "sessionsSubtitle": "Browse branch and instructor activity from the shared scheduling API.",
+    "participantsTitle": "Participant roster",
+    "participantsSubtitle": "Keep booking states and attendance updates aligned with the backend source of truth.",
+    "availabilityTitle": "Instructor coverage",
+    "availabilitySubtitle": "Review upcoming availability blocks beside the operational roster.",
+    "loadingBody": "Loading calendar, capacity, and attendance data...",
+    "loadingBookings": "Loading participant roster...",
+    "emptyTitle": "No sessions scheduled yet",
+    "emptyBody": "The calendar workspace will populate as soon as the first class or appointment is created.",
+    "errorTitle": "Scheduling workspace unavailable",
+    "errorBody": "Try again to refresh the scheduling workspace.",
+    "noParticipants": "No participants in this session yet.",
+    "noAvailability": "No instructor availability blocks found.",
+    "unassigned": "Unassigned",
+    "bookingStatusLabel": "Booking",
+    "capacityPill": "{booked} / {capacity} booked",
+    "waitlistPill": "{count} waitlist",
+    "stats": {
+      "booked": "Booked",
+      "available": "Available spots",
+      "waitlist": "Waitlist",
+      "instructor": "Instructor"
+    },
+    "actions": {
+      "checkIn": "Check in",
+      "markMissed": "Mark missed",
+      "cancelBooking": "Cancel booking"
+    },
+    "sessionStatus": {
+      "scheduled": "Scheduled",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "bookingStatus": {
+      "booked": "Booked",
+      "cancelled": "Cancelled",
+      "waitlisted": "Waitlisted",
+      "attended": "Attended",
+      "no_show": "No show",
+      "pending": "Pending",
+      "checked_in": "Checked in",
+      "missed": "Missed",
+      "completed": "Completed"
+    },
+    "availabilityStatus": {
+      "available": "Available",
+      "blocked": "Blocked",
+      "tentative": "Tentative"
+    }
+  },
   "dashboard": {
     "heroTitle": "Your day, one tap away",
     "heroSubtitle": "Check your membership, open the latest conversation, or jump into the next member action.",
