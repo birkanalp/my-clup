@@ -98,7 +98,9 @@ type InternalListBookingsRequest = ListBookingsRequest & ScopeFilter;
 type InternalListInstructorAvailabilityRequest = ListInstructorAvailabilityRequest & ScopeFilter;
 
 function table(client: ServerSupabaseClient, name: string) {
-  return (client as any).from(name) as any;
+  return (client as unknown as { from: (tableName: string) => unknown }).from(name) as {
+    [key: string]: (...args: unknown[]) => unknown;
+  };
 }
 
 function buildScopeClause(
@@ -114,7 +116,14 @@ function buildScopeClause(
     .join(',');
 }
 
-function applyScopeFilter(query: any, scopeFilter: ScopeFilter) {
+function applyScopeFilter(
+  query: {
+    or: (clause: string) => unknown;
+    eq: (column: string, value: unknown) => unknown;
+    in: (column: string, values: unknown[]) => unknown;
+  },
+  scopeFilter: ScopeFilter
+) {
   if (scopeFilter.branchScopes && scopeFilter.branchScopes.length > 0) {
     const clause = buildScopeClause(scopeFilter.branchScopes);
     if (clause) {
