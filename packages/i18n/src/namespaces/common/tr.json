@@ -109,6 +109,49 @@
     "empty": "Henüz kayıt yok.",
     "sourceUnknown": "Kaynak bilinmiyor"
   },
+  "gymAdminWeb": {
+    "productName": "Salon yönetimi",
+    "authChecking": "Oturumunuz doğrulanıyor…",
+    "devLoginNav": "Geliştirici girişi",
+    "devLoginCardTitle": "Yerel geliştirici girişi",
+    "devLoginCardBody": "Geliştirme sırasında gym-admin BFF için yerel bearer üretin.",
+    "metricsError": "Metrikler yüklenemedi",
+    "metrics": {
+      "sessionsLabel": "Görünümdeki seanslar",
+      "sessionsHint": "Kiracınız için paylaşılan rezervasyon API’sinden yüklenir."
+    },
+    "sidebar": {
+      "dashboard": "Panel",
+      "members": "Üyeler",
+      "membershipPlans": "Üyelik planları",
+      "billing": "Faturalama",
+      "schedule": "Takvim",
+      "chat": "Sohbet",
+      "campaigns": "Kampanyalar",
+      "reports": "Raporlar",
+      "listing": "Herkese açık liste"
+    },
+    "membersPage": {
+      "title": "Üyeler",
+      "subtitle": "Dizin, kayıt ve profil güncellemeleri BFF üzerinden kiracı kapsamında kalır.",
+      "placeholder": "Üye listesi ve arama dizin API’si hazır olduğunda kullanılacak."
+    },
+    "campaignsPage": {
+      "title": "Kampanyalar",
+      "subtitle": "Üye segmentleri oluşturun ve hedefleyin; teslimat dil bilincine sahiptir.",
+      "placeholder": "Kampanya oluşturucu mesajlaşma alt sistemine bağlanacak."
+    },
+    "reportsPage": {
+      "title": "Raporlar",
+      "subtitle": "Yoklama, rezervasyon, üyelik ve gelir için operasyonel özetler.",
+      "placeholder": "Rapor oluşturucular yalnızca denetlenebilir kiracı verisini toplayacak."
+    },
+    "listingPage": {
+      "title": "Keşif listesi",
+      "subtitle": "Herkese açık salon profili, olanaklar, fotoğraflar ve pazar görünürlüğünü yönetin.",
+      "placeholder": "Liste formları Epic #35 altında keşif servisleriyle senkronlanacak."
+    }
+  },
   "scheduleWorkspace": {
     "heroTitle": "Takvim, kapasite ve yoklama",
     "heroSubtitle": "Yaklaşan seansları izleyin, katılımcı listelerini güncel tutun ve yoklama durumunu ortak rezervasyon akışından çıkmadan yönetin.",

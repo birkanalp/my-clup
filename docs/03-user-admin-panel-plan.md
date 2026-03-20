@@ -203,3 +203,7 @@ Permissions should support:
 - Franchise management
 - Advanced accounting exports
 - White-label branch pages
+
+## 10. QA, localization, and analytics
+
+Implementation notes, test expectations, and `gymAdminWeb` i18n parity rules for `apps/web-gym-admin` are in **`docs/20-web-gym-admin-qa-localization.md`**. Product analytics taxonomy is in **`docs/18-analytics-observability-spec.md`**.

@@ -109,6 +109,49 @@
     "empty": "No leads captured yet.",
     "sourceUnknown": "Unknown source"
   },
+  "gymAdminWeb": {
+    "productName": "Gym admin",
+    "authChecking": "Checking your session…",
+    "devLoginNav": "Dev login",
+    "devLoginCardTitle": "Local dev login",
+    "devLoginCardBody": "Mint a local bearer token for the gym-admin BFF during development.",
+    "metricsError": "Could not load metrics",
+    "metrics": {
+      "sessionsLabel": "Sessions in view",
+      "sessionsHint": "Loaded from the shared booking API for your tenant."
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "members": "Members",
+      "membershipPlans": "Membership plans",
+      "billing": "Billing",
+      "schedule": "Schedule",
+      "chat": "Chat",
+      "campaigns": "Campaigns",
+      "reports": "Reports",
+      "listing": "Public listing"
+    },
+    "membersPage": {
+      "title": "Members",
+      "subtitle": "Directory, enrollment, and profile updates stay tenant-scoped via the BFF.",
+      "placeholder": "Member list and search will use the directory API when it lands."
+    },
+    "campaignsPage": {
+      "title": "Campaigns",
+      "subtitle": "Create and target member segments; delivery stays locale-aware.",
+      "placeholder": "Campaign composer and scheduling will connect to the messaging subsystem."
+    },
+    "reportsPage": {
+      "title": "Reports",
+      "subtitle": "Operational summaries for attendance, bookings, memberships, and revenue.",
+      "placeholder": "Report builders will aggregate audited, tenant-scoped data only."
+    },
+    "listingPage": {
+      "title": "Discovery listing",
+      "subtitle": "Manage public gym profile, amenities, photos, and visibility for marketplace discovery.",
+      "placeholder": "Listing forms will sync to discovery services under Epic #35."
+    }
+  },
   "scheduleWorkspace": {
     "heroTitle": "Calendar, capacity, and attendance",
     "heroSubtitle": "Track the next sessions, keep participant rosters current, and update attendance without leaving the shared booking flow.",

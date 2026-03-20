@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/src/i18n/navigation';
+import { DashboardMetrics } from '@/src/components/DashboardMetrics';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -42,6 +43,8 @@ export default async function HomePage({ params }: Props) {
           <h1 style={{ margin: '0.65rem 0 0.5rem', fontSize: '2rem' }}>{t('adminShell.title')}</h1>
           <p style={{ margin: 0, maxWidth: 720, color: '#cbd5e1' }}>{t('adminShell.subtitle')}</p>
         </section>
+
+        <DashboardMetrics />
 
         <section
           style={{
@@ -115,9 +118,11 @@ export default async function HomePage({ params }: Props) {
                 background: '#f0fdfa',
               }}
             >
-              <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>Local dev login</div>
+              <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>
+                {t('gymAdminWeb.devLoginCardTitle')}
+              </div>
               <p style={{ margin: '0.4rem 0 0', color: '#475569' }}>
-                Mint a local bearer token for the gym-admin BFF during development.
+                {t('gymAdminWeb.devLoginCardBody')}
               </p>
             </Link>
           ) : null}

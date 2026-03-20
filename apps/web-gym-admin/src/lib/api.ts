@@ -18,8 +18,13 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-const withCredentials: typeof fetch = (input, init) =>
-  fetch(input, { credentials: 'include', ...init });
+/** Same-origin BFF fetch with cookies + dev bearer token (localStorage). */
+const bffFetch: typeof fetch = (input, init) =>
+  fetch(input, {
+    credentials: 'include',
+    ...init,
+    headers: withDevAccessToken(init?.headers),
+  });
 
 type WhoamiResponse = {
   user: { id: string };
@@ -31,7 +36,7 @@ type WhoamiResponse = {
 const sharedApi = () =>
   createApi({
     baseUrl: getBaseUrl(),
-    fetch: withCredentials,
+    fetch: bffFetch,
   });
 
 const api = {
