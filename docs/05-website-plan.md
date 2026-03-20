@@ -148,3 +148,4 @@ The website must be multilingual from the start, not treated as a later enhancem
 
 - Content governance and legal versioning: **`docs/24-website-content-governance.md`**
 - QA, performance, and analytics wiring: **`docs/25-website-qa-performance.md`**
+- Discovery marketplace boundaries and SEO: **`docs/26-discovery-marketplace.md`**

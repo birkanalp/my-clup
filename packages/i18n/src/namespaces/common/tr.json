@@ -234,6 +234,11 @@
       "thanks": "Teşekkürler — mümkünse seçtiğiniz dilde size dönüş yapacağız."
     }
   },
+  "discoveryWeb": {
+    "title": "Salon keşfi",
+    "subtitle": "Arama yapın, olanakları karşılaştırın; pazar API’si açıldığında deneme talebi başlatın.",
+    "body": "Listeler kiracıya aittir ve dil bilincine sahiptir. Yorumlar, deneme talepleri ve potansiyel müşteri yönlendirmesi denetlenen BFF uçları ve açık rıza ile akar; SEO meta verisi dile göre üretilir."
+  },
   "scheduleWorkspace": {
     "heroTitle": "Takvim, kapasite ve yoklama",
     "heroSubtitle": "Yaklaşan seansları izleyin, katılımcı listelerini güncel tutun ve yoklama durumunu ortak rezervasyon akışından çıkmadan yönetin.",
@@ -350,7 +355,7 @@
   "memberDiscovery": {
     "title": "Salon kesfi",
     "subtitle": "Hedeflerinize uygun salonlari arayin ve karsilastirin.",
-    "body": "Harita tabanli kesif ve deneme rezervasyonu Epic #35 ile marketplace API'lerine baglanacak."
+    "body": "Harita aramasi, yorumlar, deneme talepleri ve potansiyel müşteri yönlendirmesi kiracı güvenli marketplace API’leri ve dil bilincine sahip listelerle çalışacak (Epic #35)."
   },
   "memberProgress": {
     "title": "Ilerlemeniz",
