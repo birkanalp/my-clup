@@ -11,7 +11,7 @@ describe('api', () => {
     vi.resetModules();
   });
 
-  it('exposes chat namespace with conversations and messages', async () => {
+  it('exposes chat and bookings namespaces', async () => {
     const { api } = await import('./api');
     expect(api.chat).toBeDefined();
     expect(api.chat.conversations).toBeDefined();
@@ -20,5 +20,10 @@ describe('api', () => {
     expect(api.chat.messages).toBeDefined();
     expect(typeof api.chat.messages.list).toBe('function');
     expect(typeof api.chat.messages.send).toBe('function');
+    expect(api.bookings).toBeDefined();
+    expect(typeof api.bookings.listSessions).toBe('function');
+    expect(typeof api.bookings.listBookings).toBe('function');
+    expect(typeof api.bookings.updateAttendance).toBe('function');
+    expect(typeof api.bookings.listInstructorAvailability).toBe('function');
   });
 });
