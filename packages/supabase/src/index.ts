@@ -56,6 +56,8 @@ export {
 } from './realtime/index';
 
 export {
+  buildBookingCapacityReports,
+  buildBookingFollowUpEvents,
   createBooking,
   cancelBooking,
   getBooking,

@@ -21,6 +21,14 @@ import type {
 } from '@myclup/contracts/bookings';
 import type { ServerSupabaseClient } from '../client';
 import { NotFoundError } from '../auth';
+export {
+  buildBookingCapacityReports,
+  buildBookingFollowUpEvents,
+  type BookingCapacityReport,
+  type BookingFollowUpEvent,
+  type BookingFollowUpBuilderInput,
+  type BookingFollowUpEventType,
+} from './foundations';
 
 type ScopeFilter = {
   gymIds?: string[];
