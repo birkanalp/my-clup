@@ -5,7 +5,7 @@ function getBaseUrl(): string {
   return process.env.NEXT_PUBLIC_SITE_URL ?? 'https://myclup.com';
 }
 
-const STATIC_PATHS = ['', '/about', '/contact', '/legal/privacy', '/legal/terms'];
+const STATIC_PATHS = ['', '/about', '/contact', '/discover', '/legal/privacy', '/legal/terms'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getBaseUrl();

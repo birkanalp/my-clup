@@ -234,6 +234,11 @@
       "thanks": "Thanks — we will get back to you in your selected language where possible."
     }
   },
+  "discoveryWeb": {
+    "title": "Discover gyms",
+    "subtitle": "Search, compare amenities, and start a trial request when the marketplace API is enabled.",
+    "body": "Listings are tenant-owned and locale-aware. Reviews, trial requests, and lead routing will flow through audited BFF endpoints with explicit consent and SEO-safe metadata per locale."
+  },
   "scheduleWorkspace": {
     "heroTitle": "Calendar, capacity, and attendance",
     "heroSubtitle": "Track the next sessions, keep participant rosters current, and update attendance without leaving the shared booking flow.",
@@ -350,7 +355,7 @@
   "memberDiscovery": {
     "title": "Discover gyms",
     "subtitle": "Search and compare gyms that match your goals.",
-    "body": "Map-based discovery and trial booking will connect to the marketplace APIs as Epic #35 lands."
+    "body": "Map search, reviews, trial requests, and lead routing will use tenant-safe marketplace APIs with locale-aware listings (Epic #35)."
   },
   "memberProgress": {
     "title": "Your progress",

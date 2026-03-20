@@ -51,6 +51,9 @@ export default async function LocaleLayout({ children, params }: Props) {
             <Link href="/contact" className="hover:text-teal-700">
               {t('publicSite.nav.contact')}
             </Link>
+            <Link href="/discover" className="hover:text-teal-700">
+              {t('discoveryWeb.title')}
+            </Link>
             <Link href="/legal/privacy" className="hover:text-teal-700">
               {t('publicSite.nav.privacy')}
             </Link>
