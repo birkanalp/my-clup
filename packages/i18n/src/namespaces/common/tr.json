@@ -105,7 +105,7 @@
     "leadSourcePlaceholder": "Kapıdan, referans, kampanya…",
     "capture": "Kaydet",
     "pipelineTitle": "Bugünün hunisi",
-    "pipelineSubtitle": "Bu oturum için yalnızca cihazda tutulur.",
+    "pipelineSubtitle": "Personel lead senkron API’si gelene kadar AsyncStorage ile cihazda saklanır.",
     "empty": "Henüz kayıt yok.",
     "sourceUnknown": "Kaynak bilinmiyor"
   },
@@ -129,7 +129,8 @@
       "chat": "Sohbet",
       "campaigns": "Kampanyalar",
       "reports": "Raporlar",
-      "listing": "Herkese açık liste"
+      "listing": "Herkese açık liste",
+      "addons": "Ek paketler"
     },
     "membersPage": {
       "title": "Üyeler",
@@ -150,6 +151,11 @@
       "title": "Keşif listesi",
       "subtitle": "Herkese açık salon profili, olanaklar, fotoğraflar ve pazar görünürlüğünü yönetin.",
       "placeholder": "Liste formları Epic #35 altında keşif servisleriyle senkronlanacak."
+    },
+    "addonsPage": {
+      "title": "Ek paketler",
+      "subtitle": "Platform faturalaması yetki verdikten sonra isteğe bağlı modülleri (SMS, AI sohbet botu, e-imza, reklam) açın.",
+      "placeholder": "Aktivasyon ve denetim API’leri @myclup/contracts/addons şemalarını kullanacak; bu sayfa salon tarafı yapılandırma iskeletidir."
     }
   },
   "platformAdminWeb": {
@@ -165,6 +171,7 @@
       "support": "Destek kuyruğu",
       "moderation": "Moderasyon",
       "billing": "Faturalama gözetimi",
+      "memberships": "Üyelik ve finans",
       "cms": "CMS",
       "locales": "Yerelleştirme",
       "audit": "Denetim günlüğü"
@@ -189,9 +196,15 @@
       "title": "Faturalama gözetimi",
       "subtitle": "Üye KVK’siz platform faturalama sağlığı."
     },
+    "membershipsOversightPage": {
+      "title": "Üyelik ve finans gözetimi",
+      "subtitle": "Abonelik sağlığı, alacak riski ve plan katalog sapması için kiracılar arası salt okunur modeller — tüm sorgular denetlenmeli.",
+      "body": "• Üye KVK’sini toplu dışa aktarmadan salon başına üyelik örnek durumlarını toplayın.\n• Başarısız taksitler ve gecikmiş alacaklar için istisnaları gösterin; detay için kiracı kapsamlı salon paneli görünümlerine bağlayın.\n• Her yükseltilmiş detay için docs/23-platform-audit-elevated-actions.md uyarınca kimliğe bürünme veya destek kaydı referansı zorunlu.\n• Yerel rapor etiketleri packages/analytics paylaşılan taksonomisini yeniden kullanır."
+    },
     "cmsPage": {
       "title": "CMS işlemleri",
-      "subtitle": "Platform yüzeyleri için genel içerik modelleri ve dil varyantları."
+      "subtitle": "Platform yüzeyleri için genel içerik modelleri ve dil varyantları.",
+      "body": "• Yasal, pazarlama ve ürün içi metinleri locale başına sürümleyin; kanonik geri dönüşleri tanımlayın.\n• Platform şablonlarını salon sahibi liste içeriğinden ayırın; keşif moderasyonu Epic #35 akışlarında kalır.\n• İçe/dışa aktarma işleri aktör, kapsam ve içerik özü ile audit_events üretmelidir.\n• Yerelleştirme işlemleriyle yayını koordine edin — üretimde boş dize geri dönüşü olmamalı."
     },
     "localesPage": {
       "title": "Yerelleştirme işlemleri",

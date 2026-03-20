@@ -105,7 +105,7 @@
     "leadSourcePlaceholder": "Walk-in, referral, campaign…",
     "capture": "Save lead",
     "pipelineTitle": "Today’s pipeline",
-    "pipelineSubtitle": "Stored on device for this session only.",
+    "pipelineSubtitle": "Persisted on device via AsyncStorage until a staff lead sync API is available.",
     "empty": "No leads captured yet.",
     "sourceUnknown": "Unknown source"
   },
@@ -129,7 +129,8 @@
       "chat": "Chat",
       "campaigns": "Campaigns",
       "reports": "Reports",
-      "listing": "Public listing"
+      "listing": "Public listing",
+      "addons": "Add-on packages"
     },
     "membersPage": {
       "title": "Members",
@@ -150,6 +151,11 @@
       "title": "Discovery listing",
       "subtitle": "Manage public gym profile, amenities, photos, and visibility for marketplace discovery.",
       "placeholder": "Listing forms will sync to discovery services under Epic #35."
+    },
+    "addonsPage": {
+      "title": "Add-on packages",
+      "subtitle": "Toggle optional modules (SMS, AI chatbot, e-sign, ads) once entitlements are issued by platform billing.",
+      "placeholder": "Activation and audit APIs will use @myclup/contracts/addons schemas; this page is the gym-facing configuration shell."
     }
   },
   "platformAdminWeb": {
@@ -165,6 +171,7 @@
       "support": "Support queue",
       "moderation": "Moderation",
       "billing": "Billing oversight",
+      "memberships": "Membership & finance",
       "cms": "CMS",
       "locales": "Localization",
       "audit": "Audit log"
@@ -189,9 +196,15 @@
       "title": "Billing oversight",
       "subtitle": "Platform-level billing health without exposing member PII unnecessarily."
     },
+    "membershipsOversightPage": {
+      "title": "Membership and finance oversight",
+      "subtitle": "Cross-tenant read models for subscription health, receivables risk, and plan catalog drift — all queries must stay audited.",
+      "body": "• Aggregate membership instance states per gym without downloading member PII bulk exports.\n• Surface finance exceptions (failed installments, overdue receivables) with links into tenant-scoped gym admin views.\n• Pair every elevated drill-down with impersonation or support-ticket references per docs/23-platform-audit-elevated-actions.md.\n• Locale-aware reporting labels reuse shared analytics taxonomy from packages/analytics."
+    },
     "cmsPage": {
       "title": "CMS operations",
-      "subtitle": "Manage global content models and locale variants for platform surfaces."
+      "subtitle": "Manage global content models and locale variants for platform surfaces.",
+      "body": "• Version legal, marketing, and in-product copy per locale with canonical fallbacks.\n• Separate platform-owned templates from gym-owned listing content; discovery moderation stays in Epic #35 flows.\n• Export and import jobs must emit audit_events with actor, scope, and content hash.\n• Coordinate rollout with Localization operations — no empty-string fallbacks in production surfaces."
     },
     "localesPage": {
       "title": "Localization operations",

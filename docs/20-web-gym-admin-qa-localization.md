@@ -4,11 +4,11 @@ This document satisfies **#177** (Epic #32). It complements `docs/07-technical-p
 
 ## 1. Automated tests
 
-| Layer | Scope | Tool |
-|-------|--------|------|
-| Unit | Pure helpers (e.g. `navVisibility`), schema parsers | Vitest |
-| API route | BFF handlers with mocked server modules | Vitest + `NextRequest` |
-| Component | Client shells with RTL where logic warrants | Vitest + Testing Library |
+| Layer     | Scope                                               | Tool                     |
+| --------- | --------------------------------------------------- | ------------------------ |
+| Unit      | Pure helpers (e.g. `navVisibility`), schema parsers | Vitest                   |
+| API route | BFF handlers with mocked server modules             | Vitest + `NextRequest`   |
+| Component | Client shells with RTL where logic warrants         | Vitest + Testing Library |
 
 **Minimum:** new role or navigation rules require updates to `navVisibility` tests; new BFF contracts require route tests.
 

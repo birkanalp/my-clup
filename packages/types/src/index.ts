@@ -1,3 +1,4 @@
+export * from './addon';
 export * from './billing';
 export * from './booking';
 export * from './locale';

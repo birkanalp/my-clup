@@ -36,6 +36,10 @@
     "./billing": {
       "types": "./dist/billing/index.d.ts",
       "default": "./dist/billing/index.js"
+    },
+    "./addons": {
+      "types": "./dist/addons/index.d.ts",
+      "default": "./dist/addons/index.js"
     }
   },
   "scripts": {

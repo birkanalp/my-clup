@@ -11,6 +11,7 @@ const NAV: { href: string; key: string }[] = [
   { href: '/support', key: 'support' },
   { href: '/moderation', key: 'moderation' },
   { href: '/billing', key: 'billing' },
+  { href: '/memberships', key: 'memberships' },
   { href: '/cms', key: 'cms' },
   { href: '/locales', key: 'locales' },
   { href: '/audit', key: 'audit' },

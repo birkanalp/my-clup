@@ -389,6 +389,10 @@ AI functionality should be exposed to applications through a shared server-side 
 - Error handling
 - Safety fallback behavior
 
+### 8.5 Shared implementation
+
+The reference server boundary for Ollama (timeouts, retries, feature flag, Zod-validated slices) lives in **`packages/ai`** (`@myclup/ai`). Integration notes: **`docs/27-ai-server-boundary.md`**.
+
 ## 9. Analytics, Logging, and Monitoring
 
 ### 9.1 Analytics
