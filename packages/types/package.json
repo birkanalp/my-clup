@@ -12,11 +12,16 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint . && prettier --check ."
   },
   "devDependencies": {
+    "@myclup/config-eslint": "workspace:*",
+    "@myclup/config-prettier": "workspace:*",
     "@myclup/config-typescript": "workspace:*",
     "@types/node": "^22.10.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.4.0",
     "typescript": "^5.7.0"
   }
 }
