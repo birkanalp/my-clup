@@ -22,6 +22,8 @@ export {
   type ApiContract,
   type RequestOptions,
 } from './client';
+export { parseApiError } from './errors';
+export { fetcher, type FetcherOptions } from './fetcher';
 export { createHealthApi } from './health';
 export { createAuthApi } from './auth';
 export { createChatApi } from './chat';

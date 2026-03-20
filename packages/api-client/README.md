@@ -77,15 +77,16 @@ const ping = await api.health.ping();
 
 ## Error Handling
 
-- **Non-2xx response**: Throws `ApiError` with `status` and `body`
+- **Non-2xx response**: Throws `ApiError` with `status`, optional `code` / `details` (when body matches `ApiErrorResponseSchema` from `@myclup/contracts`), and raw `body` when available
 - **Invalid response shape**: Throws `ZodError` from `contract.response.parse()`
+- **`parseApiError(response)`** / **`fetcher()`**: Low-level helpers for custom calls
 
 ```typescript
 try {
   await api.health.ping();
 } catch (err) {
   if (err instanceof ApiError) {
-    console.error(err.status, err.body);
+    console.error(err.status, err.code, err.body);
   }
   throw err;
 }
