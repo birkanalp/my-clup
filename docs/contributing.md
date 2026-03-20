@@ -54,6 +54,51 @@ For multilingual delivery, configure:
 
 In CI, inject secrets via your platform's secret manager (e.g. GitHub Actions secrets). Do not check in `.env` files. Use `.env.example` as the reference for required keys.
 
+## Local Supabase Workflow
+
+Use the checked-in Supabase config and bootstrap scripts when you need a runnable local stack.
+
+### One-time setup
+
+```bash
+corepack enable
+pnpm install
+```
+
+### Start the local stack
+
+```bash
+pnpm dev:local
+```
+
+This command will:
+
+- ensure Docker is running
+- start the official local Supabase containers
+- sync `.env.local` files for root and active apps
+- seed demo gym, branch, membership, billing, and chat data
+
+### Reseed the local database
+
+```bash
+pnpm dev:local:reset
+```
+
+### Run the apps
+
+```bash
+pnpm dev:web-gym-admin
+pnpm dev:mobile-user
+pnpm dev:mobile-admin
+```
+
+### Demo accounts
+
+- Member app: `member.demo@myclup.local` / `Passw0rd!`
+- Admin app + web admin: `staff.demo@myclup.local` / `Passw0rd!`
+
+The web admin does not ship a product sign-in screen yet. Use `http://localhost:3001/en/dev-login` in development to mint a local bearer token for the BFF.
+
 ## Testing
 
 ### Unit tests (Vitest)

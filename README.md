@@ -17,6 +17,23 @@ pnpm run test
 
 See [docs/contributing.md](docs/contributing.md) for setup, environment, and workflow.
 
+## Local Stack
+
+For a full local test loop with Supabase containers and seeded demo accounts:
+
+```bash
+pnpm install
+pnpm dev:local
+pnpm dev:web-gym-admin
+```
+
+Then open `http://localhost:3001/en/dev-login` for the web demo session. Expo apps can use:
+
+```bash
+pnpm dev:mobile-user
+pnpm dev:mobile-admin
+```
+
 ## Environment Setup
 
 1. Copy `.env.example` to `.env.local` and fill in values.

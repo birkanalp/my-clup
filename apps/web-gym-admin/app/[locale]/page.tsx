@@ -10,6 +10,13 @@ export default async function HomePage({ params }: Props) {
   setRequestLocale(locale);
 
   const t = await getTranslations('common');
+  const cardStyle = {
+    padding: '1.25rem',
+    borderRadius: 20,
+    textDecoration: 'none',
+    color: '#0f172a',
+  } as const;
+
   return (
     <main style={{ padding: '1.5rem', fontFamily: 'sans-serif' }}>
       <div
@@ -45,11 +52,8 @@ export default async function HomePage({ params }: Props) {
           <Link
             href="/schedule"
             style={{
-              padding: '1.25rem',
+              ...cardStyle,
               border: '1px solid #dbe4ee',
-              borderRadius: 20,
-              textDecoration: 'none',
-              color: '#0f172a',
               background: '#ffffff',
             }}
           >
@@ -62,17 +66,30 @@ export default async function HomePage({ params }: Props) {
           <Link
             href="/chat"
             style={{
-              padding: '1.25rem',
+              ...cardStyle,
               border: '1px solid #dbe4ee',
-              borderRadius: 20,
-              textDecoration: 'none',
-              color: '#0f172a',
               background: '#ffffff',
             }}
           >
             <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>{t('adminShell.chat')}</div>
             <p style={{ margin: '0.4rem 0 0', color: '#475569' }}>{t('adminShell.chatSubtitle')}</p>
           </Link>
+
+          {process.env.NODE_ENV === 'development' ? (
+            <Link
+              href="/dev-login"
+              style={{
+                ...cardStyle,
+                border: '1px dashed #0f766e',
+                background: '#f0fdfa',
+              }}
+            >
+              <div style={{ fontSize: '1.15rem', fontWeight: 700 }}>Local dev login</div>
+              <p style={{ margin: '0.4rem 0 0', color: '#475569' }}>
+                Mint a local bearer token for the gym-admin BFF during development.
+              </p>
+            </Link>
+          ) : null}
         </section>
       </div>
     </main>

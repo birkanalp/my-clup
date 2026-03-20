@@ -13,9 +13,20 @@
   },
   "scripts": {
     "build": "turbo run build",
+    "dev:local": "node ./scripts/dev/bootstrap-local.mjs",
+    "dev:local:env": "node ./scripts/dev/sync-local-env.mjs",
+    "dev:local:reset": "node ./scripts/dev/reset-local.mjs",
+    "dev:local:seed": "node ./scripts/dev/seed-local-data.mjs",
+    "dev:mobile-admin": "pnpm --filter @myclup/mobile-admin start",
+    "dev:mobile-user": "pnpm --filter @myclup/mobile-user start",
+    "dev:web-gym-admin": "pnpm --filter @myclup/web-gym-admin dev",
     "lint": "turbo run lint",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
+    "supabase:reset": "pnpm exec supabase db reset --local --yes",
+    "supabase:start": "pnpm exec supabase start",
+    "supabase:status": "pnpm exec supabase status",
+    "supabase:stop": "pnpm exec supabase stop",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "clean": "turbo run build --force --no-cache"
@@ -24,8 +35,10 @@
     "@myclup/config-eslint": "workspace:*",
     "@myclup/config-prettier": "workspace:*",
     "@playwright/test": "^1.49.0",
+    "@supabase/supabase-js": "^2.47.0",
     "eslint": "^9.15.0",
     "prettier": "^3.4.0",
+    "supabase": "^2.52.6",
     "turbo": "^2.3.0"
   }
 }

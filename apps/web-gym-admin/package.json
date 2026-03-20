@@ -17,6 +17,7 @@
     "@myclup/ui-web": "workspace:*",
     "@myclup/i18n": "workspace:*",
     "@myclup/supabase": "workspace:^",
+    "@supabase/supabase-js": "^2.47.0",
     "next": "^15.1.0",
     "next-intl": "^3.25.0",
     "react": "^19.0.0",
