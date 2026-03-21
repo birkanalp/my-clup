@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { runWorkoutCleanup } from './boundary';
+import { runChatConversationSummary, runMultilingualRewrite, runWorkoutCleanup } from './boundary';
 import type { AiRuntimeConfig } from './env';
 
 const baseConfig: AiRuntimeConfig = {
@@ -65,6 +65,66 @@ describe('runWorkoutCleanup', () => {
     expect(res.ok).toBe(false);
     if (!res.ok) {
       expect(res.reason).toBe('invalid_json');
+    }
+  });
+});
+
+describe('runChatConversationSummary', () => {
+  it('parses valid summary JSON', async () => {
+    const fetchFn = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        response: JSON.stringify({
+          locale: 'en',
+          summary: 'Member asked about freeze policy.',
+          topics: ['membership', 'freeze'],
+          openQuestions: ['Effective date?'],
+          suggestedStaffReplies: ['I can check your contract end date.'],
+        }),
+      }),
+    });
+
+    const res = await runChatConversationSummary({
+      config: baseConfig,
+      transcript: 'member: can I freeze?\nstaff: let me check',
+      locale: 'en',
+      fetchFn: fetchFn as unknown as typeof fetch,
+    });
+
+    expect(res.ok).toBe(true);
+    if (res.ok) {
+      expect(res.value.summary).toContain('freeze');
+      expect(res.value.topics).toContain('membership');
+    }
+  });
+});
+
+describe('runMultilingualRewrite', () => {
+  it('parses valid rewrite JSON', async () => {
+    const fetchFn = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        response: JSON.stringify({
+          sourceLocale: 'en',
+          targetLocale: 'tr',
+          rewrittenText: 'Ders rezervasyonunuz onaylandı.',
+          toneNote: 'Formal TR',
+        }),
+      }),
+    });
+
+    const res = await runMultilingualRewrite({
+      config: baseConfig,
+      text: 'Your class booking is confirmed.',
+      sourceLocale: 'en',
+      targetLocale: 'tr',
+      fetchFn: fetchFn as unknown as typeof fetch,
+    });
+
+    expect(res.ok).toBe(true);
+    if (res.ok) {
+      expect(res.value.targetLocale).toBe('tr');
+      expect(res.value.rewrittenText.length).toBeGreaterThan(0);
     }
   });
 });

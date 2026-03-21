@@ -19,11 +19,17 @@ Authoritative product rules remain in `docs/07-technical-plan.md` §8 and `.curs
 
 ## Slices
 
-| Slice           | Entry               | Output schema                      |
-| --------------- | ------------------- | ---------------------------------- |
-| Workout cleanup | `runWorkoutCleanup` | `WorkoutCleanupOutputSchema` (Zod) |
+| Slice                  | Entry                        | Output schema                           |
+| ---------------------- | ---------------------------- | --------------------------------------- |
+| Workout cleanup        | `runWorkoutCleanup`          | `WorkoutCleanupOutputSchema` (Zod)      |
+| Chat summary (handoff) | `runChatConversationSummary` | `ChatConversationSummarySchema` (Zod)   |
+| Multilingual rewrite   | `runMultilingualRewrite`     | `MultilingualRewriteOutputSchema` (Zod) |
 
-Prompts are **versioned in code** (`workout-cleanup-v1`); add new files for new versions.
+Prompts are **versioned in code** (`*-v1.ts` files); add new files for new versions.
+
+**Chat summary:** Callers must pass **tenant-safe, policy-compliant** transcripts (PII minimization / redaction before model input).
+
+**Multilingual rewrite:** For **campaign or legal** text, require human review in product workflows before publish (see issue #191).
 
 ## Observability
 

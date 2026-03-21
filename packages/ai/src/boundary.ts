@@ -1,7 +1,18 @@
+import type { ZodType } from 'zod';
 import type { AiRuntimeConfig } from './env';
 import type { AiLogger } from './logger';
 import { ollamaGenerateText } from './ollama';
+import { buildChatSummaryPromptV1 } from './prompts/chat-summary-v1';
+import { buildMultilingualRewritePromptV1 } from './prompts/multilingual-rewrite-v1';
 import { buildWorkoutCleanupPromptV1 } from './prompts/workout-cleanup-v1';
+import {
+  ChatConversationSummarySchema,
+  type ChatConversationSummary,
+} from './schemas/chat-summary';
+import {
+  MultilingualRewriteOutputSchema,
+  type MultilingualRewriteOutput,
+} from './schemas/multilingual-rewrite';
 import { WorkoutCleanupOutputSchema, type WorkoutCleanupOutput } from './schemas/workout-cleanup';
 
 export type AiFailureReason =
@@ -26,30 +37,27 @@ function mapOllamaReason(r: string): AiFailureReason {
   return 'unknown';
 }
 
-/**
- * Shared server-side AI boundary — workout text cleanup slice (initial use case).
- */
-export async function runWorkoutCleanup(input: {
+async function runOllamaJsonSlice<T>(opts: {
   config: AiRuntimeConfig;
-  rawNotes: string;
-  locale: string;
+  prompt: string;
+  slice: string;
+  schema: ZodType<T>;
   fetchFn?: typeof fetch;
   logger?: AiLogger;
-}): Promise<AiResult<WorkoutCleanupOutput>> {
-  if (!input.config.enabled) {
-    input.logger?.('warn', 'ai.feature_disabled', { slice: 'workout_cleanup' });
+}): Promise<AiResult<T>> {
+  if (!opts.config.enabled) {
+    opts.logger?.('warn', 'ai.feature_disabled', { slice: opts.slice });
     return { ok: false, reason: 'disabled', message: 'AI disabled via MYCLUP_AI_ENABLED' };
   }
 
-  const prompt = buildWorkoutCleanupPromptV1(input.rawNotes, input.locale);
   const gen = await ollamaGenerateText({
-    baseUrl: input.config.ollamaBaseUrl,
-    model: input.config.model,
-    prompt,
-    timeoutMs: input.config.defaultTimeoutMs,
-    maxRetries: input.config.maxRetries,
-    fetchFn: input.fetchFn,
-    logger: input.logger,
+    baseUrl: opts.config.ollamaBaseUrl,
+    model: opts.config.model,
+    prompt: opts.prompt,
+    timeoutMs: opts.config.defaultTimeoutMs,
+    maxRetries: opts.config.maxRetries,
+    fetchFn: opts.fetchFn,
+    logger: opts.logger,
   });
 
   if (!gen.ok) {
@@ -64,19 +72,81 @@ export async function runWorkoutCleanup(input: {
   try {
     parsedJson = JSON.parse(gen.text) as unknown;
   } catch {
-    input.logger?.('warn', 'ai.output_invalid_json', { slice: 'workout_cleanup' });
+    opts.logger?.('warn', 'ai.output_invalid_json', { slice: opts.slice });
     return { ok: false, reason: 'invalid_json', message: 'Model output was not valid JSON' };
   }
 
-  const safe = WorkoutCleanupOutputSchema.safeParse(parsedJson);
+  const safe = opts.schema.safeParse(parsedJson);
   if (!safe.success) {
-    input.logger?.('warn', 'ai.output_schema_failed', {
-      slice: 'workout_cleanup',
+    opts.logger?.('warn', 'ai.output_schema_failed', {
+      slice: opts.slice,
       issues: safe.error.flatten(),
     });
     return { ok: false, reason: 'schema', message: 'Model JSON failed schema validation' };
   }
 
-  input.logger?.('info', 'ai.slice_success', { slice: 'workout_cleanup' });
+  opts.logger?.('info', 'ai.slice_success', { slice: opts.slice });
   return { ok: true, value: safe.data };
+}
+
+/**
+ * Shared server-side AI boundary — workout text cleanup slice.
+ */
+export async function runWorkoutCleanup(input: {
+  config: AiRuntimeConfig;
+  rawNotes: string;
+  locale: string;
+  fetchFn?: typeof fetch;
+  logger?: AiLogger;
+}): Promise<AiResult<WorkoutCleanupOutput>> {
+  return runOllamaJsonSlice({
+    config: input.config,
+    prompt: buildWorkoutCleanupPromptV1(input.rawNotes, input.locale),
+    slice: 'workout_cleanup',
+    schema: WorkoutCleanupOutputSchema,
+    fetchFn: input.fetchFn,
+    logger: input.logger,
+  });
+}
+
+/**
+ * Summarize a conversation transcript for staff handoff (server-side only).
+ */
+export async function runChatConversationSummary(input: {
+  config: AiRuntimeConfig;
+  /** Redacted or truncated transcript; caller must enforce tenant policy. */
+  transcript: string;
+  locale: string;
+  fetchFn?: typeof fetch;
+  logger?: AiLogger;
+}): Promise<AiResult<ChatConversationSummary>> {
+  return runOllamaJsonSlice({
+    config: input.config,
+    prompt: buildChatSummaryPromptV1(input.transcript, input.locale),
+    slice: 'chat_summary',
+    schema: ChatConversationSummarySchema,
+    fetchFn: input.fetchFn,
+    logger: input.logger,
+  });
+}
+
+/**
+ * Rewrite member-facing copy from one locale to another.
+ */
+export async function runMultilingualRewrite(input: {
+  config: AiRuntimeConfig;
+  text: string;
+  sourceLocale: string;
+  targetLocale: string;
+  fetchFn?: typeof fetch;
+  logger?: AiLogger;
+}): Promise<AiResult<MultilingualRewriteOutput>> {
+  return runOllamaJsonSlice({
+    config: input.config,
+    prompt: buildMultilingualRewritePromptV1(input.text, input.sourceLocale, input.targetLocale),
+    slice: 'multilingual_rewrite',
+    schema: MultilingualRewriteOutputSchema,
+    fetchFn: input.fetchFn,
+    logger: input.logger,
+  });
 }
