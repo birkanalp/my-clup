@@ -116,6 +116,22 @@
     "devLoginCardTitle": "Local dev login",
     "devLoginCardBody": "Mint a local bearer token for the gym-admin BFF during development.",
     "metricsError": "Could not load metrics",
+    "signIn": {
+      "eyebrow": "Gym admin",
+      "title": "Sign in to your panel",
+      "subtitle": "Use your gym staff credentials to access the admin panel.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "errorInvalidCredentials": "Invalid email or password.",
+      "errorUnauthorizedRole": "Your account does not have access to the gym admin panel.",
+      "errorGeneric": "Sign in failed. Please try again.",
+      "errorConfigMissing": "Auth is not configured in this build."
+    },
+    "signOut": "Sign out",
     "metrics": {
       "sessionsLabel": "Sessions in view",
       "sessionsHint": "Loaded from the shared booking API for your tenant."
