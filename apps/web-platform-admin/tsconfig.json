@@ -7,7 +7,20 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@myclup/supabase": ["../../packages/supabase/src/index.ts"],
+      "@myclup/contracts": ["../../packages/contracts/src/index.ts"],
+      "@myclup/contracts/auth": ["../../packages/contracts/src/auth/index.ts"],
+      "@myclup/contracts/health": ["../../packages/contracts/src/health/index.ts"],
+      "@myclup/contracts/common": ["../../packages/contracts/src/common/index.ts"],
+      "@myclup/contracts/chat": ["../../packages/contracts/src/chat/index.ts"],
+      "@myclup/contracts/membership": ["../../packages/contracts/src/membership/index.ts"],
+      "@myclup/contracts/bookings": ["../../packages/contracts/src/bookings/index.ts"],
+      "@myclup/contracts/billing": ["../../packages/contracts/src/billing/index.ts"],
+      "@myclup/contracts/addons": ["../../packages/contracts/src/addons/index.ts"],
+      "@myclup/types": ["../../packages/types/src/index.ts"],
+      "@myclup/i18n": ["../../packages/i18n/src/index.ts"],
+      "@myclup/utils": ["../../packages/utils/src/index.ts"]
     },
     "allowJs": true
   },
