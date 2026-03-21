@@ -1,11 +1,16 @@
 'use client';
 
+import { notFound } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import { clearDevAccessToken, setDevAccessToken } from '@/src/lib/devAccessToken';
 
 export default function DevLoginPage() {
+  if (process.env.NODE_ENV !== 'development') {
+    notFound();
+  }
+
   const router = useRouter();
   const [email, setEmail] = useState(process.env.NEXT_PUBLIC_DEV_USER_EMAIL ?? '');
   const [password, setPassword] = useState(process.env.NEXT_PUBLIC_DEV_USER_PASSWORD ?? '');

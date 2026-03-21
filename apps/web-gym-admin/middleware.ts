@@ -10,8 +10,13 @@ const intlMiddleware = createMiddleware(routing);
  * Paths that do not require authentication. These are locale-prefixed paths
  * matched AFTER stripping the locale prefix (i.e. the pathname without the
  * locale segment).
+ *
+ * /dev-login is only public in development — never in production or test.
  */
-const PUBLIC_PATHS = new Set(['/sign-in', '/dev-login']);
+const PUBLIC_PATHS = new Set([
+  '/sign-in',
+  ...(process.env.NODE_ENV === 'development' ? ['/dev-login'] : []),
+]);
 
 /**
  * Returns the pathname without the leading locale segment.
@@ -45,7 +50,7 @@ export default async function middleware(request: NextRequest): Promise<NextResp
   // Determine the path without locale prefix for public-path matching.
   const pathWithoutLocale = stripLocale(pathname, routing.locales);
 
-  // Public paths: sign-in, dev-login (dev-login only active in development).
+  // Public paths: sign-in (and dev-login only when NODE_ENV === 'development').
   if (PUBLIC_PATHS.has(pathWithoutLocale)) {
     return intlResponse;
   }
