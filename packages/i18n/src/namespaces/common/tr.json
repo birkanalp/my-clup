@@ -116,6 +116,22 @@
     "devLoginCardTitle": "Yerel geliştirici girişi",
     "devLoginCardBody": "Geliştirme sırasında gym-admin BFF için yerel bearer üretin.",
     "metricsError": "Metrikler yüklenemedi",
+    "signIn": {
+      "eyebrow": "Salon yönetimi",
+      "title": "Panele giriş yapın",
+      "subtitle": "Yönetim paneline erişmek için salon personeli hesabınızı kullanın.",
+      "emailLabel": "E-posta",
+      "emailPlaceholder": "siz@ornek.com",
+      "passwordLabel": "Şifre",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Giriş yap",
+      "submitting": "Giriş yapılıyor…",
+      "errorInvalidCredentials": "Geçersiz e-posta veya şifre.",
+      "errorUnauthorizedRole": "Hesabınızın salon yönetim paneline erişim yetkisi yok.",
+      "errorGeneric": "Giriş başarısız. Lütfen tekrar deneyin.",
+      "errorConfigMissing": "Bu sürümde kimlik doğrulama yapılandırılmamış."
+    },
+    "signOut": "Çıkış yap",
     "metrics": {
       "sessionsLabel": "Görünümdeki seanslar",
       "sessionsHint": "Kiracınız için paylaşılan rezervasyon API’sinden yüklenir."

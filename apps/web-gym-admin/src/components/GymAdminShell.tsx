@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/src/i18n/navigation';
 import { AppLanguageSwitcher } from '@/src/components/AppLanguageSwitcher';
@@ -36,7 +36,16 @@ export function GymAdminShell({ children }: Props) {
   const [whoami, setWhoami] = useState<WhoamiResponse | null>(null);
   const [authReady, setAuthReady] = useState(false);
 
-  const skipAuth = pathname?.includes('/dev-login') ?? false;
+  const skipAuth =
+    (pathname?.includes('/dev-login') ?? false) || (pathname?.includes('/sign-in') ?? false);
+
+  const handleSignOut = useCallback(async () => {
+    try {
+      await fetch('/api/v1/auth/sign-out', { method: 'POST', credentials: 'include' });
+    } finally {
+      router.replace('/sign-in');
+    }
+  }, [router]);
 
   useEffect(() => {
     if (skipAuth) {
@@ -55,7 +64,7 @@ export function GymAdminShell({ children }: Props) {
       })
       .catch(() => {
         if (!cancelled) {
-          router.replace(`/dev-login`);
+          router.replace('/sign-in');
         }
       });
 
@@ -156,6 +165,25 @@ export function GymAdminShell({ children }: Props) {
             </Link>
           ) : null}
           <AppLanguageSwitcher />
+          <button
+            type="button"
+            onClick={() => {
+              void handleSignOut();
+            }}
+            style={{
+              border: '1px solid #e2e8f0',
+              borderRadius: 10,
+              padding: '0.55rem 0.85rem',
+              background: 'transparent',
+              cursor: 'pointer',
+              textAlign: 'left',
+              fontSize: '0.85rem',
+              color: '#64748b',
+              fontWeight: 500,
+            }}
+          >
+            {t('gymAdminWeb.signOut')}
+          </button>
         </div>
       </aside>
       <div style={{ flex: 1, minWidth: 0, background: '#ffffff' }}>{children}</div>
