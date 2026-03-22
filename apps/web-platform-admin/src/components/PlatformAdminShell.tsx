@@ -35,6 +35,11 @@ export function PlatformAdminShell({ children }: { children: React.ReactNode }) 
     } as const;
   };
 
+  async function handleSignOut() {
+    await fetch('/api/v1/auth/sign-out', { method: 'POST', credentials: 'include' });
+    window.location.href = window.location.pathname.replace(/^(\/[^/]+).*/, '$1/sign-in');
+  }
+
   return (
     <div style={{ display: 'flex', minHeight: '100vh', fontFamily: 'sans-serif' }}>
       <aside
@@ -72,8 +77,27 @@ export function PlatformAdminShell({ children }: { children: React.ReactNode }) 
             </Link>
           ))}
         </nav>
-        <div style={{ marginTop: 'auto' }}>
+        <div style={{ marginTop: 'auto', display: 'grid', gap: '0.75rem' }}>
           <AppLanguageSwitcher />
+          <button
+            data-testid="sign-out-button"
+            onClick={() => {
+              void handleSignOut();
+            }}
+            style={{
+              border: '1px solid #e2e8f0',
+              borderRadius: 10,
+              padding: '0.55rem 0.85rem',
+              background: 'transparent',
+              color: '#64748b',
+              fontWeight: 500,
+              fontSize: '0.95rem',
+              cursor: 'pointer',
+              textAlign: 'left',
+            }}
+          >
+            {t('platformAdminWeb.signOut')}
+          </button>
         </div>
       </aside>
       <div style={{ flex: 1, minWidth: 0, background: '#fff' }}>{children}</div>

@@ -177,6 +177,22 @@
   "platformAdminWeb": {
     "eyebrow": "Platform kontrolü",
     "productName": "Platform yönetimi",
+    "signIn": {
+      "eyebrow": "Platform yönetimi",
+      "title": "Platform yönetimine giriş yapın",
+      "subtitle": "Yönetim paneline erişmek için platform personel kimlik bilgilerinizi kullanın.",
+      "emailLabel": "E-posta",
+      "emailPlaceholder": "siz@ornek.com",
+      "passwordLabel": "Şifre",
+      "passwordPlaceholder": "••••••••",
+      "submit": "Giriş yap",
+      "submitting": "Giriş yapılıyor…",
+      "errorInvalidCredentials": "Geçersiz e-posta veya şifre.",
+      "errorUnauthorizedRole": "Hesabınızın platform yönetim paneline erişimi yok.",
+      "errorGeneric": "Giriş başarısız. Lütfen tekrar deneyin.",
+      "errorConfigMissing": "Bu derlemede kimlik doğrulama yapılandırılmamış."
+    },
+    "signOut": "Çıkış yap",
     "dashboardTitle": "Platform paneli",
     "dashboardSubtitle": "Kiracılar arası gözetim, destek araçları ve yönetişim. API rotaları buraya taşındığında paylaşılan BFF için NEXT_PUBLIC_BFF_BASE_URL kullanın.",
     "metricsPlaceholder": "Raporlama uçları bağlandığında operasyonel KPI’lar kiracı güvenli şekilde toplanacak.",
