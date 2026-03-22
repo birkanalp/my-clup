@@ -38,6 +38,22 @@
     "chat": "Sohbet",
     "chatSubtitle": "Admin kabuğundan çıkmadan aktif üye görüşmelerini yönetin."
   },
+  "memberAuth": {
+    "eyebrow": "Üye erişimi",
+    "title": "Üye uygulamasına giriş",
+    "subtitle": "Üyelik, rezervasyon ve sohbete erişmek için salon üye bilgilerinizi kullanın.",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "siz@ornek.com",
+    "passwordLabel": "Şifre",
+    "passwordPlaceholder": "••••••••",
+    "signIn": "Giriş yap",
+    "signOut": "Çıkış yap",
+    "supabaseMissing": "Bu sürümde kimlik doğrulama yapılandırılmamış.",
+    "error": {
+      "invalidCredentials": "Geçersiz e-posta veya şifre.",
+      "generic": "Giriş başarısız. Lütfen tekrar deneyin."
+    }
+  },
   "staffAuth": {
     "eyebrow": "Personel erişimi",
     "title": "Personel araçlarına giriş",
