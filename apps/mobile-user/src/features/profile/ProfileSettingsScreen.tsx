@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Card, ScreenContainer } from '@myclup/ui-native';
 import type { SupportedLocale } from '@myclup/types';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +11,7 @@ import { AppStateBlock } from '../../components/AppStateBlock';
 import { AppStatusBadge } from '../../components/AppStatusBadge';
 import { AppText } from '../../components/AppText';
 import { changeLanguageAndPersist } from '../../lib/i18n';
+import { supabase } from '../../lib/supabase';
 import { appTheme } from '../../theme/appTheme';
 import { buildProfilePatchInput } from './profileForm';
 import { useProfile } from './useProfile';
@@ -44,7 +46,15 @@ const placeholderCards = [
 
 export function ProfileSettingsScreen() {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const { data, error, loading, refresh, saveProfile, saving } = useProfile();
+
+  const handleSignOut = async () => {
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    router.replace('/sign-in');
+  };
   const [displayName, setDisplayName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const [locale, setLocale] = useState<SupportedLocale>('en');
@@ -260,6 +270,14 @@ export function ProfileSettingsScreen() {
               </Card>
             ))}
           </View>
+        </View>
+        <View style={styles.section}>
+          <AppButton
+            label={t('memberAuth.signOut')}
+            icon="logout"
+            variant="ghost"
+            onPress={() => void handleSignOut()}
+          />
         </View>
       </ScrollView>
     </ScreenContainer>

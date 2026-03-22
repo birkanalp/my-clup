@@ -38,6 +38,22 @@
     "chat": "Chat",
     "chatSubtitle": "Handle active member conversations without leaving the admin shell."
   },
+  "memberAuth": {
+    "eyebrow": "Member access",
+    "title": "Sign in to member app",
+    "subtitle": "Use your gym member credentials to access memberships, bookings, and chat.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "supabaseMissing": "Auth is not configured in this build.",
+    "error": {
+      "invalidCredentials": "Invalid email or password.",
+      "generic": "Sign in failed. Please try again."
+    }
+  },
   "staffAuth": {
     "eyebrow": "Staff access",
     "title": "Sign in to staff tools",
