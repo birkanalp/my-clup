@@ -110,7 +110,18 @@
   "staffWorkouts": {
     "title": "Workouts",
     "subtitle": "Programming and templates for instructors.",
-    "placeholder": "Workout builder and AI cleanup will connect to the shared AI service boundary. Use the web admin for full editing until mobile flows ship."
+    "placeholder": "Workout builder and AI cleanup will connect to the shared AI service boundary. Use the web admin for full editing until mobile flows ship.",
+    "templatesTitle": "Branch templates",
+    "templatesSubtitle": "Read-only previews until assignments sync from the gym admin panel.",
+    "templateA": "Strength block — lower body",
+    "templateB": "Metcon — 20 min cap",
+    "templateC": "Mobility reset",
+    "templateMeta": "{{duration}} · {{focus}}",
+    "quickLogTitle": "Session quick log",
+    "quickLogBody": "Per-member logs and AI-assisted text cleanup will use the server-side AI boundary (packages/ai) with explicit locale. For now, record details in the web admin workout tools.",
+    "focusLower": "Lower chain",
+    "focusConditioning": "Conditioning",
+    "focusRecovery": "Recovery"
   },
   "staffSales": {
     "title": "Leads",
@@ -123,7 +134,9 @@
     "pipelineTitle": "Today’s pipeline",
     "pipelineSubtitle": "Persisted on device via AsyncStorage until a staff lead sync API is available.",
     "empty": "No leads captured yet.",
-    "sourceUnknown": "Unknown source"
+    "sourceUnknown": "Unknown source",
+    "webLeadsTitle": "Website inquiries",
+    "webLeadsBody": "Contact submissions from the public marketing site are stored server-side. A staff-facing sync API will list them here once the gym BFF exposes tenant-scoped marketing leads."
   },
   "gymAdminWeb": {
     "productName": "Gym admin",

@@ -110,7 +110,18 @@
   "staffWorkouts": {
     "title": "Antrenmanlar",
     "subtitle": "Eğitmenler için program ve şablonlar.",
-    "placeholder": "Antrenman oluşturucu ve AI düzenleme paylaşılan AI hizmet sınırına bağlanacak. Tam düzenleme için web yönetimini kullanın."
+    "placeholder": "Antrenman oluşturucu ve AI düzenleme paylaşılan AI hizmet sınırına bağlanacak. Tam düzenleme için web yönetimini kullanın.",
+    "templatesTitle": "Şube şablonları",
+    "templatesSubtitle": "Atamalar salon yönetim panelinden gelene kadar salt okunur önizleme.",
+    "templateA": "Kuvvet — alt gövde",
+    "templateB": "Metcon — 20 dk tavan",
+    "templateC": "Mobilite sıfırlama",
+    "templateMeta": "{{duration}} · {{focus}}",
+    "quickLogTitle": "Hızlı seans notu",
+    "quickLogBody": "Üye başına kayıtlar ve yapay zekâ destekli metin düzenleme, sunucu tarafı yapay zekâ sınırını (packages/ai) ve açık dili kullanacak. Şimdilik ayrıntıları web panelindeki antrenman araçlarına yazın.",
+    "focusLower": "Alt zincir",
+    "focusConditioning": "Kondisyon",
+    "focusRecovery": "Toparlanma"
   },
   "staffSales": {
     "title": "Potansiyel müşteriler",
@@ -123,7 +134,9 @@
     "pipelineTitle": "Bugünün hunisi",
     "pipelineSubtitle": "Personel lead senkron API’si gelene kadar AsyncStorage ile cihazda saklanır.",
     "empty": "Henüz kayıt yok.",
-    "sourceUnknown": "Kaynak bilinmiyor"
+    "sourceUnknown": "Kaynak bilinmiyor",
+    "webLeadsTitle": "Web sitesi talepleri",
+    "webLeadsBody": "Halka açık pazarlama sitesindeki iletişim formları sunucuda saklanır. Salon BFF kiracı kapsamlı pazarlama lead’lerini sunduğunda burada listelenecek."
   },
   "gymAdminWeb": {
     "productName": "Salon yönetimi",
