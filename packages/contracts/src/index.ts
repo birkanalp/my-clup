@@ -16,4 +16,5 @@ export * from './listing';
 export * from './locale';
 export * from './members';
 export * from './membership';
+export * from './platform';
 export * from './reports';

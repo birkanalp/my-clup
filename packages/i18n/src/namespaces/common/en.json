@@ -482,6 +482,37 @@
     "dashboardTitle": "Platform dashboard",
     "dashboardSubtitle": "Cross-tenant oversight, support tooling, and governance. Wire this app to the shared BFF via NEXT_PUBLIC_BFF_BASE_URL when API routes are mounted here.",
     "metricsPlaceholder": "Operational KPIs will aggregate tenant-safe metrics once reporting endpoints are connected.",
+    "dataPreview": {
+      "empty": "No rows to display. With a local Supabase service role, this view loads tenant-safe read models.",
+      "yes": "Yes",
+      "no": "No",
+      "name": "Name",
+      "slug": "Slug",
+      "active": "Active",
+      "published": "Listed",
+      "city": "City",
+      "country": "Country",
+      "createdAt": "Created",
+      "userId": "User ID",
+      "displayName": "Display name",
+      "locale": "Locale",
+      "roles": "Roles",
+      "eventType": "Event",
+      "actor": "Actor",
+      "target": "Target",
+      "time": "Time",
+      "invoicesTotal": "Invoices (total)",
+      "invoicesOpen": "Open invoices",
+      "invoicesPaid": "Paid invoices",
+      "instancesTotal": "Membership instances",
+      "instancesActive": "Active",
+      "instancesCancelled": "Cancelled",
+      "conversationsTotal": "Conversations",
+      "localeDistribution": "Profile locale distribution",
+      "cmsStatLabel": "Conversations (content/support volume indicator)",
+      "supportSummary": "Total conversations (support queue indicator)",
+      "moderationSummary": "Total conversations (moderation scope indicator)"
+    },
     "sidebar": {
       "dashboard": "Dashboard",
       "gyms": "Gyms & tenants",
@@ -526,7 +557,8 @@
     },
     "localesPage": {
       "title": "Localization operations",
-      "subtitle": "Coordinate default locales, fallbacks, and translation coverage."
+      "subtitle": "Coordinate default locales, fallbacks, and translation coverage.",
+      "tableCount": "Profiles"
     },
     "auditPage": {
       "title": "Audit log",
