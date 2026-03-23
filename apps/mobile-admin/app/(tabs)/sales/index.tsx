@@ -74,6 +74,11 @@ export default function SalesLeadsScreen() {
             )}
           />
         </Card>
+
+        <Card>
+          <SectionHeader title={t('staffSales.webLeadsTitle')} subtitle="" />
+          <Text style={styles.webBody}>{t('staffSales.webLeadsBody')}</Text>
+        </Card>
       </View>
     </ScreenContainer>
   );
@@ -101,4 +106,10 @@ const styles = StyleSheet.create({
   },
   rowTitle: { fontSize: 16, fontWeight: '600', color: '#0f172a' },
   rowMeta: { fontSize: 13, color: '#64748b', marginTop: 4 },
+  webBody: {
+    marginTop: 8,
+    color: '#64748b',
+    fontSize: 15,
+    lineHeight: 22,
+  },
 });
