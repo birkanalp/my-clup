@@ -29,6 +29,7 @@
     "supabase:stop": "pnpm exec supabase stop",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
+    "test:e2e": "playwright test",
     "clean": "turbo run build --force --no-cache"
   },
   "devDependencies": {

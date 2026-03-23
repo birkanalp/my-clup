@@ -108,9 +108,9 @@ The web admin does not ship a product sign-in screen yet. Use `http://localhost:
 
 ### E2E (Playwright)
 
-- `playwright.config.ts` exists at root as a skeleton.
-- Add E2E tests when Next.js apps exist (Epic #14+).
-- Run with `pnpm exec playwright test` from root.
+- Root `playwright.config.ts` defines projects: `web-site` (:3000), `web-gym-admin` (:3001), `web-platform-admin` (:3002). Specs live under `e2e/<app>/`.
+- Start the apps you need, then run `pnpm test:e2e` (or `pnpm exec playwright test`).
+- Override bases with `E2E_WEB_SITE_URL`, `E2E_WEB_GYM_ADMIN_URL`, `E2E_WEB_PLATFORM_ADMIN_URL` if ports differ.
 
 ### Mobile (React Native Testing Library)
 
