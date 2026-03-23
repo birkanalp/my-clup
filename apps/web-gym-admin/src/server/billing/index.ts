@@ -2,9 +2,12 @@ import type { NextRequest } from 'next/server';
 import type {
   ApplyDiscountRequest,
   ApplyDiscountResponse,
+  BillingSummaryRequest,
+  BillingSummaryResponse,
   CreateInvoiceRequest,
   CreateInvoiceResponse,
   GetInvoiceDetailResponse,
+  Invoice,
   ListInstallmentsRequest,
   ListInstallmentsResponse,
   ListInvoicesRequest,
@@ -15,6 +18,8 @@ import type {
   ListReceivablesResponse,
   LogPaymentRequest,
   LogPaymentResponse,
+  RecordInvoicePaymentRequest,
+  RecordInvoicePaymentResponse,
   SettleReceivableRequest,
   SettleReceivableResponse,
   TriggerPaymentReminderRequest,
@@ -427,4 +432,157 @@ export async function triggerPaymentReminderServer(
     gymId: scoped.scope.gymId,
     branchId: scoped.scope.branchId,
   });
+}
+
+export async function getBillingSummaryServer(
+  req: NextRequest,
+  params: BillingSummaryRequest
+): Promise<BillingSummaryResponse | null> {
+  const scoped = await ensureScopeForRead(req, params.gymId, params.branchId);
+  if (!scoped) return null;
+
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+
+  // Outstanding: open invoices not yet paid
+  const [openResult, overdueResult, paidResult] = await Promise.all([
+    scoped.client
+      .from('invoices')
+      .select('total_amount, currency')
+      .eq('gym_id', scoped.scope.gymId)
+      .in('status', ['open', 'draft']),
+    scoped.client
+      .from('invoices')
+      .select('total_amount, currency')
+      .eq('gym_id', scoped.scope.gymId)
+      .eq('status', 'overdue'),
+    scoped.client
+      .from('invoices')
+      .select('total_amount, currency')
+      .eq('gym_id', scoped.scope.gymId)
+      .eq('status', 'paid')
+      .gte('paid_at', startOfMonth),
+  ]);
+
+  const currency =
+    openResult.data?.[0]?.currency ??
+    overdueResult.data?.[0]?.currency ??
+    paidResult.data?.[0]?.currency ??
+    'TRY';
+
+  const sum = (rows: Array<{ total_amount: number | null }> | null) =>
+    (rows ?? []).reduce((acc, row) => acc + (row.total_amount ?? 0), 0);
+
+  return {
+    outstandingAmount: sum(openResult.data),
+    overdueAmount: sum(overdueResult.data),
+    collectedThisMonthAmount: sum(paidResult.data),
+    currency,
+  };
+}
+
+export async function recordInvoicePaymentServer(
+  req: NextRequest,
+  invoiceId: string,
+  input: RecordInvoicePaymentRequest
+): Promise<RecordInvoicePaymentResponse | null> {
+  const currentUser = await getCurrentUser(req);
+  if (!currentUser) return null;
+  if (!SUPABASE_URL || !SERVICE_ROLE_KEY) return null;
+
+  const client = getClient();
+  const invoice = await getInvoiceDetail(client, invoiceId);
+  if (!invoice) {
+    throw new NotFoundError('Invoice not found');
+  }
+
+  const scopes = await resolveTenantScope(
+    client,
+    currentUser.user.id,
+    invoice.gymId,
+    invoice.branchId ?? undefined
+  );
+  if (scopes.length === 0) {
+    throw new ForbiddenError('No tenant scope for invoice payment');
+  }
+  const scope = scopes[0];
+  await requirePermission(client, currentUser.user.id, scope, 'payments:write');
+
+  const actorRole = await getActorRole(client, currentUser.user.id, scope);
+  const paidAt = input.paidAt ?? new Date().toISOString();
+  const timestamp = new Date().toISOString();
+
+  // Record the payment
+  await logPayment(client, {
+    gymId: scope.gymId,
+    branchId: scope.branchId,
+    memberId: invoice.memberId,
+    invoiceId,
+    currency: invoice.currency,
+    amount: input.amount,
+    method: input.method,
+    status: 'succeeded',
+    paidAt,
+  });
+
+  // Mark invoice as paid
+  const { data: updatedRows, error: updateError } = await client
+    .from('invoices')
+    .update({ status: 'paid', paid_at: paidAt, updated_at: timestamp })
+    .eq('id', invoiceId)
+    .select(
+      'id, gym_id, branch_id, member_id, membership_instance_id, status, currency, subtotal_amount, discount_amount, total_amount, due_at, issued_at, paid_at, created_at, updated_at'
+    );
+
+  if (updateError) {
+    console.error('[billing] invoice payment update failed', updateError);
+    throw new Error('invoice_payment_failed');
+  }
+
+  const row = updatedRows?.[0];
+  if (!row) {
+    throw new NotFoundError('Invoice not found after update');
+  }
+
+  await writeBillingAudit(client, {
+    event_type: AUDIT_EVENT_TYPES.billing_override,
+    actor_id: currentUser.user.id,
+    target_type: 'invoices',
+    target_id: invoiceId,
+    payload: {
+      subscription_id: invoiceId,
+      previous_state: invoice.status,
+      new_state: 'paid',
+      reason: input.note,
+      actor_role: actorRole,
+      tenant_id: scope.gymId,
+      action: 'invoice_mark_paid',
+      before_state: invoice.status,
+      after_state: 'paid',
+      timestamp,
+    },
+    tenant_context: { gym_id: scope.gymId, branch_id: scope.branchId ?? undefined },
+  });
+
+  // Build response matching Invoice schema
+  const updatedInvoice: Invoice = {
+    id: row.id,
+    gymId: row.gym_id,
+    branchId: row.branch_id,
+    memberId: row.member_id,
+    membershipInstanceId: row.membership_instance_id,
+    status: row.status as Invoice['status'],
+    currency: row.currency,
+    subtotalAmount: row.subtotal_amount,
+    discountAmount: row.discount_amount,
+    totalAmount: row.total_amount,
+    dueAt: row.due_at,
+    issuedAt: row.issued_at,
+    paidAt: row.paid_at,
+    lineItems: invoice.lineItems,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+
+  return updatedInvoice;
 }

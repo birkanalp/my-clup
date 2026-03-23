@@ -12,4 +12,5 @@ export * from './chat';
 export * from './common';
 export * from './health';
 export * from './locale';
+export * from './members';
 export * from './membership';

@@ -1,6 +1,8 @@
 import type {
   CancelMembershipRequest,
   CancelMembershipResponse,
+  CreateMembershipPlanRequest,
+  CreateMembershipPlanResponse,
   FreezeMembershipRequest,
   FreezeMembershipResponse,
   GetMembershipInstanceResponse,
@@ -8,18 +10,24 @@ import type {
   ListMembershipInstancesResponse,
   ListMembershipPlansRequest,
   ListMembershipPlansResponse,
+  MembershipPlan,
   RenewMembershipRequest,
   RenewMembershipResponse,
+  UpdateMembershipPlanRequest,
+  UpdateMembershipPlanResponse,
   ValidateMembershipAccessRequest,
   ValidateMembershipAccessResponse,
 } from '@myclup/contracts/membership';
 import {
   cancelMembershipContract,
+  createMembershipPlanContract,
+  deactivateMembershipPlanContract,
   freezeMembershipContract,
   getMembershipInstanceContract,
   listMembershipInstancesContract,
   listMembershipPlansContract,
   renewMembershipContract,
+  updateMembershipPlanContract,
   validateMembershipAccessContract,
 } from '@myclup/contracts/membership';
 import type { ListInvoicesRequest, ListInvoicesResponse } from '@myclup/contracts/billing';
@@ -125,6 +133,40 @@ export function createMembershipApi(request: RequestFn) {
       return request(
         listPaymentsContract as ApiContract<ListPaymentsRequest, ListPaymentsResponse>,
         params
+      );
+    },
+
+    async createMembershipPlan(
+      input: CreateMembershipPlanRequest
+    ): Promise<CreateMembershipPlanResponse> {
+      return request(
+        createMembershipPlanContract as ApiContract<
+          CreateMembershipPlanRequest,
+          CreateMembershipPlanResponse
+        >,
+        input
+      );
+    },
+
+    async updateMembershipPlan(
+      id: string,
+      input: UpdateMembershipPlanRequest
+    ): Promise<UpdateMembershipPlanResponse> {
+      return request(
+        updateMembershipPlanContract as ApiContract<
+          UpdateMembershipPlanRequest,
+          UpdateMembershipPlanResponse
+        >,
+        input,
+        { pathParams: { id } }
+      );
+    },
+
+    async deactivateMembershipPlan(id: string): Promise<MembershipPlan> {
+      return request(
+        deactivateMembershipPlanContract as ApiContract<undefined, MembershipPlan>,
+        undefined,
+        { pathParams: { id } }
       );
     },
   };

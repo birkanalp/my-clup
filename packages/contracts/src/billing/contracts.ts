@@ -1,6 +1,8 @@
 import {
   ApplyDiscountRequestSchema,
   ApplyDiscountResponseSchema,
+  BillingSummaryRequestSchema,
+  BillingSummaryResponseSchema,
   CreateInvoiceRequestSchema,
   CreateInvoiceResponseSchema,
   GetInvoiceDetailRequestSchema,
@@ -15,6 +17,8 @@ import {
   ListReceivablesResponseSchema,
   LogPaymentRequestSchema,
   LogPaymentResponseSchema,
+  RecordInvoicePaymentRequestSchema,
+  RecordInvoicePaymentResponseSchema,
   SettleReceivableRequestSchema,
   SettleReceivableResponseSchema,
   TriggerPaymentReminderRequestSchema,
@@ -89,4 +93,18 @@ export const triggerPaymentReminderContract = {
   method: 'POST' as const,
   request: TriggerPaymentReminderRequestSchema,
   response: TriggerPaymentReminderResponseSchema,
+} as const;
+
+export const getBillingSummaryContract = {
+  path: '/api/v1/billing/summary',
+  method: 'GET' as const,
+  request: BillingSummaryRequestSchema,
+  response: BillingSummaryResponseSchema,
+} as const;
+
+export const recordInvoicePaymentContract = {
+  path: '/api/v1/billing/invoices/:id/payments',
+  method: 'POST' as const,
+  request: RecordInvoicePaymentRequestSchema,
+  response: RecordInvoicePaymentResponseSchema,
 } as const;
