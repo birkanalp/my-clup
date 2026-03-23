@@ -16,8 +16,14 @@ export type Amenity = z.infer<typeof AmenitySchema>;
 
 export const OperatingHoursDaySchema = z.object({
   open: z.boolean(),
-  openTime: z.string().regex(/^\d{2}:\d{2}$/).nullable(),
-  closeTime: z.string().regex(/^\d{2}:\d{2}$/).nullable(),
+  openTime: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/)
+    .nullable(),
+  closeTime: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/)
+    .nullable(),
 });
 export type OperatingHoursDay = z.infer<typeof OperatingHoursDaySchema>;
 

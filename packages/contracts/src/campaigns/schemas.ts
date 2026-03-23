@@ -3,11 +3,7 @@ import { z } from 'zod';
 const UuidSchema = z.string().uuid();
 const IsoDatetimeSchema = z.string().datetime();
 
-export const CampaignTargetSegmentSchema = z.enum([
-  'all_members',
-  'expiring_soon',
-  'inactive',
-]);
+export const CampaignTargetSegmentSchema = z.enum(['all_members', 'expiring_soon', 'inactive']);
 export type CampaignTargetSegment = z.infer<typeof CampaignTargetSegmentSchema>;
 
 export const CampaignStatusSchema = z.enum(['draft', 'sent', 'failed']);

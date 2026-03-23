@@ -164,9 +164,7 @@ export function ReportsWorkspace({ api = getApi() }: Props) {
       </div>
 
       {/* Loading state */}
-      {loading && (
-        <p style={{ color: '#64748b' }}>{t('gymAdminWeb.reports.loadingBody')}</p>
-      )}
+      {loading && <p style={{ color: '#64748b' }}>{t('gymAdminWeb.reports.loadingBody')}</p>}
 
       {/* Error state */}
       {!loading && error && (

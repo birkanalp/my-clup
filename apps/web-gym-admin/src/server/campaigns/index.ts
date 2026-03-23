@@ -46,7 +46,10 @@ export async function listCampaigns(req: NextRequest): Promise<ListCampaignsResp
 
   let query = client
     .from('campaigns')
-    .select('id, gym_id, title, message_body, target_segment, status, sent_at, delivery_count, created_at, updated_at', { count: 'exact' })
+    .select(
+      'id, gym_id, title, message_body, target_segment, status, sent_at, delivery_count, created_at, updated_at',
+      { count: 'exact' }
+    )
     .eq('gym_id', scope.gymId)
     .order('created_at', { ascending: false });
 
@@ -105,7 +108,9 @@ export async function createCampaign(
       created_at: now,
       updated_at: now,
     })
-    .select('id, gym_id, title, message_body, target_segment, status, sent_at, delivery_count, created_at, updated_at')
+    .select(
+      'id, gym_id, title, message_body, target_segment, status, sent_at, delivery_count, created_at, updated_at'
+    )
     .single();
 
   if (error) throw new Error(`createCampaign failed: ${error.message}`);
@@ -146,11 +151,7 @@ export async function sendCampaign(
     throw new NotFoundError('Campaign not found');
   }
 
-  const scopes = await resolveTenantScope(
-    client,
-    currentUser.user.id,
-    campaign.gym_id as string
-  );
+  const scopes = await resolveTenantScope(client, currentUser.user.id, campaign.gym_id as string);
   if (scopes.length === 0) throw new ForbiddenError('No tenant scope for campaign send');
 
   const scope = scopes[0];

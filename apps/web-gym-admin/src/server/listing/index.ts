@@ -46,7 +46,8 @@ function rowToListing(row: Record<string, unknown>): GetListingResponse {
     phone: (row.phone as string | null) ?? null,
     website: (row.website as string | null) ?? null,
     amenities: ((row.amenities as string[]) ?? []) as GetListingResponse['amenities'],
-    operatingHours: (row.operating_hours as GetListingResponse['operatingHours']) ?? DEFAULT_OPERATING_HOURS,
+    operatingHours:
+      (row.operating_hours as GetListingResponse['operatingHours']) ?? DEFAULT_OPERATING_HOURS,
     isPublished: (row.is_published as boolean) ?? false,
     updatedAt: (row.updated_at as string) ?? new Date().toISOString(),
   };

@@ -18,9 +18,7 @@ function getClient() {
   });
 }
 
-export async function getReportSummary(
-  req: NextRequest
-): Promise<ReportSummaryResponse | null> {
+export async function getReportSummary(req: NextRequest): Promise<ReportSummaryResponse | null> {
   const currentUser = await getCurrentUser(req);
   if (!currentUser) return null;
   if (!SUPABASE_URL || !SERVICE_ROLE_KEY) return null;

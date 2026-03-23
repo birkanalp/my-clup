@@ -140,7 +140,14 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
   return (
     <div style={{ padding: '1.5rem', maxWidth: 1024, margin: '0 auto' }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          marginBottom: '1.5rem',
+        }}
+      >
         <div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0 }}>
             {t('gymAdminWeb.campaigns.heroTitle')}
@@ -183,31 +190,71 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
             {t('gymAdminWeb.campaigns.formTitle')}
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontWeight: 500, fontSize: '0.875rem' }}>
+            <label
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.25rem',
+                fontWeight: 500,
+                fontSize: '0.875rem',
+              }}
+            >
               {t('gymAdminWeb.campaigns.formLabelTitle')}
               <input
                 value={formTitle}
                 onChange={(e) => setFormTitle(e.target.value)}
                 placeholder={t('gymAdminWeb.campaigns.formPlaceholderTitle')}
-                style={{ padding: '0.5rem', borderRadius: 4, border: '1px solid #cbd5e1', fontSize: '0.875rem' }}
+                style={{
+                  padding: '0.5rem',
+                  borderRadius: 4,
+                  border: '1px solid #cbd5e1',
+                  fontSize: '0.875rem',
+                }}
               />
             </label>
-            <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontWeight: 500, fontSize: '0.875rem' }}>
+            <label
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.25rem',
+                fontWeight: 500,
+                fontSize: '0.875rem',
+              }}
+            >
               {t('gymAdminWeb.campaigns.formLabelMessage')}
               <textarea
                 value={formMessage}
                 onChange={(e) => setFormMessage(e.target.value)}
                 placeholder={t('gymAdminWeb.campaigns.formPlaceholderMessage')}
                 rows={4}
-                style={{ padding: '0.5rem', borderRadius: 4, border: '1px solid #cbd5e1', fontSize: '0.875rem', resize: 'vertical' }}
+                style={{
+                  padding: '0.5rem',
+                  borderRadius: 4,
+                  border: '1px solid #cbd5e1',
+                  fontSize: '0.875rem',
+                  resize: 'vertical',
+                }}
               />
             </label>
-            <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontWeight: 500, fontSize: '0.875rem' }}>
+            <label
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.25rem',
+                fontWeight: 500,
+                fontSize: '0.875rem',
+              }}
+            >
               {t('gymAdminWeb.campaigns.formLabelSegment')}
               <select
                 value={formSegment}
                 onChange={(e) => setFormSegment(e.target.value as CampaignTargetSegment)}
-                style={{ padding: '0.5rem', borderRadius: 4, border: '1px solid #cbd5e1', fontSize: '0.875rem' }}
+                style={{
+                  padding: '0.5rem',
+                  borderRadius: 4,
+                  border: '1px solid #cbd5e1',
+                  fontSize: '0.875rem',
+                }}
               >
                 {SEGMENTS.map((seg) => (
                   <option key={seg} value={seg}>
@@ -240,7 +287,10 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
                   : t('gymAdminWeb.campaigns.formSubmit')}
               </button>
               <button
-                onClick={() => { setView('list'); setFormError(null); }}
+                onClick={() => {
+                  setView('list');
+                  setFormError(null);
+                }}
                 style={{
                   background: 'transparent',
                   color: '#334155',
@@ -260,9 +310,7 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
       )}
 
       {/* List */}
-      {loading && (
-        <p style={{ color: '#64748b' }}>{t('gymAdminWeb.campaigns.loadingBody')}</p>
-      )}
+      {loading && <p style={{ color: '#64748b' }}>{t('gymAdminWeb.campaigns.loadingBody')}</p>}
       {!loading && error && (
         <div style={{ color: '#991b1b', background: '#fee2e2', padding: '1rem', borderRadius: 6 }}>
           <strong>{t('gymAdminWeb.campaigns.errorTitle')}</strong>
@@ -280,11 +328,21 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #e2e8f0', textAlign: 'left' }}>
-                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>{t('gymAdminWeb.campaigns.tableColTitle')}</th>
-                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>{t('gymAdminWeb.campaigns.tableColSegment')}</th>
-                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>{t('gymAdminWeb.campaigns.tableColStatus')}</th>
-                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>{t('gymAdminWeb.campaigns.tableColDelivery')}</th>
-                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>{t('gymAdminWeb.campaigns.tableColActions')}</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>
+                  {t('gymAdminWeb.campaigns.tableColTitle')}
+                </th>
+                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>
+                  {t('gymAdminWeb.campaigns.tableColSegment')}
+                </th>
+                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>
+                  {t('gymAdminWeb.campaigns.tableColStatus')}
+                </th>
+                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>
+                  {t('gymAdminWeb.campaigns.tableColDelivery')}
+                </th>
+                <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>
+                  {t('gymAdminWeb.campaigns.tableColActions')}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -292,7 +350,9 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
                 const tone = statusTone(campaign.status);
                 return (
                   <tr key={campaign.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '0.625rem 0.75rem', fontWeight: 500 }}>{campaign.title}</td>
+                    <td style={{ padding: '0.625rem 0.75rem', fontWeight: 500 }}>
+                      {campaign.title}
+                    </td>
                     <td style={{ padding: '0.625rem 0.75rem', color: '#475569' }}>
                       {renderSegmentLabel(campaign.targetSegment)}
                     </td>
@@ -315,7 +375,10 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
                     <td style={{ padding: '0.625rem 0.75rem' }}>
                       {campaign.status === 'draft' && (
                         <button
-                          onClick={() => { setSendError(null); setConfirmCampaign(campaign); }}
+                          onClick={() => {
+                            setSendError(null);
+                            setConfirmCampaign(campaign);
+                          }}
                           style={{
                             background: '#0f172a',
                             color: '#fff',
@@ -366,7 +429,10 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
               boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
             }}
           >
-            <h2 id="send-confirm-title" style={{ margin: '0 0 0.75rem', fontSize: '1.125rem', fontWeight: 700 }}>
+            <h2
+              id="send-confirm-title"
+              style={{ margin: '0 0 0.75rem', fontSize: '1.125rem', fontWeight: 700 }}
+            >
               {t('gymAdminWeb.campaigns.sendConfirmTitle')}
             </h2>
             <p style={{ margin: '0 0 1rem', color: '#475569', fontSize: '0.875rem' }}>
@@ -380,11 +446,16 @@ export function CampaignsWorkspace({ api = getApi() }: Props) {
                   })}
             </p>
             {sendError && (
-              <p style={{ color: '#991b1b', margin: '0 0 0.75rem', fontSize: '0.875rem' }}>{sendError}</p>
+              <p style={{ color: '#991b1b', margin: '0 0 0.75rem', fontSize: '0.875rem' }}>
+                {sendError}
+              </p>
             )}
             <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
               <button
-                onClick={() => { setConfirmCampaign(null); setSendError(null); }}
+                onClick={() => {
+                  setConfirmCampaign(null);
+                  setSendError(null);
+                }}
                 disabled={sendingId !== null}
                 style={{
                   background: 'transparent',

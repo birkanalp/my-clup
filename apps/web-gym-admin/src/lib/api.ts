@@ -120,11 +120,14 @@ const api = {
       });
     },
     async setVisibility(isPublished: boolean): Promise<UpdateListingVisibilityResponse> {
-      return fetchJson<UpdateListingVisibilityResponse>(`${getBaseUrl()}/api/v1/listing/visibility`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isPublished }),
-      });
+      return fetchJson<UpdateListingVisibilityResponse>(
+        `${getBaseUrl()}/api/v1/listing/visibility`,
+        {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ isPublished }),
+        }
+      );
     },
   },
   addons: {
@@ -143,9 +146,7 @@ const api = {
       if (params?.search) query.set('search', params.search);
       if (params?.cursor) query.set('cursor', params.cursor);
       const qs = query.toString();
-      return fetchJson<ListMembersResponse>(
-        `${getBaseUrl()}/api/v1/members${qs ? `?${qs}` : ''}`
-      );
+      return fetchJson<ListMembersResponse>(`${getBaseUrl()}/api/v1/members${qs ? `?${qs}` : ''}`);
     },
     async get(memberId: string): Promise<GetMemberResponse> {
       return fetchJson<GetMemberResponse>(`${getBaseUrl()}/api/v1/members/${memberId}`);

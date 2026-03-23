@@ -272,9 +272,7 @@ export function ListingWorkspace({ api = getApi() }: Props) {
         </p>
       </div>
 
-      {loading && (
-        <p style={{ color: '#64748b' }}>{t('gymAdminWeb.listing.loadingBody')}</p>
-      )}
+      {loading && <p style={{ color: '#64748b' }}>{t('gymAdminWeb.listing.loadingBody')}</p>}
 
       {!loading && error && (
         <div style={{ color: '#991b1b', background: '#fee2e2', padding: '1rem', borderRadius: 6 }}>
@@ -291,11 +289,7 @@ export function ListingWorkspace({ api = getApi() }: Props) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <label style={labelStyle}>
                 {t('gymAdminWeb.listing.fieldName')}
-                <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  style={inputStyle}
-                />
+                <input value={name} onChange={(e) => setName(e.target.value)} style={inputStyle} />
               </label>
               <label style={labelStyle}>
                 {t('gymAdminWeb.listing.fieldDescription')}
@@ -337,11 +331,7 @@ export function ListingWorkspace({ api = getApi() }: Props) {
               </label>
               <label style={labelStyle}>
                 {t('gymAdminWeb.listing.fieldCity')}
-                <input
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  style={inputStyle}
-                />
+                <input value={city} onChange={(e) => setCity(e.target.value)} style={inputStyle} />
               </label>
               <label style={labelStyle}>
                 {t('gymAdminWeb.listing.fieldCountry')}

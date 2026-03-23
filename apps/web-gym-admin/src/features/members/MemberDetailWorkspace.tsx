@@ -109,7 +109,12 @@ export function MemberDetailWorkspace({ memberId, api = getApi() }: Props) {
         </div>
         <Link
           href={backHref}
-          style={{ display: 'inline-block', marginTop: '1rem', color: '#0f172a', fontSize: '0.875rem' }}
+          style={{
+            display: 'inline-block',
+            marginTop: '1rem',
+            color: '#0f172a',
+            fontSize: '0.875rem',
+          }}
         >
           ← {t('gymAdminWeb.members.detail.backToList')}
         </Link>
@@ -123,7 +128,12 @@ export function MemberDetailWorkspace({ memberId, api = getApi() }: Props) {
         <p style={{ color: '#64748b' }}>{t('gymAdminWeb.members.detail.notFound')}</p>
         <Link
           href={backHref}
-          style={{ display: 'inline-block', marginTop: '1rem', color: '#0f172a', fontSize: '0.875rem' }}
+          style={{
+            display: 'inline-block',
+            marginTop: '1rem',
+            color: '#0f172a',
+            fontSize: '0.875rem',
+          }}
         >
           ← {t('gymAdminWeb.members.detail.backToList')}
         </Link>
@@ -174,8 +184,14 @@ export function MemberDetailWorkspace({ memberId, api = getApi() }: Props) {
       >
         {membership ? (
           <>
-            <LabelRow label={t('gymAdminWeb.members.detail.labelPlan')} value={membership.planName} />
-            <LabelRow label={t('gymAdminWeb.members.detail.labelStatus')} value={membership.status} />
+            <LabelRow
+              label={t('gymAdminWeb.members.detail.labelPlan')}
+              value={membership.planName}
+            />
+            <LabelRow
+              label={t('gymAdminWeb.members.detail.labelStatus')}
+              value={membership.status}
+            />
             <LabelRow
               label={t('gymAdminWeb.members.detail.labelValidFrom')}
               value={new Date(membership.validFrom).toLocaleDateString()}
@@ -183,17 +199,13 @@ export function MemberDetailWorkspace({ memberId, api = getApi() }: Props) {
             <LabelRow
               label={t('gymAdminWeb.members.detail.labelValidUntil')}
               value={
-                membership.validUntil
-                  ? new Date(membership.validUntil).toLocaleDateString()
-                  : null
+                membership.validUntil ? new Date(membership.validUntil).toLocaleDateString() : null
               }
             />
             <LabelRow
               label={t('gymAdminWeb.members.detail.labelRemainingSessions')}
               value={
-                membership.remainingSessions !== null
-                  ? String(membership.remainingSessions)
-                  : null
+                membership.remainingSessions !== null ? String(membership.remainingSessions) : null
               }
             />
           </>
@@ -290,7 +302,10 @@ export function MemberDetailWorkspace({ memberId, api = getApi() }: Props) {
         {!showConfirm && (
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button
-              onClick={() => { setActionState('idle'); setShowConfirm('suspend'); }}
+              onClick={() => {
+                setActionState('idle');
+                setShowConfirm('suspend');
+              }}
               style={{
                 background: '#fee2e2',
                 color: '#991b1b',
@@ -305,7 +320,10 @@ export function MemberDetailWorkspace({ memberId, api = getApi() }: Props) {
               {t('gymAdminWeb.members.detail.actionSuspend')}
             </button>
             <button
-              onClick={() => { setActionState('idle'); setShowConfirm('reactivate'); }}
+              onClick={() => {
+                setActionState('idle');
+                setShowConfirm('reactivate');
+              }}
               style={{
                 background: '#dcfce7',
                 color: '#166534',

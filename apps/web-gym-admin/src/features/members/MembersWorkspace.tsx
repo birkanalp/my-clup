@@ -170,9 +170,7 @@ export function MembersWorkspace({ api = getApi() }: Props) {
       )}
 
       {/* Loading */}
-      {loading && (
-        <p style={{ color: '#64748b' }}>{t('gymAdminWeb.members.loadingBody')}</p>
-      )}
+      {loading && <p style={{ color: '#64748b' }}>{t('gymAdminWeb.members.loadingBody')}</p>}
 
       {/* Error */}
       {!loading && error && (

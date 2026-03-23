@@ -70,9 +70,7 @@ export function AddonsWorkspace({ api = getApi() }: Props) {
       </div>
 
       {/* Loading */}
-      {loading && (
-        <p style={{ color: '#64748b' }}>{t('gymAdminWeb.addons.loadingBody')}</p>
-      )}
+      {loading && <p style={{ color: '#64748b' }}>{t('gymAdminWeb.addons.loadingBody')}</p>}
 
       {/* Error */}
       {!loading && error && (
@@ -116,7 +114,14 @@ export function AddonsWorkspace({ api = getApi() }: Props) {
                 }}
               >
                 {/* Package name + status badge */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.5rem' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
+                  }}
+                >
                   <h2 style={{ fontSize: '1rem', fontWeight: 600, margin: 0 }}>
                     {renderPackageName(pkg.packageId)}
                   </h2>
