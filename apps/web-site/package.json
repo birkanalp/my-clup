@@ -12,12 +12,15 @@
   },
   "dependencies": {
     "@myclup/analytics": "workspace:*",
+    "@myclup/contracts": "workspace:*",
     "@myclup/i18n": "workspace:*",
+    "@myclup/supabase": "workspace:*",
     "@myclup/types": "workspace:*",
     "next": "^15.1.0",
     "next-intl": "^3.25.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",

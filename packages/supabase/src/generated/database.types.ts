@@ -918,6 +918,36 @@ export interface Database {
         };
         Relationships: [];
       };
+      marketing_leads: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          message: string;
+          locale: string;
+          source: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          message?: string;
+          locale?: string;
+          source?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          email?: string;
+          message?: string;
+          locale?: string;
+          source?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

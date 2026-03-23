@@ -594,7 +594,9 @@
       "email": "Email",
       "message": "How can we help?",
       "submit": "Send message",
-      "thanks": "Thanks — we will get back to you in your selected language where possible."
+      "submitting": "Sending…",
+      "thanks": "Thanks — we will get back to you in your selected language where possible.",
+      "errorSubmit": "We could not send your message. Please try again later."
     }
   },
   "discoveryWeb": {
