@@ -12,6 +12,7 @@ export * from './campaigns';
 export * from './chat';
 export * from './common';
 export * from './health';
+export * from './leads';
 export * from './listing';
 export * from './locale';
 export * from './members';

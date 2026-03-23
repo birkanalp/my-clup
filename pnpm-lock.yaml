@@ -388,9 +388,15 @@ importers:
       '@myclup/analytics':
         specifier: workspace:*
         version: link:../../packages/analytics
+      '@myclup/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@myclup/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@myclup/supabase':
+        specifier: workspace:*
+        version: link:../../packages/supabase
       '@myclup/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -406,6 +412,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.2.4(react@19.2.4)
+      zod:
+        specifier: ^3.24.0
+        version: 3.25.76
     devDependencies:
       '@myclup/config-eslint':
         specifier: workspace:*

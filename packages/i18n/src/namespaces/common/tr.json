@@ -594,7 +594,9 @@
       "email": "E-posta",
       "message": "Nasıl yardımcı olabiliriz?",
       "submit": "Gönder",
-      "thanks": "Teşekkürler — mümkünse seçtiğiniz dilde size dönüş yapacağız."
+      "submitting": "Gönderiliyor…",
+      "thanks": "Teşekkürler — mümkünse seçtiğiniz dilde size dönüş yapacağız.",
+      "errorSubmit": "Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin."
     }
   },
   "discoveryWeb": {
