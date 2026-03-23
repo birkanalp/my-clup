@@ -1,6 +1,9 @@
 import type {
   CancelMembershipRequest,
   CancelMembershipResponse,
+  CreateMembershipPlanRequest,
+  CreateMembershipPlanResponse,
+  DeactivateMembershipPlanResponse,
   FreezeMembershipRequest,
   FreezeMembershipResponse,
   GetMembershipInstanceResponse,
@@ -10,16 +13,21 @@ import type {
   ListMembershipPlansResponse,
   RenewMembershipRequest,
   RenewMembershipResponse,
+  UpdateMembershipPlanRequest,
+  UpdateMembershipPlanResponse,
   ValidateMembershipAccessRequest,
   ValidateMembershipAccessResponse,
 } from '@myclup/contracts/membership';
 import {
   cancelMembershipContract,
+  createMembershipPlanContract,
+  deactivateMembershipPlanContract,
   freezeMembershipContract,
   getMembershipInstanceContract,
   listMembershipInstancesContract,
   listMembershipPlansContract,
   renewMembershipContract,
+  updateMembershipPlanContract,
   validateMembershipAccessContract,
 } from '@myclup/contracts/membership';
 import type { ListInvoicesRequest, ListInvoicesResponse } from '@myclup/contracts/billing';
@@ -125,6 +133,43 @@ export function createMembershipApi(request: RequestFn) {
       return request(
         listPaymentsContract as ApiContract<ListPaymentsRequest, ListPaymentsResponse>,
         params
+      );
+    },
+
+    async createMembershipPlan(
+      input: CreateMembershipPlanRequest
+    ): Promise<CreateMembershipPlanResponse> {
+      return request(
+        createMembershipPlanContract as ApiContract<
+          CreateMembershipPlanRequest,
+          CreateMembershipPlanResponse
+        >,
+        input
+      );
+    },
+
+    async updateMembershipPlan(
+      id: string,
+      input: UpdateMembershipPlanRequest
+    ): Promise<UpdateMembershipPlanResponse> {
+      return request(
+        updateMembershipPlanContract as ApiContract<
+          UpdateMembershipPlanRequest,
+          UpdateMembershipPlanResponse
+        >,
+        input,
+        { pathParams: { id } }
+      );
+    },
+
+    async deactivateMembershipPlan(id: string): Promise<DeactivateMembershipPlanResponse> {
+      return request(
+        deactivateMembershipPlanContract as ApiContract<
+          undefined,
+          DeactivateMembershipPlanResponse
+        >,
+        undefined,
+        { pathParams: { id } }
       );
     },
   };

@@ -259,3 +259,28 @@ export type TriggerPaymentReminderRequest = z.infer<typeof TriggerPaymentReminde
 
 export const TriggerPaymentReminderResponseSchema = PaymentReminderSchema;
 export type TriggerPaymentReminderResponse = z.infer<typeof TriggerPaymentReminderResponseSchema>;
+
+export const BillingSummaryRequestSchema = z.object({
+  gymId: UuidSchema.optional(),
+  branchId: UuidSchema.optional(),
+});
+export type BillingSummaryRequest = z.infer<typeof BillingSummaryRequestSchema>;
+
+export const BillingSummaryResponseSchema = z.object({
+  outstandingAmount: z.number().nonnegative(),
+  overdueAmount: z.number().nonnegative(),
+  collectedThisMonthAmount: z.number().nonnegative(),
+  currency: z.string().regex(/^[A-Z]{3}$/),
+});
+export type BillingSummaryResponse = z.infer<typeof BillingSummaryResponseSchema>;
+
+export const RecordInvoicePaymentRequestSchema = z.object({
+  amount: z.number().positive(),
+  method: PaymentMethodSchema,
+  paidAt: IsoDatetimeSchema.optional(),
+  note: z.string().max(500).optional(),
+});
+export type RecordInvoicePaymentRequest = z.infer<typeof RecordInvoicePaymentRequestSchema>;
+
+export const RecordInvoicePaymentResponseSchema = InvoiceSchema;
+export type RecordInvoicePaymentResponse = z.infer<typeof RecordInvoicePaymentResponseSchema>;

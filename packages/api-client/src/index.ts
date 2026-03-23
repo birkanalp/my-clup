@@ -29,6 +29,8 @@ export { createAuthApi } from './auth';
 export { createChatApi } from './chat';
 export { createBookingsApi } from './bookings';
 export { createMembershipApi } from './membership';
+export { createMembersApi } from './members';
+export { createBillingApi } from './billing';
 export type { PingResponse } from '@myclup/contracts/health';
 export type {
   WhoamiResponse,
@@ -72,6 +74,8 @@ export type {
 export type {
   CancelMembershipRequest,
   CancelMembershipResponse,
+  CreateMembershipPlanRequest,
+  CreateMembershipPlanResponse,
   FreezeMembershipRequest,
   FreezeMembershipResponse,
   GetMembershipInstanceResponse,
@@ -83,17 +87,33 @@ export type {
   MembershipPlan,
   RenewMembershipRequest,
   RenewMembershipResponse,
+  UpdateMembershipPlanRequest,
+  UpdateMembershipPlanResponse,
   ValidateMembershipAccessRequest,
   ValidateMembershipAccessResponse,
 } from '@myclup/contracts/membership';
 export type {
+  BillingSummaryRequest,
+  BillingSummaryResponse,
+  GetInvoiceDetailResponse,
   Invoice,
   ListInvoicesRequest,
   ListInvoicesResponse,
   ListPaymentsRequest,
   ListPaymentsResponse,
   Payment,
+  RecordInvoicePaymentRequest,
+  RecordInvoicePaymentResponse,
 } from '@myclup/contracts/billing';
+export type {
+  GetMemberResponse,
+  ListMembersRequest,
+  ListMembersResponse,
+  MemberDetail,
+  MemberSummary,
+  UpdateMemberStatusRequest,
+  UpdateMemberStatusResponse,
+} from '@myclup/contracts/members';
 
 import { createApiClient } from './client';
 import { createHealthApi } from './health';
@@ -101,6 +121,8 @@ import { createAuthApi } from './auth';
 import { createChatApi } from './chat';
 import { createBookingsApi } from './bookings';
 import { createMembershipApi } from './membership';
+import { createMembersApi } from './members';
+import { createBillingApi } from './billing';
 import type { ApiClientConfig } from './client';
 
 /**
@@ -124,5 +146,7 @@ export function createApi(config: ApiClientConfig) {
     chat: createChatApi(client.request),
     bookings: createBookingsApi(client.request),
     membership: createMembershipApi(client.request),
+    members: createMembersApi(client.request),
+    billing: createBillingApi(client.request),
   };
 }

@@ -82,6 +82,33 @@ const api = {
       ...args: Parameters<ReturnType<typeof sharedApi>['bookings']['listInstructorAvailability']>
     ) => sharedApi().bookings.listInstructorAvailability(...args),
   },
+  membership: {
+    listMembershipPlans: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['membership']['listMembershipPlans']>
+    ) => sharedApi().membership.listMembershipPlans(...args),
+    createMembershipPlan: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['membership']['createMembershipPlan']>
+    ) => sharedApi().membership.createMembershipPlan(...args),
+    updateMembershipPlan: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['membership']['updateMembershipPlan']>
+    ) => sharedApi().membership.updateMembershipPlan(...args),
+    deactivateMembershipPlan: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['membership']['deactivateMembershipPlan']>
+    ) => sharedApi().membership.deactivateMembershipPlan(...args),
+  },
+  billing: {
+    getBillingSummary: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['billing']['getBillingSummary']>
+    ) => sharedApi().billing.getBillingSummary(...args),
+    listInvoices: (...args: Parameters<ReturnType<typeof sharedApi>['billing']['listInvoices']>) =>
+      sharedApi().billing.listInvoices(...args),
+    getInvoiceDetail: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['billing']['getInvoiceDetail']>
+    ) => sharedApi().billing.getInvoiceDetail(...args),
+    recordInvoicePayment: (
+      ...args: Parameters<ReturnType<typeof sharedApi>['billing']['recordInvoicePayment']>
+    ) => sharedApi().billing.recordInvoicePayment(...args),
+  },
   chat: chatApi,
   campaigns: {
     async list(): Promise<ListCampaignsResponse> {
