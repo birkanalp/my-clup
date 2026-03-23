@@ -1,13 +1,13 @@
 import type {
-  GetGymMemberResponse,
-  ListGymMembersRequest,
-  ListGymMembersResponse,
+  GetMemberResponse,
+  ListMembersRequest,
+  ListMembersResponse,
   UpdateMemberStatusRequest,
   UpdateMemberStatusResponse,
 } from '@myclup/contracts/members';
 import {
-  getGymMemberContract,
-  listGymMembersContract,
+  getMemberContract,
+  listMembersContract,
   updateMemberStatusContract,
 } from '@myclup/contracts/members';
 import type { ApiContract, RequestOptions } from './client';
@@ -20,22 +20,20 @@ type RequestFn = <T>(
 
 export function createMembersApi(request: RequestFn) {
   return {
-    async listMembers(params?: ListGymMembersRequest): Promise<ListGymMembersResponse> {
+    async list(params?: ListMembersRequest): Promise<ListMembersResponse> {
       return request(
-        listGymMembersContract as ApiContract<ListGymMembersRequest, ListGymMembersResponse>,
+        listMembersContract as ApiContract<ListMembersRequest, ListMembersResponse>,
         params
       );
     },
 
-    async getMember(id: string): Promise<GetGymMemberResponse> {
-      return request(
-        getGymMemberContract as ApiContract<undefined, GetGymMemberResponse>,
-        undefined,
-        { pathParams: { id } }
-      );
+    async get(id: string): Promise<GetMemberResponse> {
+      return request(getMemberContract as ApiContract<unknown, GetMemberResponse>, undefined, {
+        pathParams: { id },
+      });
     },
 
-    async updateMemberStatus(
+    async updateStatus(
       id: string,
       input: UpdateMemberStatusRequest
     ): Promise<UpdateMemberStatusResponse> {

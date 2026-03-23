@@ -1,25 +1,10 @@
-import { setRequestLocale, getTranslations } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
+import { AddonsWorkspace } from '@/src/features/addons/AddonsWorkspace';
 
-type Props = {
-  params: Promise<{ locale: string }>;
-};
+type Props = { params: Promise<{ locale: string }> };
 
 export default async function AddonsPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations('common');
-
-  return (
-    <main style={{ padding: '1.5rem', fontFamily: 'sans-serif' }}>
-      <div style={{ maxWidth: 960, margin: '0 auto' }}>
-        <h1 style={{ fontSize: '1.75rem', margin: 0 }}>{t('gymAdminWeb.addonsPage.title')}</h1>
-        <p style={{ color: '#475569', marginTop: '0.5rem' }}>
-          {t('gymAdminWeb.addonsPage.subtitle')}
-        </p>
-        <p style={{ color: '#64748b', marginTop: '1.25rem' }}>
-          {t('gymAdminWeb.addonsPage.placeholder')}
-        </p>
-      </div>
-    </main>
-  );
+  return <AddonsWorkspace />;
 }

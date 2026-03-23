@@ -106,12 +106,11 @@ export type {
   RecordInvoicePaymentResponse,
 } from '@myclup/contracts/billing';
 export type {
-  GymMember,
-  GymMemberDetail,
-  ListGymMembersRequest,
-  ListGymMembersResponse,
-  GetGymMemberResponse,
-  MemberStatus,
+  GetMemberResponse,
+  ListMembersRequest,
+  ListMembersResponse,
+  MemberDetail,
+  MemberSummary,
   UpdateMemberStatusRequest,
   UpdateMemberStatusResponse,
 } from '@myclup/contracts/members';

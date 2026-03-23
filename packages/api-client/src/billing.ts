@@ -1,6 +1,7 @@
 import type {
   BillingSummaryRequest,
   BillingSummaryResponse,
+  GetInvoiceDetailRequest,
   GetInvoiceDetailResponse,
   ListInvoicesRequest,
   ListInvoicesResponse,
@@ -39,8 +40,8 @@ export function createBillingApi(request: RequestFn) {
 
     async getInvoiceDetail(id: string): Promise<GetInvoiceDetailResponse> {
       return request(
-        getInvoiceDetailContract as ApiContract<undefined, GetInvoiceDetailResponse>,
-        undefined,
+        getInvoiceDetailContract as ApiContract<GetInvoiceDetailRequest, GetInvoiceDetailResponse>,
+        {},
         { pathParams: { id } }
       );
     },

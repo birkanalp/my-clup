@@ -1,65 +1,79 @@
 import { z } from 'zod';
+import { MembershipStatusSchema } from '../membership/schemas';
 
 const UuidSchema = z.string().uuid();
 const IsoDatetimeSchema = z.string().datetime();
 
-export const MemberStatusSchema = z.enum(['active', 'expired', 'suspended', 'no_membership']);
-export type MemberStatus = z.infer<typeof MemberStatusSchema>;
-
-export const GymMemberSchema = z.object({
-  id: UuidSchema,
+export const MemberSummarySchema = z.object({
+  memberId: UuidSchema,
   displayName: z.string(),
-  email: z.string().email(),
-  membershipStatus: MemberStatusSchema,
+  email: z.string().nullable(),
+  phone: z.string().nullable(),
+  membershipStatus: MembershipStatusSchema.nullable(),
   membershipPlanName: z.string().nullable(),
   membershipValidUntil: IsoDatetimeSchema.nullable(),
   membershipInstanceId: UuidSchema.nullable(),
   joinedAt: IsoDatetimeSchema,
 });
-export type GymMember = z.infer<typeof GymMemberSchema>;
+export type MemberSummary = z.infer<typeof MemberSummarySchema>;
 
-export const GymMemberDetailSchema = GymMemberSchema.extend({
-  membershipPlanId: UuidSchema.nullable(),
-  remainingSessions: z.number().int().nonnegative().nullable(),
-  locale: z.string(),
+export const MemberDetailSchema = z.object({
+  memberId: UuidSchema,
+  displayName: z.string(),
+  email: z.string().nullable(),
+  phone: z.string().nullable(),
+  avatarUrl: z.string().nullable(),
+  joinedAt: IsoDatetimeSchema,
+  activeMembership: z
+    .object({
+      instanceId: UuidSchema,
+      planName: z.string(),
+      status: MembershipStatusSchema,
+      validFrom: IsoDatetimeSchema,
+      validUntil: IsoDatetimeSchema.nullable(),
+      remainingSessions: z.number().int().nonnegative().nullable(),
+    })
+    .nullable(),
 });
-export type GymMemberDetail = z.infer<typeof GymMemberDetailSchema>;
+export type MemberDetail = z.infer<typeof MemberDetailSchema>;
 
-export const ListGymMembersRequestSchema = z.object({
+export const MemberStatusValueSchema = z.enum(['active', 'suspended']);
+export type MemberStatusValue = z.infer<typeof MemberStatusValueSchema>;
+
+export const ListMembersRequestSchema = z.object({
   gymId: UuidSchema.optional(),
   branchId: UuidSchema.optional(),
-  status: MemberStatusSchema.optional(),
-  search: z.string().optional(),
+  status: MembershipStatusSchema.optional(),
+  search: z.string().max(200).optional(),
   cursor: z.string().optional(),
   limit: z.number().int().min(1).max(100).default(20),
 });
-export type ListGymMembersRequest = z.infer<typeof ListGymMembersRequestSchema>;
+export type ListMembersRequest = z.infer<typeof ListMembersRequestSchema>;
 
-export const ListGymMembersResponseSchema = z.object({
-  items: z.array(GymMemberSchema),
+export const ListMembersResponseSchema = z.object({
+  items: z.array(MemberSummarySchema),
   nextCursor: z.string().nullable(),
+  total: z.number().int().nonnegative(),
 });
-export type ListGymMembersResponse = z.infer<typeof ListGymMembersResponseSchema>;
+export type ListMembersResponse = z.infer<typeof ListMembersResponseSchema>;
 
-export const GetGymMemberRequestSchema = z.object({});
-export type GetGymMemberRequest = z.infer<typeof GetGymMemberRequestSchema>;
+export const GetMemberRequestSchema = z.object({});
+export type GetMemberRequest = z.infer<typeof GetMemberRequestSchema>;
 
-export const GetGymMemberResponseSchema = GymMemberDetailSchema;
-export type GetGymMemberResponse = z.infer<typeof GetGymMemberResponseSchema>;
-
-export const MemberStatusUpdateSchema = z.enum(['suspended', 'active']);
-export type MemberStatusUpdate = z.infer<typeof MemberStatusUpdateSchema>;
+export const GetMemberResponseSchema = MemberDetailSchema;
+export type GetMemberResponse = z.infer<typeof GetMemberResponseSchema>;
 
 export const UpdateMemberStatusRequestSchema = z.object({
-  status: MemberStatusUpdateSchema,
+  action: z.enum(['suspend', 'reactivate']),
   reason: z.string().max(500).optional(),
 });
 export type UpdateMemberStatusRequest = z.infer<typeof UpdateMemberStatusRequestSchema>;
 
 export const UpdateMemberStatusResponseSchema = z.object({
   memberId: UuidSchema,
-  previousStatus: MemberStatusSchema,
-  newStatus: MemberStatusSchema,
-  updatedAt: IsoDatetimeSchema,
+  action: z.enum(['suspend', 'reactivate']),
+  membershipInstanceId: UuidSchema.nullable(),
+  previousStatus: MembershipStatusSchema.nullable(),
+  newStatus: MembershipStatusSchema.nullable(),
 });
 export type UpdateMemberStatusResponse = z.infer<typeof UpdateMemberStatusResponseSchema>;

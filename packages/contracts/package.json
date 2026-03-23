@@ -40,6 +40,26 @@
     "./addons": {
       "types": "./dist/addons/index.d.ts",
       "default": "./dist/addons/index.js"
+    },
+    "./campaigns": {
+      "types": "./dist/campaigns/index.d.ts",
+      "default": "./dist/campaigns/index.js"
+    },
+    "./listing": {
+      "types": "./dist/listing/index.d.ts",
+      "default": "./dist/listing/index.js"
+    },
+    "./members": {
+      "types": "./dist/members/index.d.ts",
+      "default": "./dist/members/index.js"
+    },
+    "./reports": {
+      "types": "./dist/reports/index.d.ts",
+      "default": "./dist/reports/index.js"
+    },
+    "./locale": {
+      "types": "./dist/locale/index.d.ts",
+      "default": "./dist/locale/index.js"
     }
   },
   "scripts": {

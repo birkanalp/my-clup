@@ -1,24 +1,24 @@
 import {
-  GetGymMemberRequestSchema,
-  GetGymMemberResponseSchema,
-  ListGymMembersRequestSchema,
-  ListGymMembersResponseSchema,
+  GetMemberRequestSchema,
+  GetMemberResponseSchema,
+  ListMembersRequestSchema,
+  ListMembersResponseSchema,
   UpdateMemberStatusRequestSchema,
   UpdateMemberStatusResponseSchema,
 } from './schemas';
 
-export const listGymMembersContract = {
+export const listMembersContract = {
   path: '/api/v1/members',
   method: 'GET' as const,
-  request: ListGymMembersRequestSchema,
-  response: ListGymMembersResponseSchema,
+  request: ListMembersRequestSchema,
+  response: ListMembersResponseSchema,
 } as const;
 
-export const getGymMemberContract = {
+export const getMemberContract = {
   path: '/api/v1/members/:id',
   method: 'GET' as const,
-  request: GetGymMemberRequestSchema,
-  response: GetGymMemberResponseSchema,
+  request: GetMemberRequestSchema,
+  response: GetMemberResponseSchema,
 } as const;
 
 export const updateMemberStatusContract = {

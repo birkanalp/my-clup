@@ -1,31 +1,25 @@
 export {
-  GymMemberDetailSchema,
-  GymMemberSchema,
-  ListGymMembersRequestSchema,
-  ListGymMembersResponseSchema,
-  GetGymMemberRequestSchema,
-  GetGymMemberResponseSchema,
-  MemberStatusSchema,
-  MemberStatusUpdateSchema,
+  GetMemberRequestSchema,
+  GetMemberResponseSchema,
+  ListMembersRequestSchema,
+  ListMembersResponseSchema,
+  MemberDetailSchema,
+  MemberStatusValueSchema,
+  MemberSummarySchema,
   UpdateMemberStatusRequestSchema,
   UpdateMemberStatusResponseSchema,
 } from './schemas';
 
 export type {
-  GymMember,
-  GymMemberDetail,
-  ListGymMembersRequest,
-  ListGymMembersResponse,
-  GetGymMemberRequest,
-  GetGymMemberResponse,
-  MemberStatus,
-  MemberStatusUpdate,
+  GetMemberRequest,
+  GetMemberResponse,
+  ListMembersRequest,
+  ListMembersResponse,
+  MemberDetail,
+  MemberStatusValue,
+  MemberSummary,
   UpdateMemberStatusRequest,
   UpdateMemberStatusResponse,
 } from './schemas';
 
-export {
-  listGymMembersContract,
-  getGymMemberContract,
-  updateMemberStatusContract,
-} from './contracts';
+export { getMemberContract, listMembersContract, updateMemberStatusContract } from './contracts';

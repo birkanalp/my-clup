@@ -1,261 +1,345 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { useRouter } from '@/src/i18n/navigation';
+import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
+import type { MemberDetail, UpdateMemberStatusRequest } from '@myclup/contracts/members';
 import { getApi } from '@/src/lib/api';
-import type { GymMemberDetail } from '@myclup/api-client';
 
-type Props = { memberId: string };
+type ApiShape = ReturnType<typeof getApi>;
 
-export function MemberDetailWorkspace({ memberId }: Props) {
-  const t = useTranslations('common.gymAdminWeb.members.detail');
-  const tStatus = useTranslations('common.gymAdminWeb.members');
-  const router = useRouter();
-  const api = getApi();
+type Props = {
+  memberId: string;
+  api?: ApiShape;
+};
 
-  const [member, setMember] = useState<GymMemberDetail | null>(null);
+type ActionState = 'idle' | 'pending' | 'success' | 'error';
+
+function LabelRow({ label, value }: { label: string; value: string | null | undefined }) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        gap: '0.5rem',
+        fontSize: '0.875rem',
+        padding: '0.375rem 0',
+        borderBottom: '1px solid #f1f5f9',
+      }}
+    >
+      <span style={{ fontWeight: 600, color: '#475569', minWidth: 160 }}>{label}</span>
+      <span style={{ color: '#0f172a' }}>{value ?? '—'}</span>
+    </div>
+  );
+}
+
+function SectionHeading({ title }: { title: string }) {
+  return (
+    <h2
+      style={{
+        fontSize: '1rem',
+        fontWeight: 700,
+        margin: '1.5rem 0 0.75rem',
+        color: '#0f172a',
+      }}
+    >
+      {title}
+    </h2>
+  );
+}
+
+export function MemberDetailWorkspace({ memberId, api = getApi() }: Props) {
+  const t = useTranslations('common');
+  const locale = useLocale();
+
+  const [member, setMember] = useState<MemberDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [actionPending, setActionPending] = useState(false);
-  const [actionError, setActionError] = useState<string | null>(null);
-  const [actionSuccess, setActionSuccess] = useState<string | null>(null);
-  const [reason, setReason] = useState('');
+  const [actionState, setActionState] = useState<ActionState>('idle');
+  const [showConfirm, setShowConfirm] = useState<'suspend' | 'reactivate' | null>(null);
 
   const loadMember = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await api.members.getMember(memberId);
-      setMember(res);
+      const result = await api.members.get(memberId);
+      setMember(result);
     } catch {
-      setError(t('error'));
+      setError(t('gymAdminWeb.members.detail.errorBody'));
     } finally {
       setLoading(false);
     }
-  }, [api.members, memberId, t]);
+  }, [api, memberId, t]);
 
   useEffect(() => {
     void loadMember();
   }, [loadMember]);
 
-  const handleStatusUpdate = async (newStatus: 'suspended' | 'active') => {
-    setActionPending(true);
-    setActionError(null);
-    setActionSuccess(null);
-    try {
-      await api.members.updateMemberStatus(memberId, { status: newStatus, reason: reason || undefined });
-      setActionSuccess(t('actionSuccess'));
-      setReason('');
-      await loadMember();
-    } catch {
-      setActionError(t('actionError'));
-    } finally {
-      setActionPending(false);
-    }
-  };
+  const handleStatusAction = useCallback(
+    async (action: 'suspend' | 'reactivate') => {
+      setShowConfirm(null);
+      setActionState('pending');
+      try {
+        const input: UpdateMemberStatusRequest = { action };
+        await api.members.updateStatus(memberId, input);
+        setActionState('success');
+        void loadMember();
+      } catch {
+        setActionState('error');
+      }
+    },
+    [api, memberId, loadMember]
+  );
+
+  const backHref = `/${locale}/members`;
 
   if (loading) {
-    return <p style={{ color: '#64748b', padding: '1.5rem' }}>{t('loading')}</p>;
+    return (
+      <div style={{ padding: '1.5rem', maxWidth: 720, margin: '0 auto' }}>
+        <p style={{ color: '#64748b' }}>{t('gymAdminWeb.members.detail.loading')}</p>
+      </div>
+    );
   }
 
-  if (error || !member) {
-    return <p style={{ color: '#dc2626', padding: '1.5rem' }}>{error ?? t('error')}</p>;
-  }
-
-  const isSuspended = member.membershipStatus === 'suspended';
-
-  return (
-    <div style={{ maxWidth: 680 }}>
-      <p style={{ marginBottom: '1.25rem' }}>
-        <button
-          onClick={() => router.push('/members')}
+  if (error) {
+    return (
+      <div style={{ padding: '1.5rem', maxWidth: 720, margin: '0 auto' }}>
+        <div style={{ color: '#991b1b', background: '#fee2e2', padding: '1rem', borderRadius: 6 }}>
+          <strong>{t('gymAdminWeb.members.detail.errorTitle')}</strong>
+          <p style={{ margin: '0.25rem 0 0' }}>{error}</p>
+        </div>
+        <Link
+          href={backHref}
           style={{
-            background: 'none',
-            border: 'none',
-            color: '#0f766e',
-            cursor: 'pointer',
-            fontWeight: 600,
-            padding: 0,
+            display: 'inline-block',
+            marginTop: '1rem',
+            color: '#0f172a',
             fontSize: '0.875rem',
           }}
         >
-          ← {t('backToList')}
-        </button>
-      </p>
+          ← {t('gymAdminWeb.members.detail.backToList')}
+        </Link>
+      </div>
+    );
+  }
 
-      <section
+  if (!member) {
+    return (
+      <div style={{ padding: '1.5rem', maxWidth: 720, margin: '0 auto' }}>
+        <p style={{ color: '#64748b' }}>{t('gymAdminWeb.members.detail.notFound')}</p>
+        <Link
+          href={backHref}
+          style={{
+            display: 'inline-block',
+            marginTop: '1rem',
+            color: '#0f172a',
+            fontSize: '0.875rem',
+          }}
+        >
+          ← {t('gymAdminWeb.members.detail.backToList')}
+        </Link>
+      </div>
+    );
+  }
+
+  const membership = member.activeMembership;
+
+  return (
+    <div style={{ padding: '1.5rem', maxWidth: 720, margin: '0 auto' }}>
+      {/* Back link */}
+      <Link
+        href={backHref}
+        style={{ color: '#475569', fontSize: '0.875rem', textDecoration: 'none' }}
+      >
+        ← {t('gymAdminWeb.members.detail.backToList')}
+      </Link>
+
+      {/* Profile section */}
+      <SectionHeading title={t('gymAdminWeb.members.detail.sectionProfile')} />
+      <div
         style={{
+          background: '#f8fafc',
           border: '1px solid #e2e8f0',
-          borderRadius: 12,
-          padding: '1.25rem',
-          marginBottom: '1rem',
+          borderRadius: 8,
+          padding: '1rem',
         }}
       >
-        <h2
-          style={{ fontSize: '1rem', fontWeight: 700, margin: '0 0 1rem', color: '#1e293b' }}
-        >
-          {t('sectionProfile')}
-        </h2>
-        <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: '160px 1fr', gap: '0.5rem 1rem' }}>
-          <dt style={{ color: '#64748b', fontSize: '0.875rem' }}>{t('labelEmail')}</dt>
-          <dd style={{ margin: 0, fontSize: '0.875rem', fontWeight: 500 }}>
-            {member.email || '—'}
-          </dd>
-          <dt style={{ color: '#64748b', fontSize: '0.875rem' }}>{t('labelJoined')}</dt>
-          <dd style={{ margin: 0, fontSize: '0.875rem' }}>
-            {new Date(member.joinedAt).toLocaleDateString()}
-          </dd>
-        </dl>
-      </section>
+        <LabelRow label={t('gymAdminWeb.members.detail.labelName')} value={member.displayName} />
+        <LabelRow label={t('gymAdminWeb.members.detail.labelEmail')} value={member.email} />
+        <LabelRow label={t('gymAdminWeb.members.detail.labelPhone')} value={member.phone} />
+        <LabelRow
+          label={t('gymAdminWeb.members.detail.labelJoinedAt')}
+          value={new Date(member.joinedAt).toLocaleDateString()}
+        />
+      </div>
 
-      <section
+      {/* Membership section */}
+      <SectionHeading title={t('gymAdminWeb.members.detail.sectionMembership')} />
+      <div
         style={{
+          background: '#f8fafc',
           border: '1px solid #e2e8f0',
-          borderRadius: 12,
-          padding: '1.25rem',
-          marginBottom: '1rem',
+          borderRadius: 8,
+          padding: '1rem',
         }}
       >
-        <h2
-          style={{ fontSize: '1rem', fontWeight: 700, margin: '0 0 1rem', color: '#1e293b' }}
-        >
-          {t('sectionMembership')}
-        </h2>
-        <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: '160px 1fr', gap: '0.5rem 1rem' }}>
-          <dt style={{ color: '#64748b', fontSize: '0.875rem' }}>{t('labelStatus')}</dt>
-          <dd style={{ margin: 0 }}>
-            <span
-              style={{
-                display: 'inline-block',
-                padding: '2px 10px',
-                borderRadius: 12,
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                background:
-                  member.membershipStatus === 'active'
-                    ? '#16a34a20'
-                    : member.membershipStatus === 'suspended'
-                    ? '#dc262620'
-                    : '#d9780620',
-                color:
-                  member.membershipStatus === 'active'
-                    ? '#16a34a'
-                    : member.membershipStatus === 'suspended'
-                    ? '#dc2626'
-                    : '#d97706',
-              }}
-            >
-              {tStatus(`status${member.membershipStatus.charAt(0).toUpperCase()}${member.membershipStatus.slice(1)}` as never)}
-            </span>
-          </dd>
-          <dt style={{ color: '#64748b', fontSize: '0.875rem' }}>{t('labelPlan')}</dt>
-          <dd style={{ margin: 0, fontSize: '0.875rem' }}>
-            {member.membershipPlanName ?? '—'}
-          </dd>
-          <dt style={{ color: '#64748b', fontSize: '0.875rem' }}>{t('labelValidUntil')}</dt>
-          <dd style={{ margin: 0, fontSize: '0.875rem' }}>
-            {member.membershipValidUntil
-              ? new Date(member.membershipValidUntil).toLocaleDateString()
-              : '—'}
-          </dd>
-          {member.remainingSessions !== null && (
-            <>
-              <dt style={{ color: '#64748b', fontSize: '0.875rem' }}>
-                {t('labelRemainingSessions')}
-              </dt>
-              <dd style={{ margin: 0, fontSize: '0.875rem' }}>{member.remainingSessions}</dd>
-            </>
-          )}
-        </dl>
-      </section>
+        {membership ? (
+          <>
+            <LabelRow
+              label={t('gymAdminWeb.members.detail.labelPlan')}
+              value={membership.planName}
+            />
+            <LabelRow
+              label={t('gymAdminWeb.members.detail.labelStatus')}
+              value={membership.status}
+            />
+            <LabelRow
+              label={t('gymAdminWeb.members.detail.labelValidFrom')}
+              value={new Date(membership.validFrom).toLocaleDateString()}
+            />
+            <LabelRow
+              label={t('gymAdminWeb.members.detail.labelValidUntil')}
+              value={
+                membership.validUntil ? new Date(membership.validUntil).toLocaleDateString() : null
+              }
+            />
+            <LabelRow
+              label={t('gymAdminWeb.members.detail.labelRemainingSessions')}
+              value={
+                membership.remainingSessions !== null ? String(membership.remainingSessions) : null
+              }
+            />
+          </>
+        ) : (
+          <p style={{ margin: 0, color: '#64748b', fontSize: '0.875rem' }}>
+            {t('gymAdminWeb.members.detail.noActiveMembership')}
+          </p>
+        )}
+      </div>
 
-      <section
+      {/* Actions section */}
+      <SectionHeading title={t('gymAdminWeb.members.detail.sectionActions')} />
+      <div
         style={{
+          background: '#f8fafc',
           border: '1px solid #e2e8f0',
-          borderRadius: 12,
-          padding: '1.25rem',
+          borderRadius: 8,
+          padding: '1rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.75rem',
         }}
       >
-        <h2
-          style={{ fontSize: '1rem', fontWeight: 700, margin: '0 0 1rem', color: '#1e293b' }}
-        >
-          {t('sectionActions')}
-        </h2>
+        {/* Action feedback */}
+        {actionState === 'success' && (
+          <p style={{ margin: 0, color: '#166534', fontSize: '0.875rem' }}>
+            {t('gymAdminWeb.members.detail.actionSuccess')}
+          </p>
+        )}
+        {actionState === 'error' && (
+          <p style={{ margin: 0, color: '#991b1b', fontSize: '0.875rem' }}>
+            {t('gymAdminWeb.members.detail.actionError')}
+          </p>
+        )}
 
-        <div style={{ marginBottom: '0.75rem' }}>
-          <label
-            style={{ display: 'block', fontSize: '0.875rem', color: '#374151', marginBottom: '0.375rem' }}
-          >
-            {t('reasonLabel')}
-          </label>
-          <input
-            type="text"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            placeholder={t('reasonPlaceholder')}
+        {/* Inline confirm panel */}
+        {showConfirm && (
+          <div
             style={{
-              width: '100%',
-              padding: '0.5rem 0.75rem',
-              border: '1px solid #cbd5e1',
-              borderRadius: 8,
-              fontSize: '0.875rem',
-              boxSizing: 'border-box',
+              background: '#fff',
+              border: '1px solid #e2e8f0',
+              borderRadius: 6,
+              padding: '0.875rem',
             }}
-          />
-        </div>
-
-        {actionSuccess && (
-          <p style={{ color: '#16a34a', fontSize: '0.875rem', marginBottom: '0.75rem' }}>
-            {actionSuccess}
-          </p>
+          >
+            <p style={{ margin: '0 0 0.75rem', fontSize: '0.875rem', color: '#334155' }}>
+              {showConfirm === 'suspend'
+                ? t('gymAdminWeb.members.detail.suspendConfirm')
+                : t('gymAdminWeb.members.detail.reactivateConfirm')}
+            </p>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button
+                onClick={() => void handleStatusAction(showConfirm)}
+                disabled={actionState === 'pending'}
+                style={{
+                  background: showConfirm === 'suspend' ? '#991b1b' : '#166534',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 6,
+                  padding: '0.375rem 0.875rem',
+                  cursor: actionState === 'pending' ? 'not-allowed' : 'pointer',
+                  fontWeight: 600,
+                  fontSize: '0.8125rem',
+                  opacity: actionState === 'pending' ? 0.6 : 1,
+                }}
+              >
+                {actionState === 'pending'
+                  ? t('gymAdminWeb.members.detail.actionPending')
+                  : showConfirm === 'suspend'
+                    ? t('gymAdminWeb.members.detail.actionSuspend')
+                    : t('gymAdminWeb.members.detail.actionReactivate')}
+              </button>
+              <button
+                onClick={() => setShowConfirm(null)}
+                disabled={actionState === 'pending'}
+                style={{
+                  background: 'transparent',
+                  color: '#334155',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: 6,
+                  padding: '0.375rem 0.875rem',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '0.8125rem',
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         )}
-        {actionError && (
-          <p style={{ color: '#dc2626', fontSize: '0.875rem', marginBottom: '0.75rem' }}>
-            {actionError}
-          </p>
-        )}
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
-          {isSuspended ? (
+        {/* Action trigger buttons */}
+        {!showConfirm && (
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button
-              onClick={() => void handleStatusUpdate('active')}
-              disabled={actionPending}
+              onClick={() => {
+                setActionState('idle');
+                setShowConfirm('suspend');
+              }}
               style={{
-                padding: '0.5rem 1.25rem',
-                borderRadius: 8,
-                border: 'none',
-                background: '#16a34a',
-                color: '#fff',
+                background: '#fee2e2',
+                color: '#991b1b',
+                border: '1px solid #fca5a5',
+                borderRadius: 6,
+                padding: '0.5rem 1rem',
+                cursor: 'pointer',
                 fontWeight: 600,
-                cursor: actionPending ? 'default' : 'pointer',
                 fontSize: '0.875rem',
-                opacity: actionPending ? 0.7 : 1,
               }}
             >
-              {t('reactivate')}
+              {t('gymAdminWeb.members.detail.actionSuspend')}
             </button>
-          ) : (
             <button
-              onClick={() => void handleStatusUpdate('suspended')}
-              disabled={actionPending || member.membershipStatus === 'no_membership'}
+              onClick={() => {
+                setActionState('idle');
+                setShowConfirm('reactivate');
+              }}
               style={{
-                padding: '0.5rem 1.25rem',
-                borderRadius: 8,
-                border: 'none',
-                background: '#dc2626',
-                color: '#fff',
+                background: '#dcfce7',
+                color: '#166534',
+                border: '1px solid #86efac',
+                borderRadius: 6,
+                padding: '0.5rem 1rem',
+                cursor: 'pointer',
                 fontWeight: 600,
-                cursor: actionPending || member.membershipStatus === 'no_membership' ? 'default' : 'pointer',
                 fontSize: '0.875rem',
-                opacity: actionPending || member.membershipStatus === 'no_membership' ? 0.5 : 1,
               }}
             >
-              {t('suspend')}
+              {t('gymAdminWeb.members.detail.actionReactivate')}
             </button>
-          )}
-        </div>
-      </section>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

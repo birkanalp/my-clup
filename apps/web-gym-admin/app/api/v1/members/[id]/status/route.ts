@@ -1,13 +1,11 @@
-import type { NextRequest } from 'next/server';
 import { updateMemberStatusContract } from '@myclup/contracts/members';
 import { withAuthContractRoute } from '@/src/lib/withAuthContractRoute';
-import * as membersServer from '@/src/server/members';
+import * as membersServer from '@/src/server/members/index';
 
-export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params;
-  const handler = withAuthContractRoute(updateMemberStatusContract, async (req, input) => {
-    if (!input) return null;
-    return membersServer.updateMemberStatus(req, id, input);
-  });
-  return handler(request);
-}
+export const PATCH = withAuthContractRoute(updateMemberStatusContract, async (req, input) => {
+  if (!input) return null;
+  const segments = req.nextUrl.pathname.split('/');
+  // path: /api/v1/members/[id]/status — id is segment at index -2
+  const memberId = segments[segments.length - 2] ?? '';
+  return membersServer.updateMemberStatus(req, memberId, input);
+});

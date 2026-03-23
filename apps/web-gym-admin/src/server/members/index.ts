@@ -1,11 +1,9 @@
 import type { NextRequest } from 'next/server';
 import type {
-  GetGymMemberResponse,
-  GymMember,
-  GymMemberDetail,
-  ListGymMembersRequest,
-  ListGymMembersResponse,
-  MemberStatus,
+  GetMemberResponse,
+  ListMembersRequest,
+  ListMembersResponse,
+  MemberSummary,
   UpdateMemberStatusRequest,
   UpdateMemberStatusResponse,
 } from '@myclup/contracts/members';
@@ -14,11 +12,11 @@ import {
   createServerClient,
   ForbiddenError,
   getCurrentUser,
-  NotFoundError,
   requirePermission,
   resolveTenantScope,
   writeAuditEvent,
 } from '@myclup/supabase';
+import type { TenantScope } from '@myclup/types';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -30,201 +28,247 @@ function getClient() {
   });
 }
 
-async function writeMembersAudit(
+async function writeAuditSafe(
   client: ReturnType<typeof getClient>,
   params: Parameters<typeof writeAuditEvent>[1]
 ) {
   try {
     await writeAuditEvent(client, params);
-  } catch (error) {
-    console.error('[members] audit write failed', error);
+  } catch (err) {
+    console.error('[members] audit write failed', err);
   }
 }
 
-function parseListParams(req: NextRequest): ListGymMembersRequest {
-  const sp = req.nextUrl.searchParams;
-  const limitParam = sp.get('limit');
-  const limit = limitParam ? Number.parseInt(limitParam, 10) : undefined;
-  return {
-    gymId: sp.get('gymId') ?? undefined,
-    branchId: sp.get('branchId') ?? undefined,
-    status: (sp.get('status') as ListGymMembersRequest['status']) ?? undefined,
-    search: sp.get('search') ?? undefined,
-    cursor: sp.get('cursor') ?? undefined,
-    limit: typeof limit === 'number' && Number.isFinite(limit) ? limit : 20,
-  };
+async function getActorRole(
+  client: ReturnType<typeof getClient>,
+  userId: string,
+  gymId: string
+): Promise<string> {
+  const { data } = await client
+    .from('user_role_assignments')
+    .select('role, gym_id')
+    .eq('user_id', userId);
+  const rows = data ?? [];
+  const platform = rows.find((row) => row.role === 'platform_admin' && row.gym_id === null);
+  if (platform) return 'platform_admin';
+  return rows.find((row) => row.gym_id === gymId)?.role ?? 'staff';
 }
 
-/**
- * Derives a member's status from their latest membership instance.
- * Members are users with membership_instances belonging to a gym.
- */
-function deriveMemberStatus(
-  instanceStatus: string | null,
-  validUntil: string | null
-): MemberStatus {
-  if (!instanceStatus) return 'no_membership';
-  if (instanceStatus === 'cancelled') return 'suspended';
-  if (instanceStatus === 'expired') return 'expired';
-  if (instanceStatus === 'frozen') return 'suspended';
-  if (instanceStatus === 'active') {
-    if (validUntil && new Date(validUntil) < new Date()) return 'expired';
-    return 'active';
-  }
-  return 'no_membership';
-}
-
-export async function listMembers(req: NextRequest): Promise<ListGymMembersResponse | null> {
+export async function listMembers(req: NextRequest): Promise<ListMembersResponse | null> {
   const currentUser = await getCurrentUser(req);
   if (!currentUser) return null;
   if (!SUPABASE_URL || !SERVICE_ROLE_KEY) return null;
 
-  const params = parseListParams(req);
-  const client = getClient();
-  const scopes = await resolveTenantScope(
-    client,
-    currentUser.user.id,
-    params.gymId,
-    params.branchId
-  );
-  if (scopes.length === 0) {
-    throw new ForbiddenError('No tenant scope for members list');
-  }
+  const sp = req.nextUrl.searchParams;
+  const gymId = sp.get('gymId') ?? undefined;
+  const branchId = sp.get('branchId') ?? undefined;
+  const status = sp.get('status') as ListMembersRequest['status'];
+  const search = sp.get('search') ?? undefined;
+  const cursor = sp.get('cursor') ?? undefined;
+  const limitParam = sp.get('limit');
+  const limit =
+    limitParam && Number.isFinite(Number.parseInt(limitParam, 10))
+      ? Number.parseInt(limitParam, 10)
+      : 20;
 
-  const scope = scopes[0];
+  const client = getClient();
+  const scopes = await resolveTenantScope(client, currentUser.user.id, gymId, branchId);
+  if (scopes.length === 0) throw new ForbiddenError('No tenant scope for members list');
+
+  const scope: TenantScope = scopes[0];
   await requirePermission(client, currentUser.user.id, scope, 'members:read');
 
-  // Query membership instances joined with profiles for the gym
-  let query = client
+  // Query membership_instances to get distinct member_ids for this gym
+  let instanceQuery = client
     .from('membership_instances')
     .select(
-      'id, member_id, gym_id, branch_id, status, valid_from, valid_until, plan_id, remaining_sessions, created_at, membership_plans(name), profiles!membership_instances_member_id_fkey(user_id, display_name, locale)'
+      'id, plan_id, member_id, gym_id, branch_id, status, valid_from, valid_until, remaining_sessions, created_at'
     )
     .eq('gym_id', scope.gymId)
-    .order('created_at', { ascending: false })
-    .limit(params.limit + 1);
+    .order('created_at', { ascending: false });
 
-  if (params.branchId ?? scope.branchId) {
-    query = query.eq('branch_id', params.branchId ?? scope.branchId ?? '');
+  if (branchId ?? scope.branchId) {
+    instanceQuery = instanceQuery.eq('branch_id', branchId ?? scope.branchId ?? '');
+  }
+  if (status) {
+    instanceQuery = instanceQuery.eq('status', status);
   }
 
-  if (params.cursor) {
-    query = query.lt('created_at', params.cursor);
+  const { data: instanceData, error: instanceError } = await instanceQuery;
+  if (instanceError) throw new Error(`listMembers instances failed: ${instanceError.message}`);
+
+  // Deduplicate by member_id, keeping the most recent membership instance per member
+  const memberMap = new Map<
+    string,
+    {
+      instanceId: string;
+      planId: string;
+      status: string;
+      validUntil: string | null;
+      joinedAt: string;
+    }
+  >();
+
+  for (const row of instanceData ?? []) {
+    if (!memberMap.has(row.member_id)) {
+      memberMap.set(row.member_id, {
+        instanceId: row.id,
+        planId: row.plan_id,
+        status: row.status,
+        validUntil: row.valid_until,
+        joinedAt: row.created_at,
+      });
+    }
   }
 
-  if (params.status && params.status !== 'no_membership') {
-    const dbStatus = params.status === 'suspended' ? 'cancelled' : params.status;
-    query = query.eq('status', dbStatus);
+  const memberIds = Array.from(memberMap.keys());
+  if (memberIds.length === 0) {
+    return { items: [], nextCursor: null, total: 0 };
   }
 
-  const { data, error } = await query;
-  if (error) {
-    console.error('[members] list query failed', error);
-    throw new Error('members_list_failed');
+  // Fetch profiles for all member_ids
+  const { data: profileData, error: profileError } = await client
+    .from('profiles')
+    .select('user_id, display_name, avatar_url, created_at')
+    .in('user_id', memberIds);
+  if (profileError) throw new Error(`listMembers profiles failed: ${profileError.message}`);
+
+  const profileMap = new Map<string, { displayName: string; createdAt: string }>();
+  for (const profile of profileData ?? []) {
+    profileMap.set(profile.user_id, {
+      displayName: profile.display_name,
+      createdAt: profile.created_at,
+    });
   }
 
-  const rows = data ?? [];
-  const hasMore = rows.length > params.limit;
-  const items = (hasMore ? rows.slice(0, params.limit) : rows).map((row): GymMember => {
-    const profile = Array.isArray(row.profiles) ? row.profiles[0] : row.profiles;
-    const plan = Array.isArray(row.membership_plans)
-      ? row.membership_plans[0]
-      : row.membership_plans;
-    const memberStatus = deriveMemberStatus(row.status, row.valid_until);
+  // Fetch auth.users emails via a join on profiles is not directly possible without admin API.
+  // Use the service role to look up emails from the auth schema is not safe here.
+  // We will leave email as null — it requires auth.admin.listUsers which is outside RLS scope.
 
+  // Fetch plan names for unique plan_ids
+  const uniquePlanIds = [...new Set([...memberMap.values()].map((v) => v.planId))];
+  const { data: planData } = await client
+    .from('membership_plans')
+    .select('id, name')
+    .in('id', uniquePlanIds);
+  const planNameMap = new Map<string, string>();
+  for (const plan of planData ?? []) {
+    planNameMap.set(plan.id, plan.name);
+  }
+
+  // Apply search filter client-side (display name contains search term)
+  let filteredMemberIds = memberIds;
+  if (search && search.trim().length > 0) {
+    const searchLower = search.toLowerCase();
+    filteredMemberIds = memberIds.filter((id) => {
+      const profile = profileMap.get(id);
+      return profile?.displayName.toLowerCase().includes(searchLower) ?? false;
+    });
+  }
+
+  const total = filteredMemberIds.length;
+
+  // Apply cursor-based pagination
+  const cursorIndex = cursor ? filteredMemberIds.indexOf(cursor) : -1;
+  const startIndex = cursorIndex >= 0 ? cursorIndex + 1 : 0;
+  const pageIds = filteredMemberIds.slice(startIndex, startIndex + limit);
+  const hasMore = startIndex + limit < filteredMemberIds.length;
+  const nextCursor = hasMore ? (pageIds[pageIds.length - 1] ?? null) : null;
+
+  const items: MemberSummary[] = pageIds.map((memberId) => {
+    const membership = memberMap.get(memberId);
+    const profile = profileMap.get(memberId);
     return {
-      id: row.member_id,
-      displayName: (profile as { display_name?: string } | null)?.display_name ?? 'Unknown',
-      email: '',
-      membershipStatus: memberStatus,
-      membershipPlanName: (plan as { name?: string } | null)?.name ?? null,
-      membershipValidUntil: row.valid_until,
-      membershipInstanceId: row.id,
-      joinedAt: row.created_at,
+      memberId,
+      displayName: profile?.displayName ?? memberId,
+      email: null,
+      phone: null,
+      membershipStatus: (membership?.status as MemberSummary['membershipStatus']) ?? null,
+      membershipPlanName: membership ? (planNameMap.get(membership.planId) ?? null) : null,
+      membershipValidUntil: membership?.validUntil ?? null,
+      membershipInstanceId: membership?.instanceId ?? null,
+      joinedAt: profile?.createdAt ?? membership?.joinedAt ?? new Date().toISOString(),
     };
   });
 
-  // Filter by search on display name after fetching (simple approach)
-  const filtered =
-    params.search
-      ? items.filter((m) =>
-          m.displayName.toLowerCase().includes(params.search!.toLowerCase())
-        )
-      : items;
-
-  const nextCursor =
-    hasMore && rows[params.limit - 1]?.created_at ? rows[params.limit - 1].created_at : null;
-
-  return {
-    items: filtered,
-    nextCursor,
-  };
+  return { items, nextCursor, total };
 }
 
 export async function getMember(
   req: NextRequest,
   memberId: string
-): Promise<GetGymMemberResponse | null> {
+): Promise<GetMemberResponse | null> {
   const currentUser = await getCurrentUser(req);
   if (!currentUser) return null;
   if (!SUPABASE_URL || !SERVICE_ROLE_KEY) return null;
 
   const client = getClient();
 
-  // Get the member's latest membership instance for this gym to derive scope
-  const { data: instances, error: instError } = await client
+  // Look up this member's most recent membership instance to determine tenant scope
+  const { data: instanceRows, error: instanceError } = await client
     .from('membership_instances')
     .select(
-      'id, member_id, gym_id, branch_id, status, valid_from, valid_until, plan_id, remaining_sessions, created_at, membership_plans(name), profiles!membership_instances_member_id_fkey(user_id, display_name, locale)'
+      'id, plan_id, member_id, gym_id, branch_id, status, valid_from, valid_until, remaining_sessions, created_at'
     )
     .eq('member_id', memberId)
     .order('created_at', { ascending: false })
     .limit(1);
 
-  if (instError) {
-    console.error('[members] getMember query failed', instError);
-    throw new Error('member_query_failed');
-  }
+  if (instanceError) throw new Error(`getMember instances failed: ${instanceError.message}`);
 
-  const latest = instances?.[0] ?? null;
-  if (!latest) {
-    throw new NotFoundError('Member not found');
-  }
+  const latestInstance = instanceRows?.[0] ?? null;
 
-  const scopes = await resolveTenantScope(
-    client,
-    currentUser.user.id,
-    latest.gym_id,
-    latest.branch_id ?? undefined
-  );
-  if (scopes.length === 0) {
-    throw new ForbiddenError('No tenant scope for member detail');
-  }
+  // Resolve tenant scope — use the gym from the membership instance if found
+  const gymId = latestInstance?.gym_id;
+  const scopes = await resolveTenantScope(client, currentUser.user.id, gymId);
+  if (scopes.length === 0) throw new ForbiddenError('No tenant scope for member detail');
 
-  const scope = scopes[0];
+  const scope: TenantScope = scopes[0];
   await requirePermission(client, currentUser.user.id, scope, 'members:read');
 
-  const profile = Array.isArray(latest.profiles) ? latest.profiles[0] : latest.profiles;
-  const plan = Array.isArray(latest.membership_plans)
-    ? latest.membership_plans[0]
-    : latest.membership_plans;
-  const memberStatus = deriveMemberStatus(latest.status, latest.valid_until);
+  // Verify this member actually belongs to the actor's gym
+  if (latestInstance && latestInstance.gym_id !== scope.gymId) {
+    throw new ForbiddenError('Member does not belong to your gym');
+  }
 
-  const result: GymMemberDetail = {
-    id: latest.member_id,
-    displayName: (profile as { display_name?: string } | null)?.display_name ?? 'Unknown',
-    email: '',
-    membershipStatus: memberStatus,
-    membershipPlanName: (plan as { name?: string } | null)?.name ?? null,
-    membershipValidUntil: latest.valid_until,
-    membershipInstanceId: latest.id,
-    membershipPlanId: latest.plan_id,
-    remainingSessions: latest.remaining_sessions,
-    locale: (profile as { locale?: string } | null)?.locale ?? 'en',
-    joinedAt: latest.created_at,
+  const { data: profile, error: profileError } = await client
+    .from('profiles')
+    .select('user_id, display_name, avatar_url, created_at')
+    .eq('user_id', memberId)
+    .maybeSingle();
+
+  if (profileError) throw new Error(`getMember profile failed: ${profileError.message}`);
+  if (!profile && !latestInstance) return null;
+
+  let activeMembership: GetMemberResponse['activeMembership'] = null;
+  if (latestInstance) {
+    const { data: plan } = await client
+      .from('membership_plans')
+      .select('id, name')
+      .eq('id', latestInstance.plan_id)
+      .maybeSingle();
+
+    activeMembership = {
+      instanceId: latestInstance.id,
+      planName: plan?.name ?? '',
+      status: latestInstance.status as GetMemberResponse['activeMembership'] extends null
+        ? never
+        : NonNullable<GetMemberResponse['activeMembership']>['status'],
+      validFrom: latestInstance.valid_from,
+      validUntil: latestInstance.valid_until,
+      remainingSessions: latestInstance.remaining_sessions,
+    };
+  }
+
+  return {
+    memberId,
+    displayName: profile?.display_name ?? memberId,
+    email: null,
+    phone: null,
+    avatarUrl: profile?.avatar_url ?? null,
+    joinedAt: profile?.created_at ?? latestInstance?.created_at ?? new Date().toISOString(),
+    activeMembership,
   };
-
-  return result;
 }
 
 export async function updateMemberStatus(
@@ -238,77 +282,99 @@ export async function updateMemberStatus(
 
   const client = getClient();
 
-  // Find the active membership instance for this member
-  const { data: instances, error: instError } = await client
+  // Find the member's most recent active/frozen membership instance
+  const { data: instanceRows, error: instanceError } = await client
     .from('membership_instances')
-    .select('id, gym_id, branch_id, status, valid_until')
+    .select('id, gym_id, branch_id, status, member_id')
     .eq('member_id', memberId)
+    .in('status', ['active', 'frozen', 'cancelled'])
     .order('created_at', { ascending: false })
     .limit(1);
 
-  if (instError) {
-    console.error('[members] updateMemberStatus query failed', instError);
-    throw new Error('member_query_failed');
-  }
+  if (instanceError) throw new Error(`updateMemberStatus query failed: ${instanceError.message}`);
 
-  const latest = instances?.[0] ?? null;
-  if (!latest) {
-    throw new NotFoundError('Member not found');
-  }
+  const instance = instanceRows?.[0] ?? null;
+  if (!instance) throw new ForbiddenError('No membership instance found for this member');
 
   const scopes = await resolveTenantScope(
     client,
     currentUser.user.id,
-    latest.gym_id,
-    latest.branch_id ?? undefined
+    instance.gym_id,
+    instance.branch_id ?? undefined
   );
-  if (scopes.length === 0) {
-    throw new ForbiddenError('No tenant scope for member status update');
-  }
+  if (scopes.length === 0) throw new ForbiddenError('No tenant scope for member status update');
 
-  const scope = scopes[0];
+  const scope: TenantScope = scopes[0];
   await requirePermission(client, currentUser.user.id, scope, 'members:write');
 
-  // Map UI status to DB status
-  const newDbStatus = input.status === 'suspended' ? 'cancelled' : 'active';
-  const previousStatus = deriveMemberStatus(latest.status, latest.valid_until);
+  if (instance.gym_id !== scope.gymId) {
+    throw new ForbiddenError('Member does not belong to your gym');
+  }
+
+  const actorRole = await getActorRole(client, currentUser.user.id, scope.gymId);
+  const previousStatus = instance.status as UpdateMemberStatusResponse['previousStatus'];
   const timestamp = new Date().toISOString();
 
-  // Write audit before state change
-  await writeMembersAudit(client, {
-    event_type: AUDIT_EVENT_TYPES.role_change,
+  const newStatus = (input.action === 'suspend' ? 'cancelled' : 'active') as 'cancelled' | 'active';
+
+  // Write before-state audit event
+  await writeAuditSafe(client, {
+    event_type: AUDIT_EVENT_TYPES.membership_cancellation,
     actor_id: currentUser.user.id,
     target_type: 'membership_instances',
-    target_id: latest.id,
+    target_id: instance.id,
     payload: {
+      membership_id: instance.id,
       member_id: memberId,
-      action: 'member_status_update',
+      action: input.action === 'suspend' ? 'member_suspend' : 'member_reactivate',
       reason: input.reason,
-      before_state: latest.status,
-      after_state: newDbStatus,
-      actor_role: 'gym_manager',
+      actor_role: actorRole,
       tenant_id: scope.gymId,
+      before_state: previousStatus,
+      after_state: 'pending',
       timestamp,
     },
-    tenant_context: { gym_id: scope.gymId, branch_id: scope.branchId ?? undefined },
+    tenant_context: {
+      gym_id: scope.gymId,
+      branch_id: scope.branchId ?? undefined,
+    },
   });
 
   const { error: updateError } = await client
     .from('membership_instances')
-    .update({ status: newDbStatus as 'active' | 'cancelled', updated_at: timestamp })
-    .eq('id', latest.id);
+    .update({ status: newStatus, updated_at: new Date().toISOString() })
+    .eq('id', instance.id);
 
-  if (updateError) {
-    console.error('[members] status update failed', updateError);
-    throw new Error('member_status_update_failed');
-  }
+  if (updateError) throw new Error(`updateMemberStatus update failed: ${updateError.message}`);
 
-  const newStatus = deriveMemberStatus(newDbStatus, latest.valid_until);
+  // Write after-state audit event
+  await writeAuditSafe(client, {
+    event_type: AUDIT_EVENT_TYPES.membership_cancellation,
+    actor_id: currentUser.user.id,
+    target_type: 'membership_instances',
+    target_id: instance.id,
+    payload: {
+      membership_id: instance.id,
+      member_id: memberId,
+      action: input.action === 'suspend' ? 'member_suspend' : 'member_reactivate',
+      reason: input.reason,
+      actor_role: actorRole,
+      tenant_id: scope.gymId,
+      before_state: previousStatus,
+      after_state: newStatus,
+      timestamp: new Date().toISOString(),
+    },
+    tenant_context: {
+      gym_id: scope.gymId,
+      branch_id: scope.branchId ?? undefined,
+    },
+  });
 
   return {
     memberId,
-    previousStatus,
-    newStatus,
-    updatedAt: timestamp,
+    action: input.action,
+    membershipInstanceId: instance.id,
+    previousStatus: previousStatus as UpdateMemberStatusResponse['previousStatus'],
+    newStatus: newStatus as UpdateMemberStatusResponse['newStatus'],
   };
 }

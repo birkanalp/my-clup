@@ -3,6 +3,7 @@ import type {
   CancelMembershipResponse,
   CreateMembershipPlanRequest,
   CreateMembershipPlanResponse,
+  DeactivateMembershipPlanResponse,
   FreezeMembershipRequest,
   FreezeMembershipResponse,
   GetMembershipInstanceResponse,
@@ -10,7 +11,6 @@ import type {
   ListMembershipInstancesResponse,
   ListMembershipPlansRequest,
   ListMembershipPlansResponse,
-  MembershipPlan,
   RenewMembershipRequest,
   RenewMembershipResponse,
   UpdateMembershipPlanRequest,
@@ -162,9 +162,12 @@ export function createMembershipApi(request: RequestFn) {
       );
     },
 
-    async deactivateMembershipPlan(id: string): Promise<MembershipPlan> {
+    async deactivateMembershipPlan(id: string): Promise<DeactivateMembershipPlanResponse> {
       return request(
-        deactivateMembershipPlanContract as ApiContract<undefined, MembershipPlan>,
+        deactivateMembershipPlanContract as ApiContract<
+          undefined,
+          DeactivateMembershipPlanResponse
+        >,
         undefined,
         { pathParams: { id } }
       );
