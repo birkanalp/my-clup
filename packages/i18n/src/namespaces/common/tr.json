@@ -482,6 +482,37 @@
     "dashboardTitle": "Platform paneli",
     "dashboardSubtitle": "Kiracılar arası gözetim, destek araçları ve yönetişim. API rotaları buraya taşındığında paylaşılan BFF için NEXT_PUBLIC_BFF_BASE_URL kullanın.",
     "metricsPlaceholder": "Raporlama uçları bağlandığında operasyonel KPI’lar kiracı güvenli şekilde toplanacak.",
+    "dataPreview": {
+      "empty": "Gösterilecek satır yok. Yerel Supabase service role ile bu görünüm kiracı güvenli okuma modellerini yükler.",
+      "yes": "Evet",
+      "no": "Hayır",
+      "name": "Ad",
+      "slug": "Kısa ad",
+      "active": "Aktif",
+      "published": "Listelenen",
+      "city": "Şehir",
+      "country": "Ülke",
+      "createdAt": "Oluşturulma",
+      "userId": "Kullanıcı ID",
+      "displayName": "Görünen ad",
+      "locale": "Dil",
+      "roles": "Roller",
+      "eventType": "Olay",
+      "actor": "Aktör",
+      "target": "Hedef",
+      "time": "Zaman",
+      "invoicesTotal": "Faturalar (toplam)",
+      "invoicesOpen": "Açık faturalar",
+      "invoicesPaid": "Ödenen faturalar",
+      "instancesTotal": "Üyelik örnekleri",
+      "instancesActive": "Aktif",
+      "instancesCancelled": "İptal",
+      "conversationsTotal": "Konuşmalar",
+      "localeDistribution": "Profil dil dağılımı",
+      "cmsStatLabel": "Konuşmalar (içerik/destek hacim göstergesi)",
+      "supportSummary": "Toplam konuşmalar (destek kuyruğu göstergesi)",
+      "moderationSummary": "Toplam konuşmalar (moderasyon kapsamı göstergesi)"
+    },
     "sidebar": {
       "dashboard": "Panel",
       "gyms": "Salonlar ve kiracılar",
@@ -526,7 +557,8 @@
     },
     "localesPage": {
       "title": "Yerelleştirme işlemleri",
-      "subtitle": "Varsayılan diller, geri dönüşler ve çeviri kapsamını koordine edin."
+      "subtitle": "Varsayılan diller, geri dönüşler ve çeviri kapsamını koordine edin.",
+      "tableCount": "Profiller"
     },
     "auditPage": {
       "title": "Denetim günlüğü",
